@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Amy Finnegan | Siddharth Dixit</title>
+    <link>/author/amy-finnegan/</link>
+      <atom:link href="/author/amy-finnegan/index.xml" rel="self" type="application/rss+xml" />
+    <description>Amy Finnegan</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>© Siddharth Dixit 2021</copyright><lastBuildDate>Tue, 01 Dec 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_huad25c1bc025cb7d239e90ad1fd91518e_22315_512x512_fill_lanczos_center_2.png</url>
+      <title>Amy Finnegan</title>
+      <link>/author/amy-finnegan/</link>
+    </image>
+    
+    <item>
+      <title>Costing Tool for Healthcare Innovators</title>
+      <link>/publication/report-costing/</link>
+      <pubDate>Tue, 01 Dec 2020 00:00:00 +0000</pubDate>
+      <guid>/publication/report-costing/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

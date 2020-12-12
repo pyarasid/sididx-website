@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Publications | Siddharth Dixit</title>
+    <link>/publication/</link>
+      <atom:link href="/publication/index.xml" rel="self" type="application/rss+xml" />
+    <description>Publications</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>© Siddharth Dixit 2021</copyright><lastBuildDate>Tue, 01 Dec 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_huad25c1bc025cb7d239e90ad1fd91518e_22315_512x512_fill_lanczos_center_2.png</url>
+      <title>Publications</title>
+      <link>/publication/</link>
+    </image>
+    
+    <item>
+      <title>Cost-Effectiveness Analysis of  Elizabeth Glaser Pediatric AIDS Foundation (EGPAF) Pratt Pouch</title>
+      <link>/publication/report-egpaf/</link>
+      <pubDate>Tue, 01 Dec 2020 00:00:00 +0000</pubDate>
+      <guid>/publication/report-egpaf/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Cost-Effectiveness Analysis of BEMPU-TempWatch</title>
+      <link>/publication/report-bempu/</link>
+      <pubDate>Tue, 01 Dec 2020 00:00:00 +0000</pubDate>
+      <guid>/publication/report-bempu/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Cost-Effectiveness Analysis of Partners in Health–All Babies Count</title>
+      <link>/publication/report-pih/</link>
+      <pubDate>Tue, 01 Dec 2020 00:00:00 +0000</pubDate>
+      <guid>/publication/report-pih/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Costing Tool for Healthcare Innovators</title>
+      <link>/publication/report-costing/</link>
+      <pubDate>Tue, 01 Dec 2020 00:00:00 +0000</pubDate>
+      <guid>/publication/report-costing/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
