@@ -176,4 +176,4 @@ plot(resultreg)
 
 <img src="index_files/figure-html/unnamed-chunk-8-1.png" width="672" />
 
-I will end this post here as, i think, it already packs in a lot of information for one article. In the second part of the tutorial, i will go through the joining of shape file data and the CVOID-19 data for Kenya, and creation of static and animated choropleth hexbin maps to show the progression of COVID-19 cases.
+I will end this post here. In the second part of the tutorial, i will go through the joining of shape file data and the CVOID-19 data for Kenya, and creation of static and animated choropleth hexbin maps to show the progression of COVID-19 cases.
