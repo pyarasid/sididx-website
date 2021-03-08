@@ -61,9 +61,9 @@ head(original_shapes@data)
 ## 5   14  KE.EB
 ```
 
-On the choropleth hex map of kenya we will like to show the names of each country, but we can't write the full name as this will make the map really chaotic. Therefore we will abbrevaite the names of all the countries and then use these names on the map. We have create a separate excel file where we abbreviate the names of all the counties in Kenya. You can also google or find these abbreviation on wikipedia. 
+On the choropleth hex map of kenya we will like to show the names of each country, but we can't write the full name as this will make the map really chaotic. Therefore, we will abbreviate the names of all the counties, and then populate them on the map. We have created a separate excel file with abbreviations for all counties. You can also google or find these abbreviation on wikipedia. 
 
-We will first read this abbreviation excel and then add this these abbreviation to the "original_shapes" dataframe. Basically, we we will gradually all the information that we require to this dataframe before we create a chart and animation. 
+We will first read this abbreviation excel, and then add this these abbreviation to the "original_shapes" data. Basically, we we will gradually add all the information that we require to this shape file data to get it ready to be visuaized. 
 
 
 ```r
@@ -106,7 +106,7 @@ head(df_abb)
 ## 6 Embu            EB
 ```
 
-Now, we will join the abbreviation data frame with the shape file data frame. The "County" column of "df_abb" data frame and the "Name_1" column of "original_shapes" data frame have the same information i.e. the name of counties in Kenya. Therefore, we will use these column to join the two data frames.
+Now, we will join the abbreviation data frame with the shape file data frame. The "County" column of "df_abb" data frame and the "Name_1" column of "original_shapes" data have the same information i.e. the name of counties in Kenya. Therefore, we will use these columns to join the two data frames.
 
 
 ```r
@@ -137,15 +137,15 @@ head(original_shapes@data)
 ## 6   14  KE.EB  EB
 ```
 
-After we have joined the two data frames, we will turn our focus tesselating the map polygons of Kenya in to hexagons. Tesselation means covering a flat surface (in this case a map) with one or more geometric shapes which do not overlap and there is no gaps between them.
+After we have joined the two data frames, we will turn our focus tesselating the map polygons of Kenya into hexagons. Tesselation means covering a flat surface (in this case a map) with one or more geometric shapes which do not overlap and there is no gaps between them.
 
 We will use "geogrid" package in R to algorithmically tessellate kenya's map into hexagonal grids. You can find more information from the following github repository:
 
 https://github.com/jbaileyh/geogrid
 
-We will us calculate_grid() function of "geogrid" library.  This function takes in SpatialPolygonsDataframe or sf object, a learning rate (suggestion = 0.03 to begin), a grid type hexagonal or regular and a seed value. calculate_grid() function uses mathematical algorithm to covert the boundary of the polygons into hexagon shapes, while still trying to preserve the actual shape of the map. Therefore, as ou can see there can be many versions of the grids that can be created. The "seed" attribute of calculate_grid() lets us generate different version of grids. We should visually inspect these grids, and choose the grid which best captures the actual shape of the map.
+We will us calculate_grid() function of "geogrid" library to achieve our goal. This function takes in SpatialPolygonsDataframe or sf object, a learning rate (suggestion = 0.03 to begin), a grid type hexagonal or regular and a seed value. calculate_grid() function uses mathematical algorithm to covert the boundary of the polygons into hexagon shapes, while still trying to preserve the actual shape of the map. Therefore, as we can see there can be many versions of the grids that can be created. The "seed" attribute of calculate_grid() lets us generate different versions of grids. Thus, we should visually inspect each grid, and choose the grid which best captures the actual shape of the map.
 
-Lets first create 6 possible versions of the grid for Kenya's map polygons.
+Lets first create 6 possible versions of the grid for Kenya's map polygons. You can create more versions and choose from them.
 
 
 ```r
@@ -176,4 +176,4 @@ plot(resultreg)
 
 <img src="index_files/figure-html/unnamed-chunk-8-1.png" width="672" />
 
-I will end this post here as i think it already packs in a lot of information. In the second part of the tutorial, i will go through the joining of shape file data and the CVOID-19 data for Kenya, and creation of static and animated choropleth hexbin maps to show the progression of COVID-19 cases.
+I will end this post here as, i think, it already packs in a lot of information for one article In the second part of the tutorial, i will go through the joining of shape file data and the CVOID-19 data for Kenya, and creation of static and animated choropleth hexbin maps to show the progression of COVID-19 cases.
