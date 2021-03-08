@@ -21,9 +21,7 @@ Newyork Times, The Economist, Washington Post and many other news outlets often 
 
 I am planning to through the whole process in two parts. In this first part part, i will talk about where i got Kenya's shape files, data munging with the shape files data, and creating the hexagonal grid. 
 
-We first start with downloading the shape files for Kenya from the GADM website which is a high-resolution database of country administrative areas. The data is not freely available for use in commercial purposes. The website provide files which can be directly read into R, which makes this website a really handy resource. It has pretty latest shape files for almost all the countries in the worlds. You can find Kenya's shape files from the following GADM link. We will download level-1 shape files, as we are only interested in county level data. Level-2 and level-3 provide more granulated information of Kenya's administrative areas.
-
-https://gadm.org/download_country_v3.html
+We first start with downloading the shape files for Kenya from the GADM website which is a high-resolution database of country administrative areas. The data is not freely available for use in commercial purposes. The website provide files which can be directly read into R, which makes this website a really handy resource. It has pretty latest shape files for almost all the countries in the worlds. You can find Kenya's shape files on [GADM](https://gadm.org/download_country_v3.html). We will download level-1 shape files, as we are only interested in county level data. Level-2 and level-3 provide more granulated information of Kenya's administrative areas.
 
 We will unzip the downloaded folder, and load the shape file in R. We will use "rgdal" library to load the shape file into R. "rgdal" is R's interface to the "Geospatial Abstraction Library (GDAL)" which is used by other open source GIS packages such as QGIS and enables R to handle a broader range of spatial data formats.
 
@@ -75,9 +73,7 @@ head(original_shapes@data)
 
 After we have joined the two data frames, we will turn our focus tesselating the map polygons of Kenya into hexagons. Tesselation means covering a flat surface (in this case a map) with one or more geometric shapes which do not overlap and there is no gaps between them.
 
-We will use "geogrid" package in R to algorithmically tessellate kenya's map into hexagonal grids. You can find more information from the following github repository:
-
-https://github.com/jbaileyh/geogrid
+We will use "geogrid" package in R to algorithmically tessellate kenya's map into hexagonal grids. You can find more information its [github repository](https://github.com/jbaileyh/geogrid).
 
 We will us calculate_grid() function of "geogrid" library to achieve our goal. This function takes in SpatialPolygonsDataframe or sf object, a learning rate (suggestion = 0.03 to begin), a grid type hexagonal or regular and a seed value. calculate_grid() function uses mathematical algorithm to covert the boundary of the polygons into hexagon shapes, while still trying to preserve the actual shape of the map. Therefore, as we can see there can be many versions of the grids that can be created. The "seed" attribute of calculate_grid() lets us generate different versions of grids. Thus, we should visually inspect each grid, and choose the grid which best captures the actual shape of the map.
 
