@@ -16,7 +16,11 @@ image:
   preview_only: no
 projects: []
 ---
+
  
+<img src="index_files/figure-html/unnamed-chunk-1-1.png" width="672" />
+
+
 Newyork Times, The Economist, Washington Post and many other news outlets often use hexbin maps to convey information in easy, exciting and cool ways. I always wanted to create hexbin maps, and last year i got the opportunity (and data!) to learn and create choropleth hexbin maps to show the progression of COVID-19 cases. 
 
 I am planning to through the whole process in two parts. In this first part part, i will talk about where i got Kenya's shape files, data munging with the shape files data, and creating the hexagonal grid. 
@@ -154,7 +158,7 @@ for (i in 1:6) {
 }
 ```
 
-<img src="index_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+<img src="index_files/figure-html/unnamed-chunk-8-1.png" width="672" />
 Seed 6, i feel, best preserves Kenya's map geometry. Therefore, we will choose this seed, and assign this grid to convert Kenya's map into hexbin map.
 
 
@@ -170,6 +174,6 @@ resultreg <- assign_polygons(original_shapes, new_cells_reg)
 plot(resultreg)
 ```
 
-<img src="index_files/figure-html/unnamed-chunk-8-1.png" width="672" />
+<img src="index_files/figure-html/unnamed-chunk-9-1.png" width="672" />
 
 I will end this post here. In the second part of the tutorial, i will go through the joining of shape file data and the CVOID-19 data for Kenya, and creation of static and animated choropleth hexbin maps to show the progression of COVID-19 cases.
