@@ -50,7 +50,7 @@ head(original_shapes@data)
 
 On the choropleth hex map of kenya we will like to show the names of each county, but we can't write the full name of the counties as this will make the map very busy and chaotic. Therefore, we will abbreviate the names of all the counties, and then show them on the map. To accomplish this, we have created a separate excel file with abbreviations for all county names. You can also google or find these abbreviations on wikipedia. 
 
-We will first read this abbreviation excel, and then add this these abbreviation to the "original_shapes" data. Basically, we we will gradually add all the information that we require to this shape file data to get it ready to be visuaized. 
+We will first read this abbreviation excel, and then add these abbreviations to the "original_shapes" data. Basically, what we are doing here is to gradually add all the information one after other, that we require, to the shape file data to get it ready for the visualization.  
 
 ```{r, message=FALSE}
 #loading the required library and reading the CSV file with region abbreviation 
@@ -67,7 +67,7 @@ df_abb <- subset(df_abb ,select = -c(ABB))
 head(df_abb)
 ```
 
-Now, we will join the abbreviation data frame with the shape file data frame. The "County" column of "df_abb" data frame and the "Name_1" column of "original_shapes" data have the same information i.e. the name of counties in Kenya. Therefore, we will use these columns to join the two data frames.
+Now, we will join the abbreviation data frame with the shape file data frame. The "County" column of "df_abb" data frame, and the "Name_1" column of "original_shapes" data have the same information i.e. the name of counties in Kenya. Therefore, we will use these columns to join the two data frames. We will use left_join to combine the two data frames.
 
 ```{r, message=FALSE}
 #renaming "County" column using the dplyr library, we could also have joined the two data frames without renaming "County" as well
