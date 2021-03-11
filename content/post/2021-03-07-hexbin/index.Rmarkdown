@@ -26,7 +26,7 @@ grid.raster(img)
 ```
 
 
-Newyork Times, The Economist, Washington Post and many other news outlets often use hexbin maps to convey information in easy, exciting and cool ways. I always wanted to create hexbin maps, and last year i got the opportunity (and data!) to learn and create choropleth hexbin maps to show the progression of COVID-19 cases. 
+NewYork Times, The Economist, The Washington Post and many other news outlets often use hexbin maps to convey information in exciting and cool ways. I have been always drawn to these kind of maps, and wanted to create one myself. Last year i got the opportunity (and data!) to learn and create choropleth hexbin maps to show the progression of COVID-19 cases. 
 
 I am planning to through the whole process in two parts. In this first part, i will talk about where i got Kenya's shape files, data munging with the shape files data, and creating the hexagonal grid. 
 
