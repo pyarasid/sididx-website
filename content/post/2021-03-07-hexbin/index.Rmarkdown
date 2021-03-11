@@ -48,7 +48,7 @@ Once we have read the data into R. we will view the shape file data using the he
 head(original_shapes@data)
 ```
 
-On the choropleth hex map of kenya we will like to show the names of each country, but we can't write the full name as this will make the map really chaotic. Therefore, we will abbreviate the names of all the counties, and then populate them on the map. We have created a separate excel file with abbreviations for all counties. You can also google or find these abbreviation on wikipedia. 
+On the choropleth hex map of kenya we will like to show the names of each county, but we can't write the full name of the counties as this will make the map very busy and chaotic. Therefore, we will abbreviate the names of all the counties, and then show them on the map. To accomplish this, we have created a separate excel file with abbreviations for all county names. You can also google or find these abbreviations on wikipedia. 
 
 We will first read this abbreviation excel, and then add this these abbreviation to the "original_shapes" data. Basically, we we will gradually add all the information that we require to this shape file data to get it ready to be visuaized. 
 
@@ -82,7 +82,7 @@ head(original_shapes@data)
 
 After we have joined the two data frames, we will turn our focus tesselating the map polygons of Kenya into hexagons. Tesselation means covering a flat surface (in this case a map) with one or more geometric shapes which do not overlap and there is no gaps between them.
 
-We will use "geogrid" package in R to algorithmically tessellate kenya's map into hexagonal grids. You can find more information its [github repository](https://github.com/jbaileyh/geogrid).
+We will use "geogrid" package in R to algorithmically tessellate kenya's map into hexagonal grids. You can find more information on its [github repository](https://github.com/jbaileyh/geogrid).
 
 We will us calculate_grid() function of "geogrid" library to achieve our goal. This function takes in SpatialPolygonsDataframe or sf object, a learning rate (suggestion = 0.03 to begin), a grid type hexagonal or regular and a seed value. calculate_grid() function uses mathematical algorithm to covert the boundary of the polygons into hexagon shapes, while still trying to preserve the actual shape of the map. Therefore, as we can see there can be many versions of the grids that can be created. The "seed" attribute of calculate_grid() lets us generate different versions of grids. Thus, we should visually inspect each grid, and choose the grid which best captures the actual shape of the map.
 
