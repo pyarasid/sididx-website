@@ -51,7 +51,7 @@ After you have explored the baseline calculation of total costs, but would like 
 
 In this tab, we also provide user the option to input their data to obtain the vaccination cost for different countries. Users can input their data for the variables on number of health professionals, high-risk population, number of doses, bilateral vaccine procurement cost, and vaccine delivery cost by clicking on `Click to input your data!` button. Based on the user input the chart and the table below the chart will update. 
 
-In addition to vaccination costs, the charts also plots the immunization costs incurred by a country (most recent available data is plotted). A user can make comparison between the incurred immunization cost, and required COVID-19 vaccination cost for any country. 
+In addition to vaccination costs, the charts also plots the annual child immunization costs incurred by a country (most recent available data is plotted). A user can make comparison between the incurred immunization cost, and required COVID-19 vaccination cost for any country. 
 
 <em><strong>Page 3: "Data Explorer"</strong></em>
 ```{r, echo=FALSE}
