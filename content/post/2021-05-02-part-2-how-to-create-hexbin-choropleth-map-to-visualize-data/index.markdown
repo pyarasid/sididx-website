@@ -59,7 +59,7 @@ library(broom)
 resultreg_fort <- tidy(resultreg, region = "NAME_1")
 ```
 
-Below is a top five rows of the tidied shapefile data.
+Below are the top five rows of the tidied shapefile data.
 
 
 ```r
@@ -80,9 +80,9 @@ head(resultreg_fort)
 
 ### *Reading COVID-19 confirmed daily cumulative cases of Kenya and adding it to our tidy shapefile data*
 *Note: This is not the latest data of confirmed daily cases. But, one can easily update this chart with latest data by using the methodology outlined in this post.*
-*I will also like to thank my colleagues Jiaqi Zhang and Kaci Kennedy McDade for helping me obtain the COVID-19 confirmed daily cases data for Kenya*
+*I will also like to thank my colleagues Jiaqi Zhang and Kaci Kennedy McDade for helping me obtain the COVID-19 confirmed daily cases data for Kenya.*
 
-Now, we read the COIVID-19 confirmed cumulative cases as name it as `df`.
+Now, we read the COIVID-19 confirmed cumulative cases and name it as `df`.
 
 ```r
 ##Reading the COVID-19 daily cases dataset
@@ -222,7 +222,7 @@ unique(resultreg_covid$bin)
 
 Finaly, we are done with all the manipulating the shapefile data, data wrangling, and adding data to the shapefile dataframe. Now, comes the moment of truth where we will create the hexbin choropleth map using the shapefile data that we created.
 
-We use ggplot to develop the hexbin choropleth map. We will use `geom_polygon` function of ggplot which can read `resultreg_covid` shapefile data. Also, create the choropleth for the latest data which is provided in the `Date` attribute of `geom_polygon`. We provide the longitude and latitude values in the aesthetic attribute of `geom_polygon`. We then use `geom_text` function of ggplot to add the county abbreviation names at the centroid of each hexagon polygons. The remaining ggplot arguments are simply adding themes, and working on beautifying the chart by manipulating caption, title, legend and colors. Note that the bin which does not have any data on the latest date is now shown in the legend on the map. 
+We use ggplot to develop the hexbin choropleth map. We will use `geom_polygon` function of ggplot which can read `resultreg_covid` shapefile data. Also, create the choropleth for the latest data which is provided in the `Date` attribute of `geom_polygon`. We provide the longitude and latitude values in the aesthetic attribute of `geom_polygon`. We then use `geom_text` function of ggplot to add the county abbreviation names at the centroid of each hexagon polygons. The remaining ggplot arguments are simply adding themes, and working on beautifying the chart by manipulating caption, title, legend and colors. Note that the bins which do not have any data on the latest date are not shown in the legend on the map. 
 
 ```r
 library(ggplot2)
@@ -265,7 +265,7 @@ ggplot() +
 <img src="index_files/figure-html/unnamed-chunk-12-1.png" width="960" />
 
 ### *Creating the hexbin choropleth animation map*
-Now we will create the animation map of COVID-19 confirmed daily cases in Kenya. We will be using `gganimate` package to create the animation map. We simply add three new arguments from `gganimate` package to out static ggplot code. The  transition_time() argument defines how the data relates to itself across time, enter_fade() and exit_fade() defines how new data should appear and how old data should disappear during the course of the animation. This will create a gid which can then be saved on your hard drive using anim_save() function.
+Now, we will create the animation map of COVID-19 confirmed daily cases in Kenya. We will be using `gganimate` package to create the animation map. We simply add three new arguments from `gganimate` package to out static ggplot code. The  transition_time() argument defines how the data relates to itself across time, enter_fade() and exit_fade() defines how new data should appear and how old data should disappear during the course of the animation. This will create a gif which can then be saved on your hard drive using anim_save() function.
 
 ```r
 library(gganimate)
@@ -311,4 +311,4 @@ animate(plot = p, fps=4, width = 700, height = 800, end_pause = 24)
 ```
 
 ![](index_files/figure-html/unnamed-chunk-13-1.gif)<!-- -->
-We have created a static and an animated hexbin chropleth map of COVID-19 cases for Kenya. One can use the same approach to create any hexbin map using a different dataset. I hope you liked the post. Let me know how if you have any advice or comment on my approach to creating the hexbin choropleth map. 
+We have now created a static and an animated hexbin chropleth map of COVID-19 cases for Kenya. One can use the same approach to create any hexbin map using a different dataset. I hope you liked the post. Let me know if you have any advice or comment on my approach to creating the hexbin choropleth map. 
