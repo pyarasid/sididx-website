@@ -3,17 +3,107 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/authors/</loc>
+    <lastmod>2021-05-02T17:47:03-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tag/choropleth/</loc>
+    <lastmod>2021-05-02T17:47:03-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tag/geospatial-analysis/</loc>
+    <lastmod>2021-05-02T17:47:03-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tag/ggplot/</loc>
+    <lastmod>2021-05-02T17:47:03-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tag/hexagon/</loc>
+    <lastmod>2021-05-02T17:47:03-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2021/05/02/part-2-how-to-create-hexbin-choropleth-map-to-visualize-data/</loc>
+    <lastmod>2021-05-02T17:47:03-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/</loc>
+    <lastmod>2021-05-02T17:47:03-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tag/r/</loc>
+    <lastmod>2021-05-02T17:47:03-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/author/siddharth-dixit/</loc>
+    <lastmod>2021-05-02T17:47:03-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+    <lastmod>2021-05-02T17:47:03-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2021-05-02T17:47:03-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/</loc>
+    <lastmod>2021-03-15T21:12:11-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/category/geocomputation/</loc>
+    <lastmod>2021-03-15T21:12:11-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2021/03/15/covid-19/</loc>
+    <lastmod>2021-03-15T21:12:11-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/category/interactive-application/</loc>
+    <lastmod>2021-03-15T21:12:11-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tag/leaflet/</loc>
+    <lastmod>2021-03-15T21:12:11-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/category/prediction/</loc>
+    <lastmod>2021-03-15T21:12:11-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/category/data-visualization/</loc>
+    <lastmod>2021-03-07T18:33:24-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2021/03/07/hexbin/</loc>
+    <lastmod>2021-03-07T18:33:24-05:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/publication-type/4/</loc>
     <lastmod>2020-12-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/author/amy-finnegan/</loc>
-    <lastmod>2020-12-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/authors/</loc>
     <lastmod>2020-12-01T00:00:00+00:00</lastmod>
   </url>
   
@@ -78,11 +168,6 @@
   </url>
   
   <url>
-    <loc>/</loc>
-    <lastmod>2020-12-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/author/siddharth-dixit/</loc>
     <lastmod>2020-12-01T00:00:00+00:00</lastmod>
   </url>
@@ -93,20 +178,7 @@
   </url>
   
   <url>
-    <loc>/tags/</loc>
-    <lastmod>2020-12-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/categories/</loc>
-  </url>
-  
-  <url>
     <loc>/courses/</loc>
-  </url>
-  
-  <url>
-    <loc>/post/</loc>
   </url>
   
   <url>

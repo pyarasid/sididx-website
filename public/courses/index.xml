@@ -5,7 +5,8 @@
     <link>/courses/</link>
       <atom:link href="/courses/index.xml" rel="self" type="application/rss+xml" />
     <description>Courses</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>© Siddharth Dixit 2021</copyright>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>Code with  and  Blogdown
+© Siddharth Dixit, 2021</copyright>
     <image>
       <url>/images/icon_huad25c1bc025cb7d239e90ad1fd91518e_22315_512x512_fill_lanczos_center_2.png</url>
       <title>Courses</title>

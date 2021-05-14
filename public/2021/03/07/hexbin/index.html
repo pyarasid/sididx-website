@@ -1,0 +1,1271 @@
+<!DOCTYPE html><html lang="en-us" >
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  
+  
+  <meta name="generator" content="Wowchemy 5.0.0-beta.1 for Hugo">
+  
+
+  
+
+  
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Siddharth Dixit">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="NewYork Times, The Economist, The Washington Post and many other news outlets often use hexbin maps to convey information in exciting and cool ways. I have been always drawn to these kind of maps, and wanted to create one myself.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/2021/03/07/hexbin/">
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+
+  
+  
+  
+  <meta name="theme-color" content="#EF525B">
+  
+
+  
+  
+  
+  <script src="/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha256-FMvZuGapsJLjouA6k7Eo2lusoAX9i0ShlWFG6qt7SLc=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css" integrity="sha512-1xoFisiGdy9nvho8EgXuXvnpR5GAMSjFwp40gSRE3NwdUdIMIKuPa7bqoUhLD0O/5tPNhteAsE5XyyMi5reQVA==" crossorigin="anonymous">
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.2/lazysizes.min.js" integrity="sha512-TmDwFLhg3UA4ZG0Eb4MIyT1O1Mb+Oww5kFG0uHqXsdbyZz9DcvYQhKpGgNkamAI6h2lGGZq2X8ftOJvF/XjTUg==" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+    
+      
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cutive+Mono%7CLora:400,700%7CRoboto:400,700&display=swap">
+    
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.min.bb565ccc8def40f418a9099753e73ccb.css">
+
+  
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-ACCOUNTID-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+      dataLayer.push(arguments);
+  }
+
+  function trackOutboundLink(url, target) {
+    gtag('event', 'click', {
+         'event_category': 'outbound',
+         'event_label': url,
+         'transport_type': 'beacon',
+         'event_callback': function () {
+           if (target !== '_blank') {
+             document.location = url;
+           }
+         }
+    });
+    console.debug("Outbound link clicked: " + url);
+  }
+
+  function onClickCallback(event) {
+    if ((event.target.tagName !== 'A') || (event.target.host === window.location.host)) {
+      return;
+    }
+    trackOutboundLink(event.target, event.target.getAttribute('target'));  
+  }
+
+  gtag('js', new Date());
+  gtag('config', 'UA-ACCOUNTID-1', {});
+
+  
+  document.addEventListener('click', onClickCallback, false);
+</script>
+
+
+  
+
+  
+
+
+  
+  
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_huad25c1bc025cb7d239e90ad1fd91518e_22315_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_huad25c1bc025cb7d239e90ad1fd91518e_22315_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="/2021/03/07/hexbin/">
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary">
+  
+  <meta property="og:site_name" content="Siddharth Dixit">
+  <meta property="og:url" content="/2021/03/07/hexbin/">
+  <meta property="og:title" content="Part 1- How to create hexbin choropleth map to visualize data? | Siddharth Dixit">
+  <meta property="og:description" content="NewYork Times, The Economist, The Washington Post and many other news outlets often use hexbin maps to convey information in exciting and cool ways. I have been always drawn to these kind of maps, and wanted to create one myself."><meta property="og:image" content="/images/icon_huad25c1bc025cb7d239e90ad1fd91518e_22315_512x512_fill_lanczos_center_2.png">
+  <meta property="twitter:image" content="/images/icon_huad25c1bc025cb7d239e90ad1fd91518e_22315_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2021-03-07T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2021-03-07T18:33:24-05:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/2021/03/07/hexbin/"
+  },
+  "headline": "Part 1- How to create hexbin choropleth map to visualize data?",
+  
+  "datePublished": "2021-03-07T00:00:00Z",
+  "dateModified": "2021-03-07T18:33:24-05:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Siddharth Dixit"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Siddharth Dixit",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/images/icon_huad25c1bc025cb7d239e90ad1fd91518e_22315_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "NewYork Times, The Economist, The Washington Post and many other news outlets often use hexbin maps to convey information in exciting and cool ways. I have been always drawn to these kind of maps, and wanted to create one myself."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Part 1- How to create hexbin choropleth map to visualize data? | Siddharth Dixit</title>
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper  ">
+
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.js"></script>
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  <div class="page-header">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Siddharth Dixit</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Siddharth Dixit</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>Blogs</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#featured"><span>Publications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#gallery"><span>Gallery</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/media/Siddharth_Dixit_Resume.pdf"><span>Resume</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+          <i class="fas fa-moon" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  </div>
+
+  <div class="page-body">
+    <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Part 1- How to create hexbin choropleth map to visualize data?</h1>
+
+  
+  <p class="page-subtitle">Static and animated map to visualize COVID-19 data for Kenya</p>
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+  
+  <span ><a href="/author/siddharth-dixit/">Siddharth Dixit</a></span>
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          Last updated on
+      
+    
+    Mar 7, 2021
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    6 min read
+  </span>
+  
+
+  
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/category/geocomputation/">Geocomputation</a>, <a href="/category/data-visualization/">Data Visualization</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <p><img src="index_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>NewYork Times, The Economist, The Washington Post and many other news outlets often use hexbin maps to convey information in exciting and cool ways. I have been always drawn to these kind of maps, and wanted to create one myself. Last year i got the opportunity (and data!) to learn and create choropleth hexbin maps to show the progression of COVID-19 cases.</p>
+<p>I am planning to through the whole process in two parts. In this first part, i will talk about where i got Kenya&rsquo;s shape files, data munging with the shape files data, and creating the hexagonal grid.</p>
+<p>We first start with downloading the shape files for Kenya from the GADM website which is a high-resolution database of country administrative areas. The data is not freely available for use in commercial purposes. The website provide files which can be directly read into R, which makes this website a really handy resource. It has pretty latest shape files for almost all the countries in the worlds. You can find Kenya&rsquo;s shape files on <a href="https://gadm.org/download_country_v3.html" target="_blank" rel="noopener">GADM</a>. We will download level-1 shape files, as we are only interested in county level data. Level-2 and level-3 provide more granulated information of Kenya&rsquo;s administrative areas.</p>
+<p>We will unzip the downloaded folder, and load the shape file in R. We will use &ldquo;rgdal&rdquo; library to load the shape file into R. &ldquo;rgdal&rdquo; is R&rsquo;s interface to the &ldquo;Geospatial Abstraction Library (GDAL)&rdquo; which is used by other open source GIS packages such as QGIS and enables R to handle a broader range of spatial data formats.</p>
+<pre><code class="language-r">library(rgdal)
+</code></pre>
+<p>Now, we read the shape file into R.</p>
+<pre><code class="language-r">library(here) #this package is just used to refer to the folder where the shape file is kept
+original_shapes &lt;- readOGR(dsn = here(&quot;./content/post/2021-03-07-hexbin/gadm36_KEN_shp&quot;),  layer = &quot;gadm36_KEN_1&quot;)
+</code></pre>
+<p>Once we have read the data into R. we will view the shape file data using the head() function. This function shows the first 5 rows of the shape file data.</p>
+<pre><code class="language-r">head(original_shapes@data)
+</code></pre>
+<pre><code>##   GID_0 NAME_0   GID_1          NAME_1 VARNAME_1 NL_NAME_1 TYPE_1 ENGTYPE_1
+## 0   KEN  Kenya KEN.1_1         Baringo      &lt;NA&gt;      &lt;NA&gt; County    County
+## 1   KEN  Kenya KEN.2_1           Bomet      &lt;NA&gt;      &lt;NA&gt; County    County
+## 2   KEN  Kenya KEN.3_1         Bungoma      &lt;NA&gt;      &lt;NA&gt; County    County
+## 3   KEN  Kenya KEN.4_1           Busia      &lt;NA&gt;      &lt;NA&gt; County    County
+## 4   KEN  Kenya KEN.5_1 Elgeyo-Marakwet      &lt;NA&gt;      &lt;NA&gt; County    County
+## 5   KEN  Kenya KEN.6_1            Embu      &lt;NA&gt;      &lt;NA&gt; County    County
+##   CC_1 HASC_1
+## 0   30  KE.BA
+## 1   36  KE.BO
+## 2   39  KE.BN
+## 3   40  KE.BS
+## 4   28  KE.EM
+## 5   14  KE.EB
+</code></pre>
+<p>On the choropleth hex map of kenya we will like to show the names of each county, but we can&rsquo;t write the full name of the counties as this will make the map very busy and chaotic. Therefore, we will abbreviate the names of all the counties, and then show them on the map. To accomplish this, we have created a separate excel file with abbreviations for all county names. You can also google or find these abbreviations on wikipedia.</p>
+<p>We will first read this abbreviation excel, and then add these abbreviations to the &ldquo;original_shapes&rdquo; data. Basically, what we are doing here is to gradually add all the information one after other, that we require, to the shape file data to get it ready for the visualization.</p>
+<pre><code class="language-r">#loading the required library and reading the CSV file with region abbreviation 
+library(readxl)
+df_abb &lt;- read_excel(here(&quot;./content/post/2021-03-07-hexbin/abb.xlsx&quot;))
+
+#viewing the first 5 rows of the data frame 
+head(df_abb)
+</code></pre>
+<pre><code>## # A tibble: 6 x 3
+##   County          ABB   ABV  
+##   &lt;chr&gt;           &lt;chr&gt; &lt;chr&gt;
+## 1 Baringo         KE.BA BA   
+## 2 Bomet           KE.BO BO   
+## 3 Bungoma         KE.BN BN   
+## 4 Busia           KE.BS BS   
+## 5 Elgeyo-Marakwet KE.EM EM   
+## 6 Embu            KE.EB EB
+</code></pre>
+<pre><code class="language-r">#removing the ABB column from the data frame 
+df_abb &lt;- subset(df_abb ,select = -c(ABB))
+head(df_abb)
+</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##   County          ABV  
+##   &lt;chr&gt;           &lt;chr&gt;
+## 1 Baringo         BA   
+## 2 Bomet           BO   
+## 3 Bungoma         BN   
+## 4 Busia           BS   
+## 5 Elgeyo-Marakwet EM   
+## 6 Embu            EB
+</code></pre>
+<p>Now, we will join the abbreviation data frame with the shape file data frame. The &ldquo;County&rdquo; column of &ldquo;df_abb&rdquo; data frame, and the &ldquo;Name_1&rdquo; column of &ldquo;original_shapes&rdquo; data have the same information i.e. the name of counties in Kenya. Therefore, we will use these columns to join the two data frames. We will use left_join to combine the two data frames.</p>
+<pre><code class="language-r">#renaming &quot;County&quot; column using the dplyr library, we could also have joined the two data frames without renaming &quot;County&quot; as well
+library(dplyr)
+df_abb &lt;- df_abb %&gt;% 
+  rename(NAME_1=County)
+
+#using left_join() to join the two data frames
+original_shapes@data&lt;- left_join(original_shapes@data, df_abb, by=c(&quot;NAME_1&quot;=&quot;NAME_1&quot;))
+head(original_shapes@data)
+</code></pre>
+<pre><code>##   GID_0 NAME_0   GID_1          NAME_1 VARNAME_1 NL_NAME_1 TYPE_1 ENGTYPE_1
+## 1   KEN  Kenya KEN.1_1         Baringo      &lt;NA&gt;      &lt;NA&gt; County    County
+## 2   KEN  Kenya KEN.2_1           Bomet      &lt;NA&gt;      &lt;NA&gt; County    County
+## 3   KEN  Kenya KEN.3_1         Bungoma      &lt;NA&gt;      &lt;NA&gt; County    County
+## 4   KEN  Kenya KEN.4_1           Busia      &lt;NA&gt;      &lt;NA&gt; County    County
+## 5   KEN  Kenya KEN.5_1 Elgeyo-Marakwet      &lt;NA&gt;      &lt;NA&gt; County    County
+## 6   KEN  Kenya KEN.6_1            Embu      &lt;NA&gt;      &lt;NA&gt; County    County
+##   CC_1 HASC_1 ABV
+## 1   30  KE.BA  BA
+## 2   36  KE.BO  BO
+## 3   39  KE.BN  BN
+## 4   40  KE.BS  BS
+## 5   28  KE.EM  EM
+## 6   14  KE.EB  EB
+</code></pre>
+<p>After we have joined the two data frames, we will turn our focus tesselating the map polygons of Kenya into hexagons. Tesselation means covering a flat surface (in this case a map) with one or more geometric shapes which do not overlap and there is no gaps between them.</p>
+<p>We will use &ldquo;geogrid&rdquo; package in R to algorithmically tessellate kenya&rsquo;s map into hexagonal grids. You can find more information on its <a href="https://github.com/jbaileyh/geogrid" target="_blank" rel="noopener">github repository</a>.</p>
+<p>We will us calculate_grid() function of &ldquo;geogrid&rdquo; library to achieve our goal. This function takes in SpatialPolygonsDataframe or sf object, a learning rate (suggestion = 0.03 to begin), a grid type hexagonal or regular and a seed value. calculate_grid() function uses mathematical algorithm to covert the boundary of the polygons into hexagon shapes, while still trying to preserve the actual shape of the map. Therefore, as we can see there can be many versions of the grids that can be created. The &ldquo;seed&rdquo; attribute of calculate_grid() lets us generate different versions of grids. Thus, we should visually inspect each grid, and choose the grid which best captures the actual shape of the map.</p>
+<p>Lets first create 6 possible versions of the grid for Kenya&rsquo;s map polygons. You can create more versions and choose from them.</p>
+<pre><code class="language-r">library(geogrid)
+
+par(mfrow = c(2, 3), mar = c(0, 0, 2, 0))
+for (i in 1:6) {
+  new_cells &lt;- calculate_grid(shape = original_shapes, grid_type = &quot;hexagonal&quot;, seed = i)
+  plot(new_cells, main = paste(&quot;Seed&quot;, i, sep = &quot; &quot;))
+}
+</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" width="672" />
+Seed 6, i feel, best preserves Kenya&rsquo;s map geometry. Therefore, we will choose this seed, and assign this grid to convert Kenya&rsquo;s map into hexbin map.</p>
+<pre><code class="language-r">#Grid plot
+#we choose grid 6 as it closely matches the actual geometry of kenya
+new_cells_reg &lt;- calculate_grid(shape = original_shapes, grid_type = &quot;hexagonal&quot;, seed = 6)
+
+#assign_polygons() function assigns the polygon in the original spatial data to their new location based on the calculated grid function and the seed selected
+resultreg &lt;- assign_polygons(original_shapes, new_cells_reg)
+
+#plotting Kenya's grid map 
+plot(resultreg)
+</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>I will end this post here. In the second part of the tutorial, i will go through the joining of shape file data and the CVOID-19 data for Kenya, and creation of static and animated choropleth hexbin maps to show the progression of COVID-19 cases.</p>
+
+    </div>
+
+    
+
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tag/r/">r</a>
+  
+  <a class="badge badge-light" href="/tag/ggplot/">ggplot</a>
+  
+  <a class="badge badge-light" href="/tag/choropleth/">choropleth</a>
+  
+  <a class="badge badge-light" href="/tag/hexagon/">hexagon</a>
+  
+  <a class="badge badge-light" href="/tag/geospatial-analysis/">geospatial analysis</a>
+  
+</div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=/2021/03/07/hexbin/&amp;text=Part%201-%20How%20to%20create%20hexbin%20choropleth%20map%20to%20visualize%20data?" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=/2021/03/07/hexbin/&amp;t=Part%201-%20How%20to%20create%20hexbin%20choropleth%20map%20to%20visualize%20data?" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Part%201-%20How%20to%20create%20hexbin%20choropleth%20map%20to%20visualize%20data?&amp;body=/2021/03/07/hexbin/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=/2021/03/07/hexbin/&amp;title=Part%201-%20How%20to%20create%20hexbin%20choropleth%20map%20to%20visualize%20data?" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="whatsapp://send?text=Part%201-%20How%20to%20create%20hexbin%20choropleth%20map%20to%20visualize%20data?%20/2021/03/07/hexbin/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=/2021/03/07/hexbin/&amp;title=Part%201-%20How%20to%20create%20hexbin%20choropleth%20map%20to%20visualize%20data?" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+
+
+
+
+  
+
+
+
+
+<div id="disqus_thread"></div>
+<script>
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://siddix.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+  
+  
+  <div class="article-widget content-widget-hr">
+    <h3>Related</h3>
+    <ul>
+      
+      <li><a href="/2021/05/02/part-2-how-to-create-hexbin-choropleth-map-to-visualize-data/">Part 2 (final)- How to create hexbin choropleth map to visualize data?</a></li>
+      
+      <li><a href="/2021/03/15/covid-19/">How much will it cost different low- and middle- income countries (LMICs) to provide COVID-19 vaccine to their population?</a></li>
+      
+    </ul>
+  </div>
+  
+
+
+
+
+
+  </div>
+</article>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    Code with <i class='fas fa-heart'></i> and <i class='fab fa-r-project'></i> <a href='https://bookdown.org/yihui/blogdown/'>Blogdown</a><br>© Siddharth Dixit, 2021
+  </p>
+
+  
+  
+
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+    Published with
+    <a href="https://wowchemy.com" target="_blank" rel="noopener">Wowchemy</a>  —
+    the free, <a href="https://github.com/wowchemy/wowchemy-hugo-modules" target="_blank" rel="noopener">
+    open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+      
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/instant.page/5.1.0/instantpage.min.js" integrity="sha512-1+qUtKoh9XZW7j+6LhRMAyOrgSQKenQ4mluTR+cvxXjP1Z54RxZuzstR/H9kgPXQsVB8IW7DMDFUJpzLjvhGSQ==" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js" integrity="sha512-TDKKr+IvoqZnPzc3l35hdjpHD0m+b2EC2SrLEgKDRWpxf2rFCxemkgvJ5kfU48ip+Y+m2XVKyOCD85ybtlZDmw==" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/latex.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.js" integrity="sha512-SeiQaaDh73yrb56sTW/RgVdi/mMqNeM2oBwubFHagc5BkixSpP1fvqF47mKzPGWYSSy4RwbBunrJBQ4Co8fRWA==" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks",
+        'slides' : "Slides"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/wowchemy.min.ffabb05383f1b16d83e7181a605e644c.js"></script>
+
+    
+
+
+
+
+
+
+</body>
+</html>

@@ -5,12 +5,414 @@
     <link>/post/</link>
       <atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     <description>Posts</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>© Siddharth Dixit 2021</copyright>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>Code with  and  Blogdown
+© Siddharth Dixit, 2021</copyright><lastBuildDate>Sun, 02 May 2021 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_huad25c1bc025cb7d239e90ad1fd91518e_22315_512x512_fill_lanczos_center_2.png</url>
       <title>Posts</title>
       <link>/post/</link>
     </image>
+    
+    <item>
+      <title>Part 2 (final)- How to create hexbin choropleth map to visualize data?</title>
+      <link>/2021/05/02/part-2-how-to-create-hexbin-choropleth-map-to-visualize-data/</link>
+      <pubDate>Sun, 02 May 2021 00:00:00 +0000</pubDate>
+      <guid>/2021/05/02/part-2-how-to-create-hexbin-choropleth-map-to-visualize-data/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;index_files/figure-html/unnamed-chunk-1-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;In the first part of this blog we read Kenya&amp;rsquo;s shapefiles from GADM, and county name abbreviations which will be shown on the the chart instead of full names to avoid clutter on the map. Then, we used &amp;ldquo;geogrid&amp;rdquo; package of R to convert the map polygons i.e. the polygons of Kenya&amp;rsquo;s counties into hexagons.&lt;/p&gt;
+&lt;h3 id=&#34;calculating-the-centroid-of-each-hexagon&#34;&gt;&lt;em&gt;Calculating the centroid of each hexagon&lt;/em&gt;&lt;/h3&gt;
+&lt;p&gt;After creating the polygon hexagons, we calculate the centroid of each hexagon. We will use the centroid values to position the county abbreviation names on the chart. To calculate the centroid of hexagons we will use &lt;code&gt;rgeos&lt;/code&gt; library which is used for topology operations on geometries.&lt;code&gt;rgeos&lt;/code&gt; has a handy &lt;code&gt;gCentroid()&lt;/code&gt; function which will provide us the centroid of each hexagon of each county polygon for Kenya.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;#calculating the centroid of hexgons
+library(rgeos)
+centers &amp;lt;- data.frame(gCentroid(resultreg, byid = TRUE), id=resultreg@data$ABV)
+
+#Following table shows the X, Y coordinates of centroid for each polygon 
+head(centers)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##            x         y id
+## ID1 38.17338 -3.548623 TT
+## ID2 39.21422 -3.548623 KW
+## ID3 37.65295 -2.647223 KJ
+## ID4 38.69380 -2.647223 MK
+## ID5 39.73465 -2.647223 KF
+## ID6 36.09168 -1.745822 NR
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;tidying-the-shapefile&#34;&gt;&lt;em&gt;Tidying the shapefile&lt;/em&gt;&lt;/h3&gt;
+&lt;p&gt;You might recall that we used &lt;code&gt;resultreg&lt;/code&gt; dataframe which had original shapefile data and was assigned to new position based on the position of hexagons that we created. However, the data is still not in a tidy format i.e. this data cannot be used in ggplot to draw charts. Therefore, we use &lt;code&gt;tidy&lt;/code&gt; function from &lt;code&gt;broom&lt;/code&gt; package to create a new tidied data frame. 
+Notice that we use an attribute &lt;code&gt;region&lt;/code&gt; in the function. This attribute makes sure that while tidying the shapefile data, the region i.e. county names are not removed.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(broom) 
+#tidy() function of broom package returns the statistical findings of the model (such as coefficients)
+#by specifying the region attribute we keep the region name
+# tidy() function turns the data frame into a format which can be used in ggplot.
+resultreg_fort &amp;lt;- tidy(resultreg, region = &amp;quot;NAME_1&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Below are the top five rows of the tidied shapefile data.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;head(resultreg_fort)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 7
+##    long   lat order hole  piece group     id     
+##   &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;int&amp;gt; &amp;lt;lgl&amp;gt; &amp;lt;fct&amp;gt; &amp;lt;fct&amp;gt;     &amp;lt;chr&amp;gt;  
+## 1  38.2  3.06     1 FALSE 1     Baringo.1 Baringo
+## 2  38.7  3.36     2 FALSE 1     Baringo.1 Baringo
+## 3  39.2  3.06     3 FALSE 1     Baringo.1 Baringo
+## 4  39.2  2.46     4 FALSE 1     Baringo.1 Baringo
+## 5  38.7  2.16     5 FALSE 1     Baringo.1 Baringo
+## 6  38.2  2.46     6 FALSE 1     Baringo.1 Baringo
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;reading-covid-19-confirmed-daily-cumulative-cases-of-kenya-and-adding-it-to-our-tidy-shapefile-data&#34;&gt;&lt;em&gt;Reading COVID-19 confirmed daily cumulative cases of Kenya and adding it to our tidy shapefile data&lt;/em&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;em&gt;Note: This is not the latest data of confirmed daily cases. But, one can easily update this chart with latest data by using the methodology outlined in this post.&lt;/em&gt;
+&lt;em&gt;I will also like to thank my colleagues Jiaqi Zhang and Kaci Kennedy McDade for helping me obtain the COVID-19 confirmed daily cases data for Kenya.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Now, we read the COIVID-19 confirmed cumulative cases and name it as &lt;code&gt;df&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;##Reading the COVID-19 daily cases dataset
+df &amp;lt;- read_excel(here(&amp;quot;./content/post/2021-03-07-hexbin/Kenya.xlsx&amp;quot;)) 
+
+#converting into `Date` column in the dataframe into date format
+df$Date &amp;lt;- as.Date((df$Date))
+
+#printing the top five rows
+head(df)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 3
+##   Date       Region  Confirmed
+##   &amp;lt;date&amp;gt;     &amp;lt;chr&amp;gt;       &amp;lt;dbl&amp;gt;
+## 1 2020-03-12 Nairobi         1
+## 2 2020-03-13 Nairobi         1
+## 3 2020-03-14 Nairobi         1
+## 4 2020-03-15 Nairobi         3
+## 5 2020-03-16 Nairobi         3
+## 6 2020-03-17 Nairobi         4
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We will be using the names of counties to join the daily cases dataframe with the shapefile dataframe. However, to accomplish this task we need the names of counties in both the dataframe to be same. Therefore, first we check whether there is any mismatch in the county names between the two dataframes.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;#compare the region name column in `resultreg_fort` dataframe to region column of `df` to see which rows match. 
+resultreg_fort$id %in% df$Region
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [13]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [25]  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+##  [37]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [49]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [61]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [73]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [85]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [97]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [109]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [121]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [133]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [145]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [157]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [169]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [181]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [193]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [205]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [217]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [229]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [241]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [253]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [265]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [277]  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+## [289]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [301]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [313]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [325]  TRUE  TRUE  TRUE  TRUE  TRUE
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;From the above result we see some &lt;code&gt;FALSE&lt;/code&gt; observations. These are the county names in the confirmed daily cases dataframe (&lt;code&gt;df&lt;/code&gt;) which do not match with the county names in the shapefile dataframe. However, manually checking the names that do not match will be really cumbersome. Therefore, we use the following code to obtain the names of counties that do not match in the two dataframes.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;#find which names do not match 
+resultreg_fort$id[!resultreg_fort$id %in% df$Region]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;Elgeyo-Marakwet&amp;quot; &amp;quot;Elgeyo-Marakwet&amp;quot; &amp;quot;Elgeyo-Marakwet&amp;quot; &amp;quot;Elgeyo-Marakwet&amp;quot;
+##  [5] &amp;quot;Elgeyo-Marakwet&amp;quot; &amp;quot;Elgeyo-Marakwet&amp;quot; &amp;quot;Elgeyo-Marakwet&amp;quot; &amp;quot;Tharaka-Nithi&amp;quot;  
+##  [9] &amp;quot;Tharaka-Nithi&amp;quot;   &amp;quot;Tharaka-Nithi&amp;quot;   &amp;quot;Tharaka-Nithi&amp;quot;   &amp;quot;Tharaka-Nithi&amp;quot;  
+## [13] &amp;quot;Tharaka-Nithi&amp;quot;   &amp;quot;Tharaka-Nithi&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We see here that two counties&amp;ndash;&amp;ldquo;Elgeyo-Marakwet&amp;rdquo; and &amp;ldquo;Tharaka-Nithi&amp;rdquo; from &lt;code&gt;df&lt;/code&gt; do not match with the names of counties from &lt;code&gt;resultreg_fort&lt;/code&gt;. We will change the names of these counties in the &lt;code&gt;df&lt;/code&gt; dataframe to match with the names in &lt;code&gt;resultreg_fort&lt;/code&gt; dataframe.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;#Rename the states in the df to match the names in the shape file
+df$Region&amp;lt;- gsub(&amp;quot;Elgeyo Marakwet&amp;quot;,&amp;quot;Elgeyo-Marakwet&amp;quot;, df$Region)
+df$Region&amp;lt;- gsub(&amp;quot;Tharaka Nithi&amp;quot;,&amp;quot;Tharaka-Nithi&amp;quot;, df$Region)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Finally, we attach the daily COVID-19 confirmed cases data with the shapefile data.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;#Joining the COVID-19 data with the shapefile data
+resultreg_covid&amp;lt;- left_join(resultreg_fort, df, by=c(&amp;quot;id&amp;quot;=&amp;quot;Region&amp;quot;))
+
+#looking at the top two rows of the new shapefile dataframe
+head(resultreg_covid,2)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 2 x 9
+##    long   lat order hole  piece group     id      Date       Confirmed
+##   &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;int&amp;gt; &amp;lt;lgl&amp;gt; &amp;lt;fct&amp;gt; &amp;lt;fct&amp;gt;     &amp;lt;chr&amp;gt;   &amp;lt;date&amp;gt;         &amp;lt;dbl&amp;gt;
+## 1  38.2  3.06     1 FALSE 1     Baringo.1 Baringo 2020-07-28         0
+## 2  38.2  3.06     1 FALSE 1     Baringo.1 Baringo 2020-07-29         0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;creating-the-hexbin-choropleth-static-map&#34;&gt;&lt;em&gt;Creating the hexbin choropleth static map&lt;/em&gt;&lt;/h3&gt;
+&lt;p&gt;One last step before we create the hexbin choropleth map is to add the bins to the shapefile data which will store different values of COVID-19 cases. These bins will be used to create the legend for choropleth. A user can decide the number of bins they want to create based on the data range. Here we create a total of eleven bins.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;#Create bins for the legends
+resultreg_covid &amp;lt;- resultreg_covid %&amp;gt;% 
+  mutate(bin=case_when(
+    Confirmed&amp;lt;=50 ~ &amp;quot;&amp;lt;50&amp;quot;,
+    Confirmed&amp;gt;50 &amp;amp; Confirmed&amp;lt;=500 ~ &amp;quot;50-500&amp;quot;,
+    Confirmed&amp;gt;500 &amp;amp; Confirmed&amp;lt;=1000 ~ &amp;quot;500-1000&amp;quot;,
+    Confirmed&amp;gt;1000 &amp;amp; Confirmed&amp;lt;=2000 ~ &amp;quot;1000-1500&amp;quot;,
+    Confirmed&amp;gt;2000 &amp;amp; Confirmed&amp;lt;=3000 ~ &amp;quot;1500-2000&amp;quot;,
+    Confirmed&amp;gt;3000 &amp;amp; Confirmed&amp;lt;=4000 ~ &amp;quot;2000-2500&amp;quot;,
+    Confirmed&amp;gt;4000 &amp;amp; Confirmed&amp;lt;=5000 ~ &amp;quot;2500-3000&amp;quot;,
+    Confirmed&amp;gt;5000 &amp;amp; Confirmed&amp;lt;=6000 ~ &amp;quot;3000-8000&amp;quot;,
+    Confirmed&amp;gt;6000 &amp;amp; Confirmed&amp;lt;=7000 ~ &amp;quot;8000-12000&amp;quot;,
+    Confirmed&amp;gt;7000 &amp;amp; Confirmed&amp;lt;=8000 ~ &amp;quot;12000-17000&amp;quot;,
+    Confirmed&amp;gt;8000 ~ &amp;quot;17000+&amp;quot;
+  ))
+
+#Getting the levels for each bin
+resultreg_covid$bin &amp;lt;- factor(resultreg_covid$bin, levels = c(&amp;quot;&amp;lt;50&amp;quot;,&amp;quot;50-500&amp;quot;, &amp;quot;500-1000&amp;quot;, &amp;quot;1000-1500&amp;quot;,&amp;quot;1500-2000&amp;quot;,
+                                                              &amp;quot;2000-2500&amp;quot;,&amp;quot;2500-3000&amp;quot;, &amp;quot;3000-8000&amp;quot;, 
+                                                              &amp;quot;8000-12000&amp;quot;,&amp;quot;12000-17000&amp;quot;, &amp;quot;17000+&amp;quot;))
+
+#checking the number of unique levels for each bin
+unique(resultreg_covid$bin)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  [1] &amp;lt;50         50-500      500-1000    1000-1500   1500-2000   2000-2500  
+##  [7] 2500-3000   3000-8000   8000-12000  12000-17000 17000+     
+## 11 Levels: &amp;lt;50 50-500 500-1000 1000-1500 1500-2000 2000-2500 ... 17000+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Finaly, we are done with all the manipulating the shapefile data, data wrangling, and adding data to the shapefile dataframe. Now, comes the moment of truth where we will create the hexbin choropleth map using the shapefile data that we created.&lt;/p&gt;
+&lt;p&gt;We use ggplot to develop the hexbin choropleth map. We will use &lt;code&gt;geom_polygon&lt;/code&gt; function of ggplot which can read &lt;code&gt;resultreg_covid&lt;/code&gt; shapefile data. Also, create the choropleth for the latest data which is provided in the &lt;code&gt;Date&lt;/code&gt; attribute of &lt;code&gt;geom_polygon&lt;/code&gt;. We provide the longitude and latitude values in the aesthetic attribute of &lt;code&gt;geom_polygon&lt;/code&gt;. We then use &lt;code&gt;geom_text&lt;/code&gt; function of ggplot to add the county abbreviation names at the centroid of each hexagon polygons. The remaining ggplot arguments are simply adding themes, and working on beautifying the chart by manipulating caption, title, legend and colors. Note that the bins which do not have any data on the latest date are not shown in the legend on the map.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(ggplot2)
+
+#Creating static hexagon choropleth map with COVID-19 data
+ggplot() +
+  geom_polygon(data = filter(resultreg_covid, Date==max(Date)), aes(fill = bin, x = long, y = lat, group = id) , size=0, alpha=0.9) +
+  geom_text(data=centers, aes(x=x, y=y, label=id, fontface=&amp;quot;bold&amp;quot;), color=&amp;quot;white&amp;quot;, size=6, alpha=0.6) +
+  theme_void() +
+  theme(
+    legend.position = &amp;quot;right&amp;quot;,
+    text = element_text(color = &amp;quot;#22211d&amp;quot;),
+    plot.background = element_rect(fill = &amp;quot;#f5f5f2&amp;quot;, color = NA), 
+    panel.background = element_rect(fill = &amp;quot;#f5f5f2&amp;quot;, color = NA), 
+    legend.background = element_rect(fill = &amp;quot;#f5f5f2&amp;quot;, color = NA),
+    legend.text = element_text(size = 15),
+    plot.title = element_text(size= 22, hjust=0.7, face = &amp;quot;bold&amp;quot;, color = &amp;quot;#4e4d47&amp;quot;, margin = margin(b = -0.1, t = 0.4, l = 2, unit = &amp;quot;cm&amp;quot;)),
+    plot.subtitle = element_text(size = 15, face = &amp;quot;bold&amp;quot;),
+    plot.caption = element_text(size = 12)
+  ) +
+  scale_fill_viridis_d()+
+  labs(title = &amp;quot;Kenya&#39;s map of COVID-19 cases, county by county&amp;quot;,
+       subtitle = paste0(&amp;quot;Date:&amp;quot;, max(resultreg_covid$Date)),
+       caption = &amp;quot;Data Source: Ministry of Health
+       Created by: Siddharth Dixit, Jiaqi Zhang
+                   &amp;amp; Kaci Kennedy McDade
+       
+       Baringo	(BA), Bomet (BO), Bungoma (BN), Busia (BS), Elgeyo-Marakwet (EM), 
+       Embu (EB), Garissa (GA), Homa Bay (HB), Isiolo (IS), Kajiado (KJ), Kakamega (KK), 
+       Kericho (KR), Kiambu (KB), Kilifi (KF), Kirinyaga (KY), Kisii (KI), Kisumu (KU), 
+       Kitui (KT), Kwale (KW), Laikipia (LK), Lamu (LM), Machakos (MC), Makueni (MK), 
+       Mandera (MD), Marsabit (MB), Meru (ME), Migori (MG), Mombasa (MM), Murang&#39;a (MU),
+       Nairobi (NB), Nakuru (NK), Nandi (ND), Narok (NR), Nyamira (NM), Nyandarua (NN), 
+       Nyeri (NI), Samburu (SA), Siaya (SI), Taita Taveta (TT), Tana River (TR), 
+       Tharaka-Nithi (NT), Trans Nzoia (TN), Turkana (TU), Uasin Gishu (UG), Vihiga (VI), 
+       Wajir (WJ), West Pokot (WP)&amp;quot;,
+       fill=&amp;quot;&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;index_files/figure-html/unnamed-chunk-12-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;h3 id=&#34;creating-the-hexbin-choropleth-animation-map&#34;&gt;&lt;em&gt;Creating the hexbin choropleth animation map&lt;/em&gt;&lt;/h3&gt;
+&lt;p&gt;Now, we will create the animation map of COVID-19 confirmed daily cases in Kenya. We will be using &lt;code&gt;gganimate&lt;/code&gt; package to create the animation map. We simply add three new arguments from &lt;code&gt;gganimate&lt;/code&gt; package to out static ggplot code. The  transition_time() argument defines how the data relates to itself across time, enter_fade() and exit_fade() defines how new data should appear and how old data should disappear during the course of the animation. This will create a gif which can then be saved on your hard drive using anim_save() function.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(gganimate)
+
+#Creating animated hexagon choropleth map with COVID-19 data
+p &amp;lt;- ggplot() +
+  geom_polygon(data = resultreg_covid, aes(fill = bin, x = long, y = lat, group = id) , size=0, alpha=0.9) +
+  geom_text(data=centers, aes(x=x, y=y, label=id), color=&amp;quot;white&amp;quot;, size=6, alpha=0.6) +
+  theme_void() +
+  theme(
+    legend.position = &amp;quot;right&amp;quot;,
+    text = element_text(color = &amp;quot;#22211d&amp;quot;),
+    plot.background = element_rect(fill = &amp;quot;#f5f5f2&amp;quot;, color = NA), 
+    panel.background = element_rect(fill = &amp;quot;#f5f5f2&amp;quot;, color = NA), 
+    legend.background = element_rect(fill = &amp;quot;#f5f5f2&amp;quot;, color = NA),
+    legend.text = element_text(size = 15),
+    plot.title = element_text(size= 22, hjust=0.8,face = &amp;quot;bold&amp;quot;, color = &amp;quot;#4e4d47&amp;quot;, margin = margin(b = -0.1, t = 0.4, l = 2, unit = &amp;quot;cm&amp;quot;)),
+    plot.caption = element_text(hjust = 1, size = 12),
+    plot.subtitle = element_text(size = 15, face = &amp;quot;bold&amp;quot;),
+  ) +
+  scale_fill_viridis_d()+
+  labs(title = &amp;quot;Kenya&#39;s map of COVID-19 cases, county by county&amp;quot;,
+       subtitle = paste0(&amp;quot;Date:{frame_time}&amp;quot;),
+       caption = &amp;quot;Data Source: Ministry of Health
+       Created by: Siddharth Dixit, Jiaqi Zhang
+                   &amp;amp; Kaci Kennedy McDade
+       
+        Baringo	(BA), Bomet (BO), Bungoma (BN), Busia (BS), Elgeyo-Marakwet (EM), 
+       Embu (EB), Garissa (GA), Homa Bay (HB), Isiolo (IS), Kajiado (KJ), Kakamega (KK), 
+       Kericho (KR), Kiambu (KB), Kilifi (KF), Kirinyaga (KY), Kisii (KI), Kisumu (KU), 
+       Kitui (KT), Kwale (KW), Laikipia (LK), Lamu (LM), Machakos (MC), Makueni (MK), 
+       Mandera (MD), Marsabit (MB), Meru (ME), Migori (MG), Mombasa (MM), Murang&#39;a (MU),
+       Nairobi (NB), Nakuru (NK), Nandi (ND), Narok (NR), Nyamira (NM), Nyandarua (NN), 
+       Nyeri (NI), Samburu (SA), Siaya (SI), Taita Taveta (TT), Tana River (TR), 
+       Tharaka-Nithi (NT), Trans Nzoia (TN), Turkana (TU), Uasin Gishu (UG), Vihiga (VI), 
+       Wajir (WJ), West Pokot (WP)&amp;quot;,
+       fill=&amp;quot;&amp;quot;)+
+  transition_time(Date)+
+  enter_fade()+
+  exit_fade()
+
+animate(plot = p, fps=4, width = 700, height = 800, end_pause = 24)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;index_files/figure-html/unnamed-chunk-13-1.gif&#34; alt=&#34;&#34;&gt;&lt;!-- --&gt;
+We have now created a static and an animated hexbin chropleth map of COVID-19 cases for Kenya. One can use the same approach to create any hexbin map using a different dataset. I hope you liked the post. Let me know if you have any advice or comment on my approach to creating the hexbin choropleth map.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>How much will it cost different low- and middle- income countries (LMICs) to provide COVID-19 vaccine to their population?</title>
+      <link>/2021/03/15/covid-19/</link>
+      <pubDate>Mon, 15 Mar 2021 00:00:00 +0000</pubDate>
+      <guid>/2021/03/15/covid-19/</guid>
+      <description>
+&lt;script src=&#34;/rmarkdown-libs/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;/rmarkdown-libs/anchor-sections/anchor-sections.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;/rmarkdown-libs/anchor-sections/anchor-sections.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;Successful control of COVID-19 pandemic not only depends on the research and development of effective vaccines, but also on delivery of these vaccines to everyone. Therefore, for any country the total cost–procurement plus delivery cost– to vaccinate its population is a crucial information as this can help the country to plan, raise, and allocate resources needed to successfully vaccinate their population against the COVID-19 pandemic. This information becomes even more important and pressing for low- and middle- income countries (LMICs) which are already under enormous financial stress due to the impact of COVID-19 on their economies. Therefore, I, along with my colleagues at &lt;a href=&#34;https://centerforpolicyimpact.org/&#34; target=&#34;_blank&#34;&gt;The center for policy impact in global health&lt;/a&gt; developed an application where one can obtain, and predict the total cost COVID-19 vaccination for 117 LMICs.&lt;/p&gt;
+&lt;p&gt;We provide vaccination cost to reach herd immunity in a country i.e. cost to vaccinate 70% of the population, cost to vaccinate high-risk population such as population with comorbidity, and cost to vaccinate health professionals. The baseline data, and information on the methodology used for calculating the costs can be found on page 3 and page 4 of the application.&lt;/p&gt;
+&lt;p&gt;However, a general user or a policymaker might want to input their own data as they might have more accurate information for certain variables used for cost calculations in this application. Therefore, to accommodate such scenarios, we have provided the option to the users to input their own data for the variables used for vaccination cost calculation, and get the new vaccination cost information based on the user input.&lt;/p&gt;
+&lt;p&gt;Through this post, i would like to provide more information about this application, and how a user can interact and extract the maximum information from the application.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Page 1: “COVID-19 Vaccination Cost Map”&lt;/strong&gt;&lt;/em&gt;
+&lt;img src=&#34;/post/2021-03-15-covid-19/index.en_files/figure-html/unnamed-chunk-1-1.png&#34; width=&#34;672&#34; /&gt;
+The first page of the application shows the distribution of different vaccination costs– 70% population, high-risk population, and health professionals. These costs are based on our calculation using the baseline data. The baseline data can be found in the “Data Explorer” tab. A user can choose vaccination cost for different population segments, and then can click on a country of their choice to view the total cost to vaccinate its population on the chart in the panel on the right. In addition, there is an option in the panel named “Include COVAX procurement pricing”. If a user does not check this option, the vaccination cost for &lt;a href=&#34;https://www.gavi.org/vaccineswork/gavi-covax-amc-explained&#34; target=&#34;_blank&#34;&gt;COVAX-AMC&lt;/a&gt; eligible countries will use USD5.25 as the median vaccine procurement cost (more information on the median cost can be found in the methodology section of “About this site”). However, if “Include COVAX procurement pricing” is checked then the vaccination cost for &lt;a href=&#34;https://www.gavi.org/vaccineswork/gavi-covax-amc-explained&#34; target=&#34;_blank&#34;&gt;COVAX-AMC&lt;/a&gt; eligible countries will use the COVAX pricing i.e USD3. The countries which are not &lt;a href=&#34;https://www.gavi.org/vaccineswork/gavi-covax-amc-explained&#34; target=&#34;_blank&#34;&gt;COVAX-AMC&lt;/a&gt; eligible will continue using the median vaccine procurement cost of USD5.25 in the cost calculations.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Page 2: “Scenario Analysis and Immunization Comparison”&lt;/strong&gt;&lt;/em&gt;
+&lt;img src=&#34;/post/2021-03-15-covid-19/index.en_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; /&gt;
+After you have explored the baseline calculation of total costs, but would like to obtain granular information like how much does it cost for a country to procure the vaccine, or how much will it cost to deliver the vaccine to its population, you can move to &lt;code&gt;Scenario Analysis and Immunization Comparison&lt;/code&gt; tab. This tab provides user the ability to visualize costs for various scenarios. For example, a country might only incur vaccine procurement costs, and the delivery cost for such a country was being covered by some international organization or a bilateral donor, or there could be a scenario that vaccine procurement cost might have been take care off for a country by some donor, but the country will still incur delivery cost to vaccinate its population, and finally there could be the usual situation when the country incurs both the vaccine procurement and delivery cost. This page of the application provides option to a user to choose any of these scenarios for the country of their choice and visualize the vaccine procurement, delivery and total cost for 70% population, high-risk, population, and health professions. Similar to the first tab a user can again check “Include COVAX procurement pricing” if they want to include COVAX pricing in the cost calculation for their country of choice.&lt;/p&gt;
+&lt;p&gt;In this tab, we also provide user the option to input their data to obtain the vaccination cost for different countries. Users can input their data for the variables on number of health professionals, high-risk population, number of doses, bilateral vaccine procurement cost, and vaccine delivery cost by clicking on &lt;code&gt;Click to input your data!&lt;/code&gt; button. Based on the user input the chart and the table below the chart will update.&lt;/p&gt;
+&lt;p&gt;In addition to vaccination costs, the charts also plots the immunization costs incurred by a country (most recent available data is plotted). A user can make comparison between the incurred immunization cost, and required COVID-19 vaccination cost for any country.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Page 3: “Data Explorer”&lt;/strong&gt;&lt;/em&gt;
+&lt;img src=&#34;/post/2021-03-15-covid-19/index.en_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; /&gt;
+This page provides the baseline data used for the cost calculation in this application. The baseline data includes information about country’s COVAX eligibility, number of health professionals, immunization cost, total population, high-risk population percent, population covered by COVAX, population covered by bilateral deals, number of doses, vaccine procurement costs (bilateral and COVAX), and vaccine delivery cost.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Page 3: “About this Site”&lt;/strong&gt;&lt;/em&gt;
+&lt;img src=&#34;/post/2021-03-15-covid-19/index.en_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;672&#34; /&gt;
+The final page of this application provides some background information, github link to the code used in creating this application, and information on selected references.&lt;/p&gt;
+&lt;p&gt;You can glimpse the application below. But, the application is best viewed on a full screen. You can access the application on the browser by clicking &lt;a href=&#34;https://centerforpolicyimpact.shinyapps.io/covid-vaccination-costs-analysis/&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;.
+&lt;iframe src =&#34;https://centerforpolicyimpact.shinyapps.io/covid-vaccination-costs-analysis/&#34; height=1000px width=700px /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Part 1- How to create hexbin choropleth map to visualize data?</title>
+      <link>/2021/03/07/hexbin/</link>
+      <pubDate>Sun, 07 Mar 2021 00:00:00 +0000</pubDate>
+      <guid>/2021/03/07/hexbin/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;index_files/figure-html/unnamed-chunk-1-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;NewYork Times, The Economist, The Washington Post and many other news outlets often use hexbin maps to convey information in exciting and cool ways. I have been always drawn to these kind of maps, and wanted to create one myself. Last year i got the opportunity (and data!) to learn and create choropleth hexbin maps to show the progression of COVID-19 cases.&lt;/p&gt;
+&lt;p&gt;I am planning to through the whole process in two parts. In this first part, i will talk about where i got Kenya&amp;rsquo;s shape files, data munging with the shape files data, and creating the hexagonal grid.&lt;/p&gt;
+&lt;p&gt;We first start with downloading the shape files for Kenya from the GADM website which is a high-resolution database of country administrative areas. The data is not freely available for use in commercial purposes. The website provide files which can be directly read into R, which makes this website a really handy resource. It has pretty latest shape files for almost all the countries in the worlds. You can find Kenya&amp;rsquo;s shape files on &lt;a href=&#34;https://gadm.org/download_country_v3.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GADM&lt;/a&gt;. We will download level-1 shape files, as we are only interested in county level data. Level-2 and level-3 provide more granulated information of Kenya&amp;rsquo;s administrative areas.&lt;/p&gt;
+&lt;p&gt;We will unzip the downloaded folder, and load the shape file in R. We will use &amp;ldquo;rgdal&amp;rdquo; library to load the shape file into R. &amp;ldquo;rgdal&amp;rdquo; is R&amp;rsquo;s interface to the &amp;ldquo;Geospatial Abstraction Library (GDAL)&amp;rdquo; which is used by other open source GIS packages such as QGIS and enables R to handle a broader range of spatial data formats.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(rgdal)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now, we read the shape file into R.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(here) #this package is just used to refer to the folder where the shape file is kept
+original_shapes &amp;lt;- readOGR(dsn = here(&amp;quot;./content/post/2021-03-07-hexbin/gadm36_KEN_shp&amp;quot;),  layer = &amp;quot;gadm36_KEN_1&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Once we have read the data into R. we will view the shape file data using the head() function. This function shows the first 5 rows of the shape file data.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;head(original_shapes@data)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##   GID_0 NAME_0   GID_1          NAME_1 VARNAME_1 NL_NAME_1 TYPE_1 ENGTYPE_1
+## 0   KEN  Kenya KEN.1_1         Baringo      &amp;lt;NA&amp;gt;      &amp;lt;NA&amp;gt; County    County
+## 1   KEN  Kenya KEN.2_1           Bomet      &amp;lt;NA&amp;gt;      &amp;lt;NA&amp;gt; County    County
+## 2   KEN  Kenya KEN.3_1         Bungoma      &amp;lt;NA&amp;gt;      &amp;lt;NA&amp;gt; County    County
+## 3   KEN  Kenya KEN.4_1           Busia      &amp;lt;NA&amp;gt;      &amp;lt;NA&amp;gt; County    County
+## 4   KEN  Kenya KEN.5_1 Elgeyo-Marakwet      &amp;lt;NA&amp;gt;      &amp;lt;NA&amp;gt; County    County
+## 5   KEN  Kenya KEN.6_1            Embu      &amp;lt;NA&amp;gt;      &amp;lt;NA&amp;gt; County    County
+##   CC_1 HASC_1
+## 0   30  KE.BA
+## 1   36  KE.BO
+## 2   39  KE.BN
+## 3   40  KE.BS
+## 4   28  KE.EM
+## 5   14  KE.EB
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;On the choropleth hex map of kenya we will like to show the names of each county, but we can&amp;rsquo;t write the full name of the counties as this will make the map very busy and chaotic. Therefore, we will abbreviate the names of all the counties, and then show them on the map. To accomplish this, we have created a separate excel file with abbreviations for all county names. You can also google or find these abbreviations on wikipedia.&lt;/p&gt;
+&lt;p&gt;We will first read this abbreviation excel, and then add these abbreviations to the &amp;ldquo;original_shapes&amp;rdquo; data. Basically, what we are doing here is to gradually add all the information one after other, that we require, to the shape file data to get it ready for the visualization.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;#loading the required library and reading the CSV file with region abbreviation 
+library(readxl)
+df_abb &amp;lt;- read_excel(here(&amp;quot;./content/post/2021-03-07-hexbin/abb.xlsx&amp;quot;))
+
+#viewing the first 5 rows of the data frame 
+head(df_abb)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 3
+##   County          ABB   ABV  
+##   &amp;lt;chr&amp;gt;           &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;
+## 1 Baringo         KE.BA BA   
+## 2 Bomet           KE.BO BO   
+## 3 Bungoma         KE.BN BN   
+## 4 Busia           KE.BS BS   
+## 5 Elgeyo-Marakwet KE.EM EM   
+## 6 Embu            KE.EB EB
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;#removing the ABB column from the data frame 
+df_abb &amp;lt;- subset(df_abb ,select = -c(ABB))
+head(df_abb)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 2
+##   County          ABV  
+##   &amp;lt;chr&amp;gt;           &amp;lt;chr&amp;gt;
+## 1 Baringo         BA   
+## 2 Bomet           BO   
+## 3 Bungoma         BN   
+## 4 Busia           BS   
+## 5 Elgeyo-Marakwet EM   
+## 6 Embu            EB
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now, we will join the abbreviation data frame with the shape file data frame. The &amp;ldquo;County&amp;rdquo; column of &amp;ldquo;df_abb&amp;rdquo; data frame, and the &amp;ldquo;Name_1&amp;rdquo; column of &amp;ldquo;original_shapes&amp;rdquo; data have the same information i.e. the name of counties in Kenya. Therefore, we will use these columns to join the two data frames. We will use left_join to combine the two data frames.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;#renaming &amp;quot;County&amp;quot; column using the dplyr library, we could also have joined the two data frames without renaming &amp;quot;County&amp;quot; as well
+library(dplyr)
+df_abb &amp;lt;- df_abb %&amp;gt;% 
+  rename(NAME_1=County)
+
+#using left_join() to join the two data frames
+original_shapes@data&amp;lt;- left_join(original_shapes@data, df_abb, by=c(&amp;quot;NAME_1&amp;quot;=&amp;quot;NAME_1&amp;quot;))
+head(original_shapes@data)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##   GID_0 NAME_0   GID_1          NAME_1 VARNAME_1 NL_NAME_1 TYPE_1 ENGTYPE_1
+## 1   KEN  Kenya KEN.1_1         Baringo      &amp;lt;NA&amp;gt;      &amp;lt;NA&amp;gt; County    County
+## 2   KEN  Kenya KEN.2_1           Bomet      &amp;lt;NA&amp;gt;      &amp;lt;NA&amp;gt; County    County
+## 3   KEN  Kenya KEN.3_1         Bungoma      &amp;lt;NA&amp;gt;      &amp;lt;NA&amp;gt; County    County
+## 4   KEN  Kenya KEN.4_1           Busia      &amp;lt;NA&amp;gt;      &amp;lt;NA&amp;gt; County    County
+## 5   KEN  Kenya KEN.5_1 Elgeyo-Marakwet      &amp;lt;NA&amp;gt;      &amp;lt;NA&amp;gt; County    County
+## 6   KEN  Kenya KEN.6_1            Embu      &amp;lt;NA&amp;gt;      &amp;lt;NA&amp;gt; County    County
+##   CC_1 HASC_1 ABV
+## 1   30  KE.BA  BA
+## 2   36  KE.BO  BO
+## 3   39  KE.BN  BN
+## 4   40  KE.BS  BS
+## 5   28  KE.EM  EM
+## 6   14  KE.EB  EB
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;After we have joined the two data frames, we will turn our focus tesselating the map polygons of Kenya into hexagons. Tesselation means covering a flat surface (in this case a map) with one or more geometric shapes which do not overlap and there is no gaps between them.&lt;/p&gt;
+&lt;p&gt;We will use &amp;ldquo;geogrid&amp;rdquo; package in R to algorithmically tessellate kenya&amp;rsquo;s map into hexagonal grids. You can find more information on its &lt;a href=&#34;https://github.com/jbaileyh/geogrid&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;github repository&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;We will us calculate_grid() function of &amp;ldquo;geogrid&amp;rdquo; library to achieve our goal. This function takes in SpatialPolygonsDataframe or sf object, a learning rate (suggestion = 0.03 to begin), a grid type hexagonal or regular and a seed value. calculate_grid() function uses mathematical algorithm to covert the boundary of the polygons into hexagon shapes, while still trying to preserve the actual shape of the map. Therefore, as we can see there can be many versions of the grids that can be created. The &amp;ldquo;seed&amp;rdquo; attribute of calculate_grid() lets us generate different versions of grids. Thus, we should visually inspect each grid, and choose the grid which best captures the actual shape of the map.&lt;/p&gt;
+&lt;p&gt;Lets first create 6 possible versions of the grid for Kenya&amp;rsquo;s map polygons. You can create more versions and choose from them.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(geogrid)
+
+par(mfrow = c(2, 3), mar = c(0, 0, 2, 0))
+for (i in 1:6) {
+  new_cells &amp;lt;- calculate_grid(shape = original_shapes, grid_type = &amp;quot;hexagonal&amp;quot;, seed = i)
+  plot(new_cells, main = paste(&amp;quot;Seed&amp;quot;, i, sep = &amp;quot; &amp;quot;))
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;index_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; /&gt;
+Seed 6, i feel, best preserves Kenya&amp;rsquo;s map geometry. Therefore, we will choose this seed, and assign this grid to convert Kenya&amp;rsquo;s map into hexbin map.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;#Grid plot
+#we choose grid 6 as it closely matches the actual geometry of kenya
+new_cells_reg &amp;lt;- calculate_grid(shape = original_shapes, grid_type = &amp;quot;hexagonal&amp;quot;, seed = 6)
+
+#assign_polygons() function assigns the polygon in the original spatial data to their new location based on the calculated grid function and the seed selected
+resultreg &amp;lt;- assign_polygons(original_shapes, new_cells_reg)
+
+#plotting Kenya&#39;s grid map 
+plot(resultreg)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;index_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;I will end this post here. In the second part of the tutorial, i will go through the joining of shape file data and the CVOID-19 data for Kenya, and creation of static and animated choropleth hexbin maps to show the progression of COVID-19 cases.&lt;/p&gt;
+</description>
+    </item>
     
   </channel>
 </rss>

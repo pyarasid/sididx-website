@@ -248,6 +248,44 @@
 
 
 
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-ACCOUNTID-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+      dataLayer.push(arguments);
+  }
+
+  function trackOutboundLink(url, target) {
+    gtag('event', 'click', {
+         'event_category': 'outbound',
+         'event_label': url,
+         'transport_type': 'beacon',
+         'event_callback': function () {
+           if (target !== '_blank') {
+             document.location = url;
+           }
+         }
+    });
+    console.debug("Outbound link clicked: " + url);
+  }
+
+  function onClickCallback(event) {
+    if ((event.target.tagName !== 'A') || (event.target.host === window.location.host)) {
+      return;
+    }
+    trackOutboundLink(event.target, event.target.getAttribute('target'));  
+  }
+
+  gtag('js', new Date());
+  gtag('config', 'UA-ACCOUNTID-1', {});
+
+  
+  document.addEventListener('click', onClickCallback, false);
+</script>
+
+
   
 
   
@@ -634,6 +672,12 @@
   <h2>Latest</h2>
   <ul>
     
+      <li><a href="/2021/05/02/part-2-how-to-create-hexbin-choropleth-map-to-visualize-data/">Part 2 (final)- How to create hexbin choropleth map to visualize data?</a></li>
+    
+      <li><a href="/2021/03/15/covid-19/">How much will it cost different low- and middle- income countries (LMICs) to provide COVID-19 vaccine to their population?</a></li>
+    
+      <li><a href="/2021/03/07/hexbin/">Part 1- How to create hexbin choropleth map to visualize data?</a></li>
+    
       <li><a href="/publication/report-egpaf/">Cost-Effectiveness Analysis of  Elizabeth Glaser Pediatric AIDS Foundation (EGPAF) Pratt Pouch</a></li>
     
       <li><a href="/publication/report-bempu/">Cost-Effectiveness Analysis of BEMPU-TempWatch</a></li>
@@ -656,7 +700,7 @@
   
 
   <p class="powered-by">
-    © Siddharth Dixit 2021
+    Code with <i class='fas fa-heart'></i> and <i class='fab fa-r-project'></i> <a href='https://bookdown.org/yihui/blogdown/'>Blogdown</a><br>© Siddharth Dixit, 2021
   </p>
 
   

@@ -248,6 +248,44 @@
 
 
 
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-ACCOUNTID-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+      dataLayer.push(arguments);
+  }
+
+  function trackOutboundLink(url, target) {
+    gtag('event', 'click', {
+         'event_category': 'outbound',
+         'event_label': url,
+         'transport_type': 'beacon',
+         'event_callback': function () {
+           if (target !== '_blank') {
+             document.location = url;
+           }
+         }
+    });
+    console.debug("Outbound link clicked: " + url);
+  }
+
+  function onClickCallback(event) {
+    if ((event.target.tagName !== 'A') || (event.target.host === window.location.host)) {
+      return;
+    }
+    trackOutboundLink(event.target, event.target.getAttribute('target'));  
+  }
+
+  gtag('js', new Date());
+  gtag('config', 'UA-ACCOUNTID-1', {});
+
+  
+  document.addEventListener('click', onClickCallback, false);
+</script>
+
+
   
 
   
@@ -285,7 +323,7 @@
   <meta property="og:description" content="Associate in Research"><meta property="og:image" content="/images/icon_huad25c1bc025cb7d239e90ad1fd91518e_22315_512x512_fill_lanczos_center_2.png">
   <meta property="twitter:image" content="/images/icon_huad25c1bc025cb7d239e90ad1fd91518e_22315_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
   
-    
+    <meta property="og:updated_time" content="2021-03-15T00:00:00&#43;00:00">
   
 
   
@@ -650,6 +688,46 @@
 
   
   
+    
+    
+    
+    <div>
+      <h2><a href="/category/geocomputation/" >Geocomputation</a></h2>
+      <div class="article-style">
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div>
+      <h2><a href="/category/interactive-application/" >Interactive application</a></h2>
+      <div class="article-style">
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div>
+      <h2><a href="/category/prediction/" >Prediction</a></h2>
+      <div class="article-style">
+        
+      </div>
+    </div>
+  
+    
+    
+    
+    <div>
+      <h2><a href="/category/data-visualization/" >Data Visualization</a></h2>
+      <div class="article-style">
+        
+      </div>
+    </div>
+  
 
   
 
@@ -664,7 +742,7 @@
   
 
   <p class="powered-by">
-    © Siddharth Dixit 2021
+    Code with <i class='fas fa-heart'></i> and <i class='fab fa-r-project'></i> <a href='https://bookdown.org/yihui/blogdown/'>Blogdown</a><br>© Siddharth Dixit, 2021
   </p>
 
   

@@ -1,0 +1,1392 @@
+<!DOCTYPE html><html lang="en-us" >
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  
+  
+  <meta name="generator" content="Wowchemy 5.0.0-beta.1 for Hugo">
+  
+
+  
+
+  
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Siddharth Dixit">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="In the first part of this blog we read Kenya&rsquo;s shapefiles from GADM, and county name abbreviations which will be shown on the the chart instead of full names to avoid clutter on the map.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/2021/05/02/part-2-how-to-create-hexbin-choropleth-map-to-visualize-data/">
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+
+  
+  
+  
+  <meta name="theme-color" content="#EF525B">
+  
+
+  
+  
+  
+  <script src="/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha256-FMvZuGapsJLjouA6k7Eo2lusoAX9i0ShlWFG6qt7SLc=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css" integrity="sha512-1xoFisiGdy9nvho8EgXuXvnpR5GAMSjFwp40gSRE3NwdUdIMIKuPa7bqoUhLD0O/5tPNhteAsE5XyyMi5reQVA==" crossorigin="anonymous">
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.2/lazysizes.min.js" integrity="sha512-TmDwFLhg3UA4ZG0Eb4MIyT1O1Mb+Oww5kFG0uHqXsdbyZz9DcvYQhKpGgNkamAI6h2lGGZq2X8ftOJvF/XjTUg==" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+    
+      
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cutive+Mono%7CLora:400,700%7CRoboto:400,700&display=swap">
+    
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.min.bb565ccc8def40f418a9099753e73ccb.css">
+
+  
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-ACCOUNTID-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+      dataLayer.push(arguments);
+  }
+
+  function trackOutboundLink(url, target) {
+    gtag('event', 'click', {
+         'event_category': 'outbound',
+         'event_label': url,
+         'transport_type': 'beacon',
+         'event_callback': function () {
+           if (target !== '_blank') {
+             document.location = url;
+           }
+         }
+    });
+    console.debug("Outbound link clicked: " + url);
+  }
+
+  function onClickCallback(event) {
+    if ((event.target.tagName !== 'A') || (event.target.host === window.location.host)) {
+      return;
+    }
+    trackOutboundLink(event.target, event.target.getAttribute('target'));  
+  }
+
+  gtag('js', new Date());
+  gtag('config', 'UA-ACCOUNTID-1', {});
+
+  
+  document.addEventListener('click', onClickCallback, false);
+</script>
+
+
+  
+
+  
+
+
+  
+  
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_huad25c1bc025cb7d239e90ad1fd91518e_22315_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_huad25c1bc025cb7d239e90ad1fd91518e_22315_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="/2021/05/02/part-2-how-to-create-hexbin-choropleth-map-to-visualize-data/">
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary">
+  
+  <meta property="og:site_name" content="Siddharth Dixit">
+  <meta property="og:url" content="/2021/05/02/part-2-how-to-create-hexbin-choropleth-map-to-visualize-data/">
+  <meta property="og:title" content="Part 2 (final)- How to create hexbin choropleth map to visualize data? | Siddharth Dixit">
+  <meta property="og:description" content="In the first part of this blog we read Kenya&rsquo;s shapefiles from GADM, and county name abbreviations which will be shown on the the chart instead of full names to avoid clutter on the map."><meta property="og:image" content="/images/icon_huad25c1bc025cb7d239e90ad1fd91518e_22315_512x512_fill_lanczos_center_2.png">
+  <meta property="twitter:image" content="/images/icon_huad25c1bc025cb7d239e90ad1fd91518e_22315_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2021-05-02T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2021-05-02T17:47:03-04:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/2021/05/02/part-2-how-to-create-hexbin-choropleth-map-to-visualize-data/"
+  },
+  "headline": "Part 2 (final)- How to create hexbin choropleth map to visualize data?",
+  
+  "datePublished": "2021-05-02T00:00:00Z",
+  "dateModified": "2021-05-02T17:47:03-04:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Siddharth Dixit"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Siddharth Dixit",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/images/icon_huad25c1bc025cb7d239e90ad1fd91518e_22315_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "In the first part of this blog we read Kenya\u0026rsquo;s shapefiles from GADM, and county name abbreviations which will be shown on the the chart instead of full names to avoid clutter on the map."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Part 2 (final)- How to create hexbin choropleth map to visualize data? | Siddharth Dixit</title>
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper  ">
+
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.js"></script>
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  <div class="page-header">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Siddharth Dixit</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Siddharth Dixit</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>Blogs</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#featured"><span>Publications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#gallery"><span>Gallery</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/media/Siddharth_Dixit_Resume.pdf"><span>Resume</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+          <i class="fas fa-moon" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  </div>
+
+  <div class="page-body">
+    <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Part 2 (final)- How to create hexbin choropleth map to visualize data?</h1>
+
+  
+  <p class="page-subtitle">Static and animated map to visualize COVID-19 data for Kenya</p>
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+  
+  <span ><a href="/author/siddharth-dixit/">Siddharth Dixit</a></span>
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          Last updated on
+      
+    
+    May 2, 2021
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    11 min read
+  </span>
+  
+
+  
+  
+  
+  
+  
+
+  
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <p><img src="index_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>In the first part of this blog we read Kenya&rsquo;s shapefiles from GADM, and county name abbreviations which will be shown on the the chart instead of full names to avoid clutter on the map. Then, we used &ldquo;geogrid&rdquo; package of R to convert the map polygons i.e. the polygons of Kenya&rsquo;s counties into hexagons.</p>
+<h3 id="calculating-the-centroid-of-each-hexagon"><em>Calculating the centroid of each hexagon</em></h3>
+<p>After creating the polygon hexagons, we calculate the centroid of each hexagon. We will use the centroid values to position the county abbreviation names on the chart. To calculate the centroid of hexagons we will use <code>rgeos</code> library which is used for topology operations on geometries.<code>rgeos</code> has a handy <code>gCentroid()</code> function which will provide us the centroid of each hexagon of each county polygon for Kenya.</p>
+<pre><code class="language-r">#calculating the centroid of hexgons
+library(rgeos)
+centers &lt;- data.frame(gCentroid(resultreg, byid = TRUE), id=resultreg@data$ABV)
+
+#Following table shows the X, Y coordinates of centroid for each polygon 
+head(centers)
+</code></pre>
+<pre><code>##            x         y id
+## ID1 38.17338 -3.548623 TT
+## ID2 39.21422 -3.548623 KW
+## ID3 37.65295 -2.647223 KJ
+## ID4 38.69380 -2.647223 MK
+## ID5 39.73465 -2.647223 KF
+## ID6 36.09168 -1.745822 NR
+</code></pre>
+<h3 id="tidying-the-shapefile"><em>Tidying the shapefile</em></h3>
+<p>You might recall that we used <code>resultreg</code> dataframe which had original shapefile data and was assigned to new position based on the position of hexagons that we created. However, the data is still not in a tidy format i.e. this data cannot be used in ggplot to draw charts. Therefore, we use <code>tidy</code> function from <code>broom</code> package to create a new tidied data frame. 
+Notice that we use an attribute <code>region</code> in the function. This attribute makes sure that while tidying the shapefile data, the region i.e. county names are not removed.</p>
+<pre><code class="language-r">library(broom) 
+#tidy() function of broom package returns the statistical findings of the model (such as coefficients)
+#by specifying the region attribute we keep the region name
+# tidy() function turns the data frame into a format which can be used in ggplot.
+resultreg_fort &lt;- tidy(resultreg, region = &quot;NAME_1&quot;)
+</code></pre>
+<p>Below are the top five rows of the tidied shapefile data.</p>
+<pre><code class="language-r">head(resultreg_fort)
+</code></pre>
+<pre><code>## # A tibble: 6 x 7
+##    long   lat order hole  piece group     id     
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;lgl&gt; &lt;fct&gt; &lt;fct&gt;     &lt;chr&gt;  
+## 1  38.2  3.06     1 FALSE 1     Baringo.1 Baringo
+## 2  38.7  3.36     2 FALSE 1     Baringo.1 Baringo
+## 3  39.2  3.06     3 FALSE 1     Baringo.1 Baringo
+## 4  39.2  2.46     4 FALSE 1     Baringo.1 Baringo
+## 5  38.7  2.16     5 FALSE 1     Baringo.1 Baringo
+## 6  38.2  2.46     6 FALSE 1     Baringo.1 Baringo
+</code></pre>
+<h3 id="reading-covid-19-confirmed-daily-cumulative-cases-of-kenya-and-adding-it-to-our-tidy-shapefile-data"><em>Reading COVID-19 confirmed daily cumulative cases of Kenya and adding it to our tidy shapefile data</em></h3>
+<p><em>Note: This is not the latest data of confirmed daily cases. But, one can easily update this chart with latest data by using the methodology outlined in this post.</em>
+<em>I will also like to thank my colleagues Jiaqi Zhang and Kaci Kennedy McDade for helping me obtain the COVID-19 confirmed daily cases data for Kenya.</em></p>
+<p>Now, we read the COIVID-19 confirmed cumulative cases and name it as <code>df</code>.</p>
+<pre><code class="language-r">##Reading the COVID-19 daily cases dataset
+df &lt;- read_excel(here(&quot;./content/post/2021-03-07-hexbin/Kenya.xlsx&quot;)) 
+
+#converting into `Date` column in the dataframe into date format
+df$Date &lt;- as.Date((df$Date))
+
+#printing the top five rows
+head(df)
+</code></pre>
+<pre><code>## # A tibble: 6 x 3
+##   Date       Region  Confirmed
+##   &lt;date&gt;     &lt;chr&gt;       &lt;dbl&gt;
+## 1 2020-03-12 Nairobi         1
+## 2 2020-03-13 Nairobi         1
+## 3 2020-03-14 Nairobi         1
+## 4 2020-03-15 Nairobi         3
+## 5 2020-03-16 Nairobi         3
+## 6 2020-03-17 Nairobi         4
+</code></pre>
+<p>We will be using the names of counties to join the daily cases dataframe with the shapefile dataframe. However, to accomplish this task we need the names of counties in both the dataframe to be same. Therefore, first we check whether there is any mismatch in the county names between the two dataframes.</p>
+<pre><code class="language-r">#compare the region name column in `resultreg_fort` dataframe to region column of `df` to see which rows match. 
+resultreg_fort$id %in% df$Region
+</code></pre>
+<pre><code>##   [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [13]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [25]  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+##  [37]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [49]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [61]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [73]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [85]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+##  [97]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [109]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [121]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [133]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [145]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [157]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [169]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [181]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [193]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [205]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [217]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [229]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [241]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [253]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [265]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [277]  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+## [289]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [301]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [313]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [325]  TRUE  TRUE  TRUE  TRUE  TRUE
+</code></pre>
+<p>From the above result we see some <code>FALSE</code> observations. These are the county names in the confirmed daily cases dataframe (<code>df</code>) which do not match with the county names in the shapefile dataframe. However, manually checking the names that do not match will be really cumbersome. Therefore, we use the following code to obtain the names of counties that do not match in the two dataframes.</p>
+<pre><code class="language-r">#find which names do not match 
+resultreg_fort$id[!resultreg_fort$id %in% df$Region]
+</code></pre>
+<pre><code>##  [1] &quot;Elgeyo-Marakwet&quot; &quot;Elgeyo-Marakwet&quot; &quot;Elgeyo-Marakwet&quot; &quot;Elgeyo-Marakwet&quot;
+##  [5] &quot;Elgeyo-Marakwet&quot; &quot;Elgeyo-Marakwet&quot; &quot;Elgeyo-Marakwet&quot; &quot;Tharaka-Nithi&quot;  
+##  [9] &quot;Tharaka-Nithi&quot;   &quot;Tharaka-Nithi&quot;   &quot;Tharaka-Nithi&quot;   &quot;Tharaka-Nithi&quot;  
+## [13] &quot;Tharaka-Nithi&quot;   &quot;Tharaka-Nithi&quot;
+</code></pre>
+<p>We see here that two counties&ndash;&ldquo;Elgeyo-Marakwet&rdquo; and &ldquo;Tharaka-Nithi&rdquo; from <code>df</code> do not match with the names of counties from <code>resultreg_fort</code>. We will change the names of these counties in the <code>df</code> dataframe to match with the names in <code>resultreg_fort</code> dataframe.</p>
+<pre><code class="language-r">#Rename the states in the df to match the names in the shape file
+df$Region&lt;- gsub(&quot;Elgeyo Marakwet&quot;,&quot;Elgeyo-Marakwet&quot;, df$Region)
+df$Region&lt;- gsub(&quot;Tharaka Nithi&quot;,&quot;Tharaka-Nithi&quot;, df$Region)
+</code></pre>
+<p>Finally, we attach the daily COVID-19 confirmed cases data with the shapefile data.</p>
+<pre><code class="language-r">#Joining the COVID-19 data with the shapefile data
+resultreg_covid&lt;- left_join(resultreg_fort, df, by=c(&quot;id&quot;=&quot;Region&quot;))
+
+#looking at the top two rows of the new shapefile dataframe
+head(resultreg_covid,2)
+</code></pre>
+<pre><code>## # A tibble: 2 x 9
+##    long   lat order hole  piece group     id      Date       Confirmed
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;lgl&gt; &lt;fct&gt; &lt;fct&gt;     &lt;chr&gt;   &lt;date&gt;         &lt;dbl&gt;
+## 1  38.2  3.06     1 FALSE 1     Baringo.1 Baringo 2020-07-28         0
+## 2  38.2  3.06     1 FALSE 1     Baringo.1 Baringo 2020-07-29         0
+</code></pre>
+<h3 id="creating-the-hexbin-choropleth-static-map"><em>Creating the hexbin choropleth static map</em></h3>
+<p>One last step before we create the hexbin choropleth map is to add the bins to the shapefile data which will store different values of COVID-19 cases. These bins will be used to create the legend for choropleth. A user can decide the number of bins they want to create based on the data range. Here we create a total of eleven bins.</p>
+<pre><code class="language-r">#Create bins for the legends
+resultreg_covid &lt;- resultreg_covid %&gt;% 
+  mutate(bin=case_when(
+    Confirmed&lt;=50 ~ &quot;&lt;50&quot;,
+    Confirmed&gt;50 &amp; Confirmed&lt;=500 ~ &quot;50-500&quot;,
+    Confirmed&gt;500 &amp; Confirmed&lt;=1000 ~ &quot;500-1000&quot;,
+    Confirmed&gt;1000 &amp; Confirmed&lt;=2000 ~ &quot;1000-1500&quot;,
+    Confirmed&gt;2000 &amp; Confirmed&lt;=3000 ~ &quot;1500-2000&quot;,
+    Confirmed&gt;3000 &amp; Confirmed&lt;=4000 ~ &quot;2000-2500&quot;,
+    Confirmed&gt;4000 &amp; Confirmed&lt;=5000 ~ &quot;2500-3000&quot;,
+    Confirmed&gt;5000 &amp; Confirmed&lt;=6000 ~ &quot;3000-8000&quot;,
+    Confirmed&gt;6000 &amp; Confirmed&lt;=7000 ~ &quot;8000-12000&quot;,
+    Confirmed&gt;7000 &amp; Confirmed&lt;=8000 ~ &quot;12000-17000&quot;,
+    Confirmed&gt;8000 ~ &quot;17000+&quot;
+  ))
+
+#Getting the levels for each bin
+resultreg_covid$bin &lt;- factor(resultreg_covid$bin, levels = c(&quot;&lt;50&quot;,&quot;50-500&quot;, &quot;500-1000&quot;, &quot;1000-1500&quot;,&quot;1500-2000&quot;,
+                                                              &quot;2000-2500&quot;,&quot;2500-3000&quot;, &quot;3000-8000&quot;, 
+                                                              &quot;8000-12000&quot;,&quot;12000-17000&quot;, &quot;17000+&quot;))
+
+#checking the number of unique levels for each bin
+unique(resultreg_covid$bin)
+</code></pre>
+<pre><code>##  [1] &lt;50         50-500      500-1000    1000-1500   1500-2000   2000-2500  
+##  [7] 2500-3000   3000-8000   8000-12000  12000-17000 17000+     
+## 11 Levels: &lt;50 50-500 500-1000 1000-1500 1500-2000 2000-2500 ... 17000+
+</code></pre>
+<p>Finaly, we are done with all the manipulating the shapefile data, data wrangling, and adding data to the shapefile dataframe. Now, comes the moment of truth where we will create the hexbin choropleth map using the shapefile data that we created.</p>
+<p>We use ggplot to develop the hexbin choropleth map. We will use <code>geom_polygon</code> function of ggplot which can read <code>resultreg_covid</code> shapefile data. Also, create the choropleth for the latest data which is provided in the <code>Date</code> attribute of <code>geom_polygon</code>. We provide the longitude and latitude values in the aesthetic attribute of <code>geom_polygon</code>. We then use <code>geom_text</code> function of ggplot to add the county abbreviation names at the centroid of each hexagon polygons. The remaining ggplot arguments are simply adding themes, and working on beautifying the chart by manipulating caption, title, legend and colors. Note that the bins which do not have any data on the latest date are not shown in the legend on the map.</p>
+<pre><code class="language-r">library(ggplot2)
+
+#Creating static hexagon choropleth map with COVID-19 data
+ggplot() +
+  geom_polygon(data = filter(resultreg_covid, Date==max(Date)), aes(fill = bin, x = long, y = lat, group = id) , size=0, alpha=0.9) +
+  geom_text(data=centers, aes(x=x, y=y, label=id, fontface=&quot;bold&quot;), color=&quot;white&quot;, size=6, alpha=0.6) +
+  theme_void() +
+  theme(
+    legend.position = &quot;right&quot;,
+    text = element_text(color = &quot;#22211d&quot;),
+    plot.background = element_rect(fill = &quot;#f5f5f2&quot;, color = NA), 
+    panel.background = element_rect(fill = &quot;#f5f5f2&quot;, color = NA), 
+    legend.background = element_rect(fill = &quot;#f5f5f2&quot;, color = NA),
+    legend.text = element_text(size = 15),
+    plot.title = element_text(size= 22, hjust=0.7, face = &quot;bold&quot;, color = &quot;#4e4d47&quot;, margin = margin(b = -0.1, t = 0.4, l = 2, unit = &quot;cm&quot;)),
+    plot.subtitle = element_text(size = 15, face = &quot;bold&quot;),
+    plot.caption = element_text(size = 12)
+  ) +
+  scale_fill_viridis_d()+
+  labs(title = &quot;Kenya's map of COVID-19 cases, county by county&quot;,
+       subtitle = paste0(&quot;Date:&quot;, max(resultreg_covid$Date)),
+       caption = &quot;Data Source: Ministry of Health
+       Created by: Siddharth Dixit, Jiaqi Zhang
+                   &amp; Kaci Kennedy McDade
+       
+       Baringo	(BA), Bomet (BO), Bungoma (BN), Busia (BS), Elgeyo-Marakwet (EM), 
+       Embu (EB), Garissa (GA), Homa Bay (HB), Isiolo (IS), Kajiado (KJ), Kakamega (KK), 
+       Kericho (KR), Kiambu (KB), Kilifi (KF), Kirinyaga (KY), Kisii (KI), Kisumu (KU), 
+       Kitui (KT), Kwale (KW), Laikipia (LK), Lamu (LM), Machakos (MC), Makueni (MK), 
+       Mandera (MD), Marsabit (MB), Meru (ME), Migori (MG), Mombasa (MM), Murang'a (MU),
+       Nairobi (NB), Nakuru (NK), Nandi (ND), Narok (NR), Nyamira (NM), Nyandarua (NN), 
+       Nyeri (NI), Samburu (SA), Siaya (SI), Taita Taveta (TT), Tana River (TR), 
+       Tharaka-Nithi (NT), Trans Nzoia (TN), Turkana (TU), Uasin Gishu (UG), Vihiga (VI), 
+       Wajir (WJ), West Pokot (WP)&quot;,
+       fill=&quot;&quot;)
+</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" width="960" /></p>
+<h3 id="creating-the-hexbin-choropleth-animation-map"><em>Creating the hexbin choropleth animation map</em></h3>
+<p>Now, we will create the animation map of COVID-19 confirmed daily cases in Kenya. We will be using <code>gganimate</code> package to create the animation map. We simply add three new arguments from <code>gganimate</code> package to out static ggplot code. The  transition_time() argument defines how the data relates to itself across time, enter_fade() and exit_fade() defines how new data should appear and how old data should disappear during the course of the animation. This will create a gif which can then be saved on your hard drive using anim_save() function.</p>
+<pre><code class="language-r">library(gganimate)
+
+#Creating animated hexagon choropleth map with COVID-19 data
+p &lt;- ggplot() +
+  geom_polygon(data = resultreg_covid, aes(fill = bin, x = long, y = lat, group = id) , size=0, alpha=0.9) +
+  geom_text(data=centers, aes(x=x, y=y, label=id), color=&quot;white&quot;, size=6, alpha=0.6) +
+  theme_void() +
+  theme(
+    legend.position = &quot;right&quot;,
+    text = element_text(color = &quot;#22211d&quot;),
+    plot.background = element_rect(fill = &quot;#f5f5f2&quot;, color = NA), 
+    panel.background = element_rect(fill = &quot;#f5f5f2&quot;, color = NA), 
+    legend.background = element_rect(fill = &quot;#f5f5f2&quot;, color = NA),
+    legend.text = element_text(size = 15),
+    plot.title = element_text(size= 22, hjust=0.8,face = &quot;bold&quot;, color = &quot;#4e4d47&quot;, margin = margin(b = -0.1, t = 0.4, l = 2, unit = &quot;cm&quot;)),
+    plot.caption = element_text(hjust = 1, size = 12),
+    plot.subtitle = element_text(size = 15, face = &quot;bold&quot;),
+  ) +
+  scale_fill_viridis_d()+
+  labs(title = &quot;Kenya's map of COVID-19 cases, county by county&quot;,
+       subtitle = paste0(&quot;Date:{frame_time}&quot;),
+       caption = &quot;Data Source: Ministry of Health
+       Created by: Siddharth Dixit, Jiaqi Zhang
+                   &amp; Kaci Kennedy McDade
+       
+        Baringo	(BA), Bomet (BO), Bungoma (BN), Busia (BS), Elgeyo-Marakwet (EM), 
+       Embu (EB), Garissa (GA), Homa Bay (HB), Isiolo (IS), Kajiado (KJ), Kakamega (KK), 
+       Kericho (KR), Kiambu (KB), Kilifi (KF), Kirinyaga (KY), Kisii (KI), Kisumu (KU), 
+       Kitui (KT), Kwale (KW), Laikipia (LK), Lamu (LM), Machakos (MC), Makueni (MK), 
+       Mandera (MD), Marsabit (MB), Meru (ME), Migori (MG), Mombasa (MM), Murang'a (MU),
+       Nairobi (NB), Nakuru (NK), Nandi (ND), Narok (NR), Nyamira (NM), Nyandarua (NN), 
+       Nyeri (NI), Samburu (SA), Siaya (SI), Taita Taveta (TT), Tana River (TR), 
+       Tharaka-Nithi (NT), Trans Nzoia (TN), Turkana (TU), Uasin Gishu (UG), Vihiga (VI), 
+       Wajir (WJ), West Pokot (WP)&quot;,
+       fill=&quot;&quot;)+
+  transition_time(Date)+
+  enter_fade()+
+  exit_fade()
+
+animate(plot = p, fps=4, width = 700, height = 800, end_pause = 24)
+</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-13-1.gif" alt=""><!-- -->
+We have now created a static and an animated hexbin chropleth map of COVID-19 cases for Kenya. One can use the same approach to create any hexbin map using a different dataset. I hope you liked the post. Let me know if you have any advice or comment on my approach to creating the hexbin choropleth map.</p>
+
+    </div>
+
+    
+
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tag/r/">r</a>
+  
+  <a class="badge badge-light" href="/tag/ggplot/">ggplot</a>
+  
+  <a class="badge badge-light" href="/tag/choropleth/">choropleth</a>
+  
+  <a class="badge badge-light" href="/tag/hexagon/">hexagon</a>
+  
+  <a class="badge badge-light" href="/tag/geospatial-analysis/">geospatial analysis</a>
+  
+</div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=/2021/05/02/part-2-how-to-create-hexbin-choropleth-map-to-visualize-data/&amp;text=Part%202%20%28final%29-%20How%20to%20create%20hexbin%20choropleth%20map%20to%20visualize%20data?" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=/2021/05/02/part-2-how-to-create-hexbin-choropleth-map-to-visualize-data/&amp;t=Part%202%20%28final%29-%20How%20to%20create%20hexbin%20choropleth%20map%20to%20visualize%20data?" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Part%202%20%28final%29-%20How%20to%20create%20hexbin%20choropleth%20map%20to%20visualize%20data?&amp;body=/2021/05/02/part-2-how-to-create-hexbin-choropleth-map-to-visualize-data/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=/2021/05/02/part-2-how-to-create-hexbin-choropleth-map-to-visualize-data/&amp;title=Part%202%20%28final%29-%20How%20to%20create%20hexbin%20choropleth%20map%20to%20visualize%20data?" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="whatsapp://send?text=Part%202%20%28final%29-%20How%20to%20create%20hexbin%20choropleth%20map%20to%20visualize%20data?%20/2021/05/02/part-2-how-to-create-hexbin-choropleth-map-to-visualize-data/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=/2021/05/02/part-2-how-to-create-hexbin-choropleth-map-to-visualize-data/&amp;title=Part%202%20%28final%29-%20How%20to%20create%20hexbin%20choropleth%20map%20to%20visualize%20data?" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+
+
+
+
+  
+
+
+
+
+<div id="disqus_thread"></div>
+<script>
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://siddix.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+  
+  
+  <div class="article-widget content-widget-hr">
+    <h3>Related</h3>
+    <ul>
+      
+      <li><a href="/2021/03/07/hexbin/">Part 1- How to create hexbin choropleth map to visualize data?</a></li>
+      
+      <li><a href="/2021/03/15/covid-19/">How much will it cost different low- and middle- income countries (LMICs) to provide COVID-19 vaccine to their population?</a></li>
+      
+    </ul>
+  </div>
+  
+
+
+
+
+
+  </div>
+</article>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    Code with <i class='fas fa-heart'></i> and <i class='fab fa-r-project'></i> <a href='https://bookdown.org/yihui/blogdown/'>Blogdown</a><br>© Siddharth Dixit, 2021
+  </p>
+
+  
+  
+
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+    Published with
+    <a href="https://wowchemy.com" target="_blank" rel="noopener">Wowchemy</a>  —
+    the free, <a href="https://github.com/wowchemy/wowchemy-hugo-modules" target="_blank" rel="noopener">
+    open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+      
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/instant.page/5.1.0/instantpage.min.js" integrity="sha512-1+qUtKoh9XZW7j+6LhRMAyOrgSQKenQ4mluTR+cvxXjP1Z54RxZuzstR/H9kgPXQsVB8IW7DMDFUJpzLjvhGSQ==" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js" integrity="sha512-TDKKr+IvoqZnPzc3l35hdjpHD0m+b2EC2SrLEgKDRWpxf2rFCxemkgvJ5kfU48ip+Y+m2XVKyOCD85ybtlZDmw==" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/latex.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.js" integrity="sha512-SeiQaaDh73yrb56sTW/RgVdi/mMqNeM2oBwubFHagc5BkixSpP1fvqF47mKzPGWYSSy4RwbBunrJBQ4Co8fRWA==" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks",
+        'slides' : "Slides"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/wowchemy.min.ffabb05383f1b16d83e7181a605e644c.js"></script>
+
+    
+
+
+
+
+
+
+</body>
+</html>

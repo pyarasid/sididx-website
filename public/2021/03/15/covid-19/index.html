@@ -1,0 +1,1262 @@
+<!DOCTYPE html><html lang="en-us" >
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  
+  
+  <meta name="generator" content="Wowchemy 5.0.0-beta.1 for Hugo">
+  
+
+  
+
+  
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Siddharth Dixit">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Successful control of COVID-19 pandemic not only depends on the research and development of effective vaccines, but also on delivery of these vaccines to everyone. Therefore, for any country the total cost–procurement plus delivery cost– to vaccinate its population is a crucial information as this can help the country to plan, raise, and allocate resources needed to successfully vaccinate their population against the COVID-19 pandemic.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/2021/03/15/covid-19/">
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+
+  
+  
+  
+  <meta name="theme-color" content="#EF525B">
+  
+
+  
+  
+  
+  <script src="/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha256-FMvZuGapsJLjouA6k7Eo2lusoAX9i0ShlWFG6qt7SLc=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css" integrity="sha512-1xoFisiGdy9nvho8EgXuXvnpR5GAMSjFwp40gSRE3NwdUdIMIKuPa7bqoUhLD0O/5tPNhteAsE5XyyMi5reQVA==" crossorigin="anonymous">
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.2/lazysizes.min.js" integrity="sha512-TmDwFLhg3UA4ZG0Eb4MIyT1O1Mb+Oww5kFG0uHqXsdbyZz9DcvYQhKpGgNkamAI6h2lGGZq2X8ftOJvF/XjTUg==" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+    
+      
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cutive+Mono%7CLora:400,700%7CRoboto:400,700&display=swap">
+    
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.min.bb565ccc8def40f418a9099753e73ccb.css">
+
+  
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-ACCOUNTID-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+      dataLayer.push(arguments);
+  }
+
+  function trackOutboundLink(url, target) {
+    gtag('event', 'click', {
+         'event_category': 'outbound',
+         'event_label': url,
+         'transport_type': 'beacon',
+         'event_callback': function () {
+           if (target !== '_blank') {
+             document.location = url;
+           }
+         }
+    });
+    console.debug("Outbound link clicked: " + url);
+  }
+
+  function onClickCallback(event) {
+    if ((event.target.tagName !== 'A') || (event.target.host === window.location.host)) {
+      return;
+    }
+    trackOutboundLink(event.target, event.target.getAttribute('target'));  
+  }
+
+  gtag('js', new Date());
+  gtag('config', 'UA-ACCOUNTID-1', {});
+
+  
+  document.addEventListener('click', onClickCallback, false);
+</script>
+
+
+  
+
+  
+
+
+  
+  
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_huad25c1bc025cb7d239e90ad1fd91518e_22315_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_huad25c1bc025cb7d239e90ad1fd91518e_22315_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="/2021/03/15/covid-19/">
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary">
+  
+  <meta property="og:site_name" content="Siddharth Dixit">
+  <meta property="og:url" content="/2021/03/15/covid-19/">
+  <meta property="og:title" content="How much will it cost different low- and middle- income countries (LMICs) to provide COVID-19 vaccine to their population? | Siddharth Dixit">
+  <meta property="og:description" content="Successful control of COVID-19 pandemic not only depends on the research and development of effective vaccines, but also on delivery of these vaccines to everyone. Therefore, for any country the total cost–procurement plus delivery cost– to vaccinate its population is a crucial information as this can help the country to plan, raise, and allocate resources needed to successfully vaccinate their population against the COVID-19 pandemic."><meta property="og:image" content="/images/icon_huad25c1bc025cb7d239e90ad1fd91518e_22315_512x512_fill_lanczos_center_2.png">
+  <meta property="twitter:image" content="/images/icon_huad25c1bc025cb7d239e90ad1fd91518e_22315_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2021-03-15T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2021-03-15T21:12:11-04:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/2021/03/15/covid-19/"
+  },
+  "headline": "How much will it cost different low- and middle- income countries (LMICs) to provide COVID-19 vaccine to their population?",
+  
+  "datePublished": "2021-03-15T00:00:00Z",
+  "dateModified": "2021-03-15T21:12:11-04:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Siddharth Dixit"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Siddharth Dixit",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/images/icon_huad25c1bc025cb7d239e90ad1fd91518e_22315_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "Successful control of COVID-19 pandemic not only depends on the research and development of effective vaccines, but also on delivery of these vaccines to everyone. Therefore, for any country the total cost–procurement plus delivery cost– to vaccinate its population is a crucial information as this can help the country to plan, raise, and allocate resources needed to successfully vaccinate their population against the COVID-19 pandemic."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>How much will it cost different low- and middle- income countries (LMICs) to provide COVID-19 vaccine to their population? | Siddharth Dixit</title>
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper  ">
+
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.js"></script>
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  <div class="page-header">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Siddharth Dixit</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Siddharth Dixit</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>Blogs</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#featured"><span>Publications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#gallery"><span>Gallery</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/media/Siddharth_Dixit_Resume.pdf"><span>Resume</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+          <i class="fas fa-moon" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  </div>
+
+  <div class="page-body">
+    <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>How much will it cost different low- and middle- income countries (LMICs) to provide COVID-19 vaccine to their population?</h1>
+
+  
+  <p class="page-subtitle">An interactive application to explore and predict COVID-19 vaccination cost.</p>
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          Last updated on
+      
+    
+    Mar 15, 2021
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    5 min read
+  </span>
+  
+
+  
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/category/prediction/">Prediction</a>, <a href="/category/geocomputation/">Geocomputation</a>, <a href="/category/interactive-application/">Interactive application</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+
+<p>Successful control of COVID-19 pandemic not only depends on the research and development of effective vaccines, but also on delivery of these vaccines to everyone. Therefore, for any country the total cost–procurement plus delivery cost– to vaccinate its population is a crucial information as this can help the country to plan, raise, and allocate resources needed to successfully vaccinate their population against the COVID-19 pandemic. This information becomes even more important and pressing for low- and middle- income countries (LMICs) which are already under enormous financial stress due to the impact of COVID-19 on their economies. Therefore, I, along with my colleagues at <a href="https://centerforpolicyimpact.org/" target="_blank">The center for policy impact in global health</a> developed an application where one can obtain, and predict the total cost COVID-19 vaccination for 117 LMICs.</p>
+<p>We provide vaccination cost to reach herd immunity in a country i.e. cost to vaccinate 70% of the population, cost to vaccinate high-risk population such as population with comorbidity, and cost to vaccinate health professionals. The baseline data, and information on the methodology used for calculating the costs can be found on page 3 and page 4 of the application.</p>
+<p>However, a general user or a policymaker might want to input their own data as they might have more accurate information for certain variables used for cost calculations in this application. Therefore, to accommodate such scenarios, we have provided the option to the users to input their own data for the variables used for vaccination cost calculation, and get the new vaccination cost information based on the user input.</p>
+<p>Through this post, i would like to provide more information about this application, and how a user can interact and extract the maximum information from the application.</p>
+<p><em><strong>Page 1: “COVID-19 Vaccination Cost Map”</strong></em>
+<img src="/post/2021-03-15-covid-19/index.en_files/figure-html/unnamed-chunk-1-1.png" width="672" />
+The first page of the application shows the distribution of different vaccination costs– 70% population, high-risk population, and health professionals. These costs are based on our calculation using the baseline data. The baseline data can be found in the “Data Explorer” tab. A user can choose vaccination cost for different population segments, and then can click on a country of their choice to view the total cost to vaccinate its population on the chart in the panel on the right. In addition, there is an option in the panel named “Include COVAX procurement pricing”. If a user does not check this option, the vaccination cost for <a href="https://www.gavi.org/vaccineswork/gavi-covax-amc-explained" target="_blank">COVAX-AMC</a> eligible countries will use USD5.25 as the median vaccine procurement cost (more information on the median cost can be found in the methodology section of “About this site”). However, if “Include COVAX procurement pricing” is checked then the vaccination cost for <a href="https://www.gavi.org/vaccineswork/gavi-covax-amc-explained" target="_blank">COVAX-AMC</a> eligible countries will use the COVAX pricing i.e USD3. The countries which are not <a href="https://www.gavi.org/vaccineswork/gavi-covax-amc-explained" target="_blank">COVAX-AMC</a> eligible will continue using the median vaccine procurement cost of USD5.25 in the cost calculations.</p>
+<p><em><strong>Page 2: “Scenario Analysis and Immunization Comparison”</strong></em>
+<img src="/post/2021-03-15-covid-19/index.en_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+After you have explored the baseline calculation of total costs, but would like to obtain granular information like how much does it cost for a country to procure the vaccine, or how much will it cost to deliver the vaccine to its population, you can move to <code>Scenario Analysis and Immunization Comparison</code> tab. This tab provides user the ability to visualize costs for various scenarios. For example, a country might only incur vaccine procurement costs, and the delivery cost for such a country was being covered by some international organization or a bilateral donor, or there could be a scenario that vaccine procurement cost might have been take care off for a country by some donor, but the country will still incur delivery cost to vaccinate its population, and finally there could be the usual situation when the country incurs both the vaccine procurement and delivery cost. This page of the application provides option to a user to choose any of these scenarios for the country of their choice and visualize the vaccine procurement, delivery and total cost for 70% population, high-risk, population, and health professions. Similar to the first tab a user can again check “Include COVAX procurement pricing” if they want to include COVAX pricing in the cost calculation for their country of choice.</p>
+<p>In this tab, we also provide user the option to input their data to obtain the vaccination cost for different countries. Users can input their data for the variables on number of health professionals, high-risk population, number of doses, bilateral vaccine procurement cost, and vaccine delivery cost by clicking on <code>Click to input your data!</code> button. Based on the user input the chart and the table below the chart will update.</p>
+<p>In addition to vaccination costs, the charts also plots the immunization costs incurred by a country (most recent available data is plotted). A user can make comparison between the incurred immunization cost, and required COVID-19 vaccination cost for any country.</p>
+<p><em><strong>Page 3: “Data Explorer”</strong></em>
+<img src="/post/2021-03-15-covid-19/index.en_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+This page provides the baseline data used for the cost calculation in this application. The baseline data includes information about country’s COVAX eligibility, number of health professionals, immunization cost, total population, high-risk population percent, population covered by COVAX, population covered by bilateral deals, number of doses, vaccine procurement costs (bilateral and COVAX), and vaccine delivery cost.</p>
+<p><em><strong>Page 3: “About this Site”</strong></em>
+<img src="/post/2021-03-15-covid-19/index.en_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+The final page of this application provides some background information, github link to the code used in creating this application, and information on selected references.</p>
+<p>You can glimpse the application below. But, the application is best viewed on a full screen. You can access the application on the browser by clicking <a href="https://centerforpolicyimpact.shinyapps.io/covid-vaccination-costs-analysis/" target="_blank">here</a>.
+<iframe src ="https://centerforpolicyimpact.shinyapps.io/covid-vaccination-costs-analysis/" height=1000px width=700px /></p>
+
+    </div>
+
+    
+
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tag/r/">r</a>
+  
+  <a class="badge badge-light" href="/tag/ggplot/">ggplot</a>
+  
+  <a class="badge badge-light" href="/tag/geospatial-analysis/">geospatial analysis</a>
+  
+  <a class="badge badge-light" href="/tag/leaflet/">leaflet</a>
+  
+</div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=/2021/03/15/covid-19/&amp;text=How%20much%20will%20it%20cost%20different%20low-%20and%20middle-%20income%20countries%20%28LMICs%29%20to%20provide%20COVID-19%20vaccine%20to%20their%20population?" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=/2021/03/15/covid-19/&amp;t=How%20much%20will%20it%20cost%20different%20low-%20and%20middle-%20income%20countries%20%28LMICs%29%20to%20provide%20COVID-19%20vaccine%20to%20their%20population?" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=How%20much%20will%20it%20cost%20different%20low-%20and%20middle-%20income%20countries%20%28LMICs%29%20to%20provide%20COVID-19%20vaccine%20to%20their%20population?&amp;body=/2021/03/15/covid-19/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=/2021/03/15/covid-19/&amp;title=How%20much%20will%20it%20cost%20different%20low-%20and%20middle-%20income%20countries%20%28LMICs%29%20to%20provide%20COVID-19%20vaccine%20to%20their%20population?" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="whatsapp://send?text=How%20much%20will%20it%20cost%20different%20low-%20and%20middle-%20income%20countries%20%28LMICs%29%20to%20provide%20COVID-19%20vaccine%20to%20their%20population?%20/2021/03/15/covid-19/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=/2021/03/15/covid-19/&amp;title=How%20much%20will%20it%20cost%20different%20low-%20and%20middle-%20income%20countries%20%28LMICs%29%20to%20provide%20COVID-19%20vaccine%20to%20their%20population?" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <a href="/"><img class="avatar mr-3 avatar-circle" src="/author/siddharth-dixit/avatar_hu8fdc9644b00fe4ff51d8cda395766b0f_370662_270x270_fill_q90_lanczos_center.jpg" alt="Siddharth Dixit"></a>
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="/">Siddharth Dixit</a></h5>
+      <h6 class="card-subtitle">Associate in Research</h6>
+      
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/sid_dix" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/pyarasid" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.linkedin.com/in/siddharth-dixit-b02bbb34/" target="_blank" rel="noopener">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+<div id="disqus_thread"></div>
+<script>
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://siddix.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+  
+  
+  <div class="article-widget content-widget-hr">
+    <h3>Related</h3>
+    <ul>
+      
+      <li><a href="/2021/03/07/hexbin/">Part 1- How to create hexbin choropleth map to visualize data?</a></li>
+      
+      <li><a href="/2021/05/02/part-2-how-to-create-hexbin-choropleth-map-to-visualize-data/">Part 2 (final)- How to create hexbin choropleth map to visualize data?</a></li>
+      
+    </ul>
+  </div>
+  
+
+
+
+
+
+  </div>
+</article>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    Code with <i class='fas fa-heart'></i> and <i class='fab fa-r-project'></i> <a href='https://bookdown.org/yihui/blogdown/'>Blogdown</a><br>© Siddharth Dixit, 2021
+  </p>
+
+  
+  
+
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+    Published with
+    <a href="https://wowchemy.com" target="_blank" rel="noopener">Wowchemy</a>  —
+    the free, <a href="https://github.com/wowchemy/wowchemy-hugo-modules" target="_blank" rel="noopener">
+    open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+      
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/instant.page/5.1.0/instantpage.min.js" integrity="sha512-1+qUtKoh9XZW7j+6LhRMAyOrgSQKenQ4mluTR+cvxXjP1Z54RxZuzstR/H9kgPXQsVB8IW7DMDFUJpzLjvhGSQ==" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js" integrity="sha512-TDKKr+IvoqZnPzc3l35hdjpHD0m+b2EC2SrLEgKDRWpxf2rFCxemkgvJ5kfU48ip+Y+m2XVKyOCD85ybtlZDmw==" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/latex.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.js" integrity="sha512-SeiQaaDh73yrb56sTW/RgVdi/mMqNeM2oBwubFHagc5BkixSpP1fvqF47mKzPGWYSSy4RwbBunrJBQ4Co8fRWA==" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks",
+        'slides' : "Slides"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/wowchemy.min.ffabb05383f1b16d83e7181a605e644c.js"></script>
+
+    
+
+
+
+
+
+
+</body>
+</html>
