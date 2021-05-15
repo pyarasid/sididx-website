@@ -26,7 +26,7 @@ links:
 #publication: In *Source Themes Conference*
 #publication_short: In *STC*
 publication_types:
-- "4"
+- "3"
 #publishDate: "2021-05-14T00:00:00Z"
 #slides: example
 summary: COVID-19 vaccination will have a major impact on LMIC national healthcare budgets. Substantial investments by governments and donors are needed for vaccine procurement and vaccine delivery infrastructure.  
