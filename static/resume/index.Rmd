@@ -7,7 +7,7 @@ output:
     # set it to true for a self-contained HTML page but it'll take longer to render
     self_contained: false
 # uncomment this line to produce HTML and PDF in RStudio:
-#knit: pagedown::chrome_print
+knit: pagedown::chrome_print
 ---
 
 Aside
@@ -52,7 +52,7 @@ Main
 
 Siddharth Dixit {#title}
 --------------------------------------------------------------------------------
- <br>
+ <br><br><br>
  
 ### Key Qualifications
 
