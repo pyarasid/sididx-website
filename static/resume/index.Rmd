@@ -31,11 +31,11 @@ Technical skills {#skills}
 --------------------------------------------------------------------------------
 
 
-- Data Visualization, Statistical Learning, Economic analysis and Project Appraisal
+- Data Visualization, Statistical Learning, Economic analysis and Project Appraisal.
 
-- Experience in using Statistical and Neural Network Algorithms 
+- Experience in using Statistical and Neural Network Algorithms .
 
-- Skilled in R & Rstudio (dplyr, ggplot2, Shiny), Python (Pandas, NumPy, sklearn), D3.js, MS Office, Stata
+- Skilled in R & Rstudio (dplyr, ggplot2, Shiny), Python (Pandas, NumPy, sklearn), D3.js, MS Office, Stata.
 
 
 Disclaimer {#disclaimer}
@@ -55,9 +55,9 @@ Siddharth Dixit {#title}
 
 ### Key Qualifications
 
--	Policy analyst and researcher with over seven years of experience in the private and not-for-profit sectors
--	Five years of experience in program management, planning and strategy, including conception and launch of new programs and an NGO
--	Product designer experienced in redesign and launch of new technologies using quantitative and qualitative research methods
+-	Policy analyst and researcher with over seven years of experience in the private and not-for-profit sectors.
+-	Five years of experience in program management, planning and strategy, including conception and launch of new programs and an NGO.
+-	Product designer experienced in redesign and launch of new technologies using quantitative and qualitative research methods.
 -	Experience in managing critical client relationships, and communications with multiple stakeholders including mentoring and training of new employees, and capacity building of colleagues. 
 
 
