@@ -43,4 +43,10 @@ experience:
   #description: Taught electronic engineering and researched semiconductor physics.
   location: Bangalore, India
   title: Consultant
+- company: John Deere India Pvt. Ltd.
+  company_url: ""
+  date_end: "2012-05-31"
+  date_start: "2009-07-01"
+  location: Pune, India
+  title: Senior Engineer
 ---
