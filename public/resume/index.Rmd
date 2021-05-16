@@ -1,0 +1,291 @@
+---
+title: "Siddharth Dixit's resume"
+author: Siddharth Dixit
+date: "`r Sys.Date()`"
+output:
+  pagedown::html_resume:
+    # set it to true for a self-contained HTML page but it'll take longer to render
+    self_contained: false
+# uncomment this line to produce HTML and PDF in RStudio:
+knit: pagedown::chrome_print
+---
+
+Aside
+================================================================================
+
+
+<!-- ![Lijia Yu](https://avatars1.githubusercontent.com/u/895125?s=400&v=4){width=80%} -->
+
+
+Contact Info {#contact}
+--------------------------------------------------------------------------------
+
+- <i class="fa fa-envelope"></i> siddharth.dixit@duke.edu
+- <i class="fa fa-link"></i> [www.siddix.us](https://www.siddix.us/)
+- <i class="fa fa-github"></i> [github.com/pyarasid](https://github.com/pyarasid)
+- <i class="fa fa-linkedin"></i> [https://www.linkedin.com/siddharth_dixit](https://www.linkedin.com/in/siddharth-dixit-b02bbb34)
+- For more information, please contact me via email.
+
+
+Technical skills {#skills}
+--------------------------------------------------------------------------------
+
+
+- Data Visualization, Statistical Learning, Economic analysis and Project Appraisal
+
+- Experience in using Statistical and Neural Network Algorithms 
+
+- Skilled in Rstudio (dplyr, ggplot2, Shiny), Python (Pandas, NumPy, sklearn), D3.js, MS Office, Stata
+
+
+Disclaimer {#disclaimer}
+--------------------------------------------------------------------------------
+
+This resume was made with the R package [**pagedown**](https://github.com/rstudio/pagedown).
+
+Last updated on `r Sys.Date()`.
+
+
+
+Main
+================================================================================
+
+Siddharth Dixit {#title}
+--------------------------------------------------------------------------------
+
+### Key Qualifications
+
+-	Policy analyst and researcher with over seven years of experience in the private and not-for-profit sectors
+-	Five years of experience in program management, planning and strategy, including conception and launch of new programs and an NGO
+-	Product designer experienced in redesign and launch of new technologies using quantitative and qualitative research methods
+-	Experience in managing critical client relationships, and communications with multiple stakeholders including mentoring and training of new employees, and capacity building of colleagues. 
+
+
+
+Education {data-icon=graduation-cap data-concise=true}
+--------------------------------------------------------------------------------
+
+### Duke University
+
+Master of International Development Policy (Applied Economics)
+
+Durham, USA
+
+2015 - 2017
+
+- Received graduate certificate in International Peace and Conflict Resolution from UNC, Chapel Hill, USA
+- Masters project on irrigation issue and its impact on small farmers, and food security in Uttar Pradesh
+
+### Sciences Po                                                                                
+
+Coursework in Master of Public Affairs Program  
+
+Paris, France
+
+2014 - 2015
+
+- Received French Government Scholarship (Charpak Scholarship) to attend the program
+- Project on B2B dynamics and redesign of BEE (Black Economic Empowerment) policy in South Africa
+
+### Ashoka University
+
+Certificate in Liberal Arts, Young India Fellowship (YIF)
+
+New Delhi, India
+
+2012 - 2013
+
+- One of the 97 fellows selected from among thousands of applicants from across India to study on full scholarship ($10,000)
+- Worked on a project to conduct primary and secondary research to understand the role played by elected village representatives in Raebareli (India) in rural development
+
+### Manipal University
+
+Bachelors of Engineering (Mechanical Engineering)                                                                               
+
+Manipal, India
+
+2005 - 2009
+
+
+Professional Experience {data-icon=suitcase}
+--------------------------------------------------------------------------------
+
+### Associate in Research
+
+Duke University
+
+Durham, USA
+
+2017 - Present
+
+::: concise
+- Lead BMGF sponsored health transition project in Nigeria and Ghana 
+- Write Shiny apps, and lead machine learning projects
+- Published four cost-effectiveness analysis (CEA) study of `SL@B` funded health innovations
+- Conducted project appraisal of public infrastructures under deep climate change uncertainty in St. Lucia for World Bank
+- Conducted policy research on trade and investment relationship between India and Sub-Saharan Africa
+:::
+
+### Intern, Enabling the Business of Agriculture (EBA) (Development Economics (DECSI))
+
+The World Bank
+
+Washington D.C., USA                                                                                                    
+
+2016
+
+::: concise
+- Conducted detailed research on laws agriculture machinery in many African and Asian countries 
+- Collected data for EBA topics on Seed, Information and Communication Technology (ICT) and Markets
+- Participated in developing effective partnerships with leading agriculture organizations and experts in India 
+:::
+
+### Consultant, Rural Innovation and Farmings
+
+Ashoka Innovators for the Public
+
+Bangalore, India                                                                                
+
+2013 - 2014
+
+::: concise
+- Worked on creating a one-year immersion fellowship to attract young talent to agriculture sector 
+- Designing the curriculum framework and developing case studies about social enterprises
+- Detailing the budget of $ 50 million USD 
+- Designing the program structure and curriculum
+- Managing communication between multiple stakeholders including social-entrepreneurs, academic institutions, and potential funders
+:::
+
+### Senior Engineer, Design team
+
+John Deere India Pvt. Ltd.
+
+Pune, India              
+
+2009 - 2012
+
+::: concise
+- Coordinated and executed multi-million-dollar projects in the tractor chassis area
+- Worked and coordinated with multi-cultural teams across three continents
+- Involved in design of hydraulics and chassis of small tractors for Indian market
+- Tasked on capacity building of new employees in design team
+- Reduced chassis design errors by half by training and educating employees about best practices and engineering standards
+:::
+
+
+Publications{data-icon=file}
+--------------------------------------------------------------------------------
+## Reports
+
+### [Cost-Effectiveness Analysis: Elizabeth Glaser Pediatric AIDS Foundation (EGPAF) – Pratt Pouch](https://sites.globalhealth.duke.edu/evidencelab/wp-content/uploads/sites/23/2018/07/Bempu-CEA-Report.pdf)
+
+Dixit, S., Shahid, M., Fernholz, F., Ogbuoj, O., Biru, B., Baumgartner, J. N., & Udayakumar, K. (2020). Cost-Effectiveness Analysis: Elizabeth Glaser Pediatric AIDS Foundation (EGPAF) – Pratt Pouch. Durham: Evidence Lab, Duke Global Health Institute. 
+
+N/A
+
+2020
+
+### [Cost-Effectiveness Analysis: Partners inHealth–All Babies Count](https://sites.globalhealth.duke.edu/evidencelab/wp-content/uploads/sites/23/2018/07/PIH-CEA-Report.pdf)
+
+Dixit, S., Shahid, M., Fernholz, F., Ogbuoj, O., Biru, B., Baumgartner, J. N., & Udayakumar, K. (2020). Cost-Effectiveness Analysis: Partners inHealth–All Babies Count. Durham: Evidence Lab at Duke Global Health Institute. 
+
+N/A
+
+2020
+
+### [Cost-Effectiveness Analysis: BEMPU-TempWatch](https://sites.globalhealth.duke.edu/evidencelab/wp-content/uploads/sites/23/2018/07/Bempu-CEA-Report.pdf)
+
+Dixit, S., Shahid, M., Fernholz, F., Ogbuoj, O., Biru, B., Baumgartner, J. N., & Udayakumar, K. (2020). Cost-Effectiveness Analysis: BEMPU-TempWatch. Durham: Evidence Lab, Duke Global Health Institute.
+
+N/A
+
+2020
+
+### Cost Effectiveness Analysis: INMED Bilikit™
+
+Dixit, S., Shahid, M., Fernholz, F., Ogbuoji, O., Biru, B., Udayakumar, K., & Baumgartner, J. (2020). Cost Effectiveness Analysis: INMED Bilikit™. Durham: Evaluating Saving Lives at Birth (E-SL@B) Program; Duke Global Health Institute Evidence Lab & Global Health Innovation Center at Duke University.
+
+N/A
+
+2020
+
+### [Costing Tool for Health Innovators](https://dukeghic.org/wp-content/uploads/sites/20/2020/12/Costing-Tool-for-Healthcare-Innovations-Brief.pdf)
+
+Dixit, S., Fernholz, F., Ogbuoji, O., Finnegan, A., Biru, B., Udayakumar,K.,& Baumgartner, J. (2020) Costing Tool for Health Innovators. Durham: Evaluating Saving Lives at Birth (E-SL@B) Program; Duke Global Health Institute Evidence Lab & Global Health Innovation Center at Duke University. 
+
+N/A
+
+2020
+
+
+### [Nigeria’s policy response to COVID-19](http://centerforpolicyimpact.org/our-work/the-4ds/nigeria-policy-response-to-covid-19/)
+
+Dixit S, Ogundeji YK, Onwujekwe O, Ezenwanfor C, Ohiri K, Ogbuoji O, Mao W, Bharali I, Yamey G. Nigeria’s policy response to COVID-19. The Center for Policy Impact in Global Health. Policy Report: June 2020. 
+
+N/A
+
+2020
+
+
+### [Ghana’s policy response to COVID-19](http://centerforpolicyimpact.org/our-work/the-4ds/ghana-policy-response-to-covid-19/)
+
+Zhang J, Nonvignon J, Dixit S, Mao W, Yamey G. Ghana’s policy response to COVID-19. The Center for Policy Impact in Global Health. Policy Report: July 2020 
+
+N/A
+
+2020
+
+
+### [Transitioning away from donor funding for health: a cross-cutting examination of donor approaches to transition](http://centerforpolicyimpact.org/transitioning-away-from-donor-funding-for-health-cross-cutting/)
+
+McDade KK, Schäferhoff M, Ogbuoji O, Bharali I, Dixit S, Mao W, Bandara S, Yamey G. Transitioning away from donor funding for health: a cross-cutting examination of donor approaches to transition. The Center for Policy Impact in Global Health. Duke Global Working Paper Series: number 21, April 2020 
+
+N/A
+
+2020
+
+### [HEALTH AID in TRANSITION: A Review of the World Bank International Development Association (IDA)](http://centerforpolicyimpact.org/wp-content/uploads/sites/18/2019/11/IDA-Transition-Profile-Final-1.pdf)
+
+Dixit, S., McDade, K. K., Yamey, G., & Schäeferhoff, M. (November 2019). HEALTH AID in TRANSITION: A Review of the World Bank International Development Association (IDA). Durham: The Center for Policy Impact in Global Health. 
+
+N/A
+
+2019
+
+
+## Working Papers
+
+### [The Cost of Procuring and Delivering COVID-19 Vaccines in Low- and Middle-Income Countries: A Model of Projected Resource Needs](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3824690)
+
+Mustafa Diab, Mohamed and Zimmerman, Armand and Dixit, Siddharth and Mao, Wenhui and Bharali, Ipchita and Kristoffersen, Annalisa and Yamey, Gavin and Ogbuoji, Osondu, The Cost of Procuring and Delivering COVID-19 Vaccines in Low- and Middle-Income Countries: A Model of Projected Resource Needs. 
+
+N/A
+
+2021
+ 
+### [Are Economic Relations with India Helping Africa? Trade, Investment and Development in the Middle-Income South](https://www.brookings.edu/wp-content/uploads/2019/03/Are-Economic-Relations-with-India-Helping-Africa.pdf)
+
+Dixit, S., Gill, I. S., & Kumar, C. (2018). Are Economic Relations with India Helping Africa? Trade, Investment and Development in the Middle-Income South. Washington DC: The Brookings Institution. 
+
+N/A
+
+2018
+
+## Blogs
+
+### [How well has Nigeria responded to COVID-19? ](https://www.brookings.edu/blog/future-development/2020/07/02/how-well-has-nigeria-responded-to-covid-19/)
+
+Dixit, S., Ogundeji, Y. K., & Onwujekwe, O. (2020, July 2). How well has Nigeria responded to COVID-19? 
+
+N/A
+
+2020
+
+### [Is trade with India changing Africa’s health care landscape?](https://www.brookings.edu/blog/future-development/2019/03/01/is-trade-with-india-changing-africas-health-care-landscape/)
+
+Dixit, S., Emery, N., & Kumar, C. (2019, March 1). Is trade with India changing Africa’s health care landscape? 
+
+N/A
+
+2019
+

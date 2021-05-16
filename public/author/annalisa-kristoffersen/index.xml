@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Annalisa Kristoffersen | Siddharth Dixit</title>
+    <link>/author/annalisa-kristoffersen/</link>
+      <atom:link href="/author/annalisa-kristoffersen/index.xml" rel="self" type="application/rss+xml" />
+    <description>Annalisa Kristoffersen</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>Code with  and  Blogdown
+© Siddharth Dixit, 2021</copyright><lastBuildDate>Fri, 14 May 2021 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_huad25c1bc025cb7d239e90ad1fd91518e_22315_512x512_fill_lanczos_center_2.png</url>
+      <title>Annalisa Kristoffersen</title>
+      <link>/author/annalisa-kristoffersen/</link>
+    </image>
+    
+    <item>
+      <title>The Cost of Procuring and Delivering COVID-19 Vaccines in Low- and Middle-Income Countries: A Model of Projected Resource Needs</title>
+      <link>/publication/report-covid19/</link>
+      <pubDate>Fri, 14 May 2021 00:00:00 +0000</pubDate>
+      <guid>/publication/report-covid19/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
