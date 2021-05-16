@@ -52,7 +52,8 @@ Main
 
 Siddharth Dixit {#title}
 --------------------------------------------------------------------------------
-
+ <br>
+ 
 ### Key Qualifications
 
 -	Policy analyst and researcher with over seven years of experience in the private and not-for-profit sectors
@@ -100,12 +101,12 @@ New Delhi, India
 
 ### Manipal University
 
-Bachelors of Engineering (Mechanical Engineering)                                                                               
+Bachelors of Engineering (Mechanical Engineering)                                                                            
 Manipal, India
 
 2005 - 2009
 
-<br><br><br>
+
 
 Professional Experience {data-icon=suitcase}
 --------------------------------------------------------------------------------
