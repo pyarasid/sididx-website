@@ -53,8 +53,6 @@ Main
 Siddharth Dixit {#title}
 --------------------------------------------------------------------------------
 
-<br><br>
-
 ### Key Qualifications
 
 -	Policy analyst and researcher with over seven years of experience in the private and not-for-profit sectors
@@ -109,6 +107,8 @@ Manipal, India
 
 
 <br><br><br><br><br><br>
+<br><br>
+
 
 Professional Experience {data-icon=suitcase}
 --------------------------------------------------------------------------------
