@@ -52,7 +52,7 @@ Main
 
 Siddharth Dixit {#title}
 --------------------------------------------------------------------------------
- <br>
+
  
 ### Key Qualifications
 
@@ -107,7 +107,7 @@ Manipal, India
 2005 - 2009
 
 
-<br><br><br>
+<br><br><br><br>
 
 Professional Experience {data-icon=suitcase}
 --------------------------------------------------------------------------------
