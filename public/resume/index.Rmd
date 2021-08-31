@@ -297,3 +297,19 @@ N/A
 
 2019
 
+## Dashboards
+
+### [COVID-19 Vaccine Cost Map Dashboard](https://centerforpolicyimpact.shinyapps.io/covid-vaccination-costs-analysis/)
+
+N/A
+
+2021
+
+### [UN Population Interactive Dashboard](https://centerforpolicyimpact.shinyapps.io/un_population_interactive_app/)
+
+N/A
+
+2021
+
+
+
