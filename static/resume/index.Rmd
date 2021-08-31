@@ -31,11 +31,11 @@ Technical skills {#skills}
 --------------------------------------------------------------------------------
 
 
-- Data Visualization, Statistical Learning, Economic analysis and Project Appraisal.
+- Data Visualization, Statistical Learning, Economic analysis and Project Appraisal
 
-- Experience in using Statistical and Neural Network Algorithms .
+- Experience in using Statistical and Neural Network Algorithms 
 
-- Skilled in R & Rstudio (dplyr, ggplot2, Shiny), Python (Pandas, NumPy, sklearn), D3.js, MS Office, Stata.
+- Skilled in Rstudio (dplyr, ggplot2, Shiny), Python (Pandas, NumPy, sklearn), D3.js, MS Office, Stata
 
 
 Disclaimer {#disclaimer}
@@ -55,9 +55,9 @@ Siddharth Dixit {#title}
 
 ### Key Qualifications
 
--	Policy analyst and researcher with over seven years of experience in the private and not-for-profit sectors.
--	Five years of experience in program management, planning and strategy, including conception and launch of new programs and an NGO.
--	Product designer experienced in redesign and launch of new technologies using quantitative and qualitative research methods.
+-	Policy analyst and researcher with over seven years of experience in the private and not-for-profit sectors
+-	Five years of experience in program management, planning and strategy, including conception and launch of new programs and an NGO
+-	Product designer experienced in redesign and launch of new technologies using quantitative and qualitative research methods
 -	Experience in managing critical client relationships, and communications with multiple stakeholders including mentoring and training of new employees, and capacity building of colleagues. 
 
 
@@ -100,15 +100,12 @@ New Delhi, India
 
 ### Manipal University
 
-Bachelors of Engineering (Mechanical Engineering) 
-
+Bachelors of Engineering (Mechanical Engineering)                                                                               
 
 Manipal, India
 
 2005 - 2009
 
-
-<br><br><br><br>
 
 Professional Experience {data-icon=suitcase}
 --------------------------------------------------------------------------------
@@ -206,7 +203,7 @@ N/A
 
 ### Cost Effectiveness Analysis: INMED Bilikit™
 
-Dixit, S., Shahid, M., Fernholz, F., Ogbuoji, O., Biru, B., Udayakumar, K., & Baumgartner, J. (2020). Cost Effectiveness Analysis: INMED Bilikit™. Durham: Evaluating Saving Lives at Birth (`E-SL@B`) Program; Duke Global Health Institute Evidence Lab & Global Health Innovation Center at Duke University.
+Dixit, S., Shahid, M., Fernholz, F., Ogbuoji, O., Biru, B., Udayakumar, K., & Baumgartner, J. (2020). Cost Effectiveness Analysis: INMED Bilikit™. Durham: Evaluating Saving Lives at Birth (E-SL@B) Program; Duke Global Health Institute Evidence Lab & Global Health Innovation Center at Duke University.
 
 N/A
 
@@ -214,7 +211,7 @@ N/A
 
 ### [Costing Tool for Health Innovators](https://dukeghic.org/wp-content/uploads/sites/20/2020/12/Costing-Tool-for-Healthcare-Innovations-Brief.pdf)
 
-Dixit, S., Fernholz, F., Ogbuoji, O., Finnegan, A., Biru, B., Udayakumar,K.,& Baumgartner, J. (2020) Costing Tool for Health Innovators. Durham: Evaluating Saving Lives at Birth (`E-SL@B`) Program; Duke Global Health Institute Evidence Lab & Global Health Innovation Center at Duke University. 
+Dixit, S., Fernholz, F., Ogbuoji, O., Finnegan, A., Biru, B., Udayakumar,K.,& Baumgartner, J. (2020) Costing Tool for Health Innovators. Durham: Evaluating Saving Lives at Birth (E-SL@B) Program; Duke Global Health Institute Evidence Lab & Global Health Innovation Center at Duke University. 
 
 N/A
 
@@ -247,6 +244,14 @@ N/A
 
 2020
 
+### [Incentivizing wealthy nations to participate in the COVID-19 Vaccine Global Access Facility (COVAX): a game theory perspective.](https://gh.bmj.com/content/5/11/e003627)
+
+McAdams D, McDade KK, Ogbuoji O, Mathew J, Dixit S., Yamey G.  BMJ Global Health 2020;5: e003627. 
+
+N/A 
+
+2020
+
 ### [HEALTH AID in TRANSITION: A Review of the World Bank International Development Association (IDA)](http://centerforpolicyimpact.org/wp-content/uploads/sites/18/2019/11/IDA-Transition-Profile-Final-1.pdf)
 
 Dixit, S., McDade, K. K., Yamey, G., & Schäeferhoff, M. (November 2019). HEALTH AID in TRANSITION: A Review of the World Bank International Development Association (IDA). Durham: The Center for Policy Impact in Global Health. 
@@ -255,7 +260,6 @@ N/A
 
 2019
 
-<br><br><br><br><br><br>
 
 ## Working Papers
 
@@ -292,4 +296,26 @@ Dixit, S., Emery, N., & Kumar, C. (2019, March 1). Is trade with India changing 
 N/A
 
 2019
+
+## Dashboards
+
+### [COVID-19 Vaccine Cost Map Dashboard](https://centerforpolicyimpact.shinyapps.io/covid-vaccination-costs-analysis/)
+
+N/A
+
+2021
+
+### [UN Population Interactive Dashboard](https://centerforpolicyimpact.shinyapps.io/un_population_interactive_app/)
+
+N/A
+
+2021
+
+### [Middle Income Trap Dashboard](https://exploring.shinyapps.io/Trap_Bubble_Animation/?_ga=2.118202121.1473579884.1630443478-1007841347.1607906447)
+
+N/A
+
+2017
+
+
 
