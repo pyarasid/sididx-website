@@ -236,7 +236,7 @@ ggplot(avg_temp10now)+
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
     strip.text = element_text(hjust = 0, face = "bold"))+
-  ggtitle("Lucknow, India daily mean temperature between 2019 and 2021 \n (compared to 1981-2010 average)")
+  ggtitle("Lucknow, India daily mean temperature between 2010 and 2021 \n (compared to 1981-2010 average)")
  
 
 ```
