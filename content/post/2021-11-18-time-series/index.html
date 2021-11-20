@@ -16,6 +16,8 @@ image:
   focal_point: ''
   preview_only: no
 projects: []
+editor_options: 
+  chunk_output_type: inline
 ---
 
 <script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
@@ -220,9 +222,8 @@ head(band)</code></pre>
     legend.position = &quot;bottom&quot;,
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
-    strip.text = element_text(hjust = 0, face = &quot;bold&quot;)
-    
-  )</code></pre>
+    strip.text = element_text(hjust = 0, face = &quot;bold&quot;))+
+  ggtitle(&quot;Lucknow, India daily mean temperature between 2019 and 2021 \n (compared to 1981-2010 average)&quot;)</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-16-1.png" width="960" /></p>
 <p>We can from the above chart that in last 10 years, many years were hotter than historical average in Lucknow. 2010, 2014, 2015, 2016, 2017, 2018, 2019, and 2021, had more months where the temperature was more than the historical average (see the red peaks in the chart).</p>
 </div>

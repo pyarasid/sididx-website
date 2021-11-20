@@ -17,7 +17,7 @@ image:
   preview_only: no
 projects: []
 editor_options: 
-  chunk_output_type: console
+  chunk_output_type: inline
 ---
 
 In this blog, we will try to visualize the deviation in mean daily temperature in Lucknow, India in last ten years compared to the historical average.
@@ -236,9 +236,8 @@ ggplot(avg_temp10now)+
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
     strip.text = element_text(hjust = 0, face = "bold"))+
-  
   ggtitle("Lucknow, India daily mean temperature between 2019 and 2021 \n (compared to 1981-2010 average)")
-
+ 
 
 ```
 
