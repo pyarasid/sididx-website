@@ -220,7 +220,7 @@ ggplot(avg_temp10now)+
 
 Now, we did a bit of styling like moving the legend to the bottom, and moving the y-axis to the right.
 
-```{r,message=FALSE, fig.width=10, fig.height=20}
+```{r,message=FALSE, fig.width=15, fig.height=20}
 ggplot(avg_temp10now)+
   theme_minimal()+
   geom_rect(data = band, aes(xmin=band_start, xmax=band_end), ymin=40, ymax=110, fill="#cccccc", alpha=0.5)+
@@ -232,11 +232,16 @@ ggplot(avg_temp10now)+
   xlab("")+ylab("")+
   scale_y_continuous(position="right")+
   theme(
+    axis.text = element_text(size = 17),
     legend.position = "bottom",
+    legend.title = element_text(size = 18),
+    legend.text = element_text(size = 12),
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
-    strip.text = element_text(hjust = 0, face = "bold"))+
-  ggtitle("Lucknow, India daily mean temperature between 2010 and 2021 \n (compared to 1981-2010 average)")
+    strip.text = element_text(hjust = 0, face = "bold", size = 20),
+    plot.title = element_text(size = 25, face = "bold"),
+    )+
+  ggtitle("Lucknow, India daily mean temperature between \n 2010 and 2021 (compared to 1981-2010 average)")
  
 
 ```
