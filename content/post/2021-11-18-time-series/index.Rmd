@@ -32,7 +32,7 @@ library(zoo)
 
 ```
 
-Lets read in the temperature data for Lucknow, India.
+Lets read in the temperature data for Lucknow, India.We obtained the data from [Global Historical Climatology Network daily](https://www.ncdc.noaa.gov/cdo-web/search?datasetid=GHCND). 
 
 ```{r, message=FALSE}
 weather_data <- read.csv("temp_data_lko.csv", stringsAsFactors = FALSE)
@@ -241,5 +241,5 @@ ggplot(avg_temp10now)+
 
 ```
 
-We can from the above chart that in last 10 years, many years were hotter than historical average in Lucknow. 2010, 2014, 2015, 2016, 2017, 2018, 2019, and 2021, had more months where the temperature was more than the historical average (see the red peaks in the chart). 
+We can from the above chart that in last 10 years, many years were hotter than historical average in Lucknow. 2010, 2014, 2015, 2016, 2017, 2018, 2019, and 2021, had more months where the temperature was more than the historical average (see the red peaks in the chart). I will also like to thank [Flowingdata](https://flowingdata.com/) for inspiration for this analysis.
 

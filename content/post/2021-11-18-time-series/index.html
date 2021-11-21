@@ -29,7 +29,7 @@ editor_options:
 library(ggplot2)
 library(lubridate)
 library(zoo)</code></pre>
-<p>Lets read in the temperature data for Lucknow, India.</p>
+<p>Lets read in the temperature data for Lucknow, India.We obtained the data from <a href="https://www.ncdc.noaa.gov/cdo-web/search?datasetid=GHCND">Global Historical Climatology Network daily</a>.</p>
 <pre class="r"><code>weather_data &lt;- read.csv(&quot;temp_data_lko.csv&quot;, stringsAsFactors = FALSE)
 
 head(weather_data)</code></pre>
@@ -225,5 +225,5 @@ head(band)</code></pre>
     strip.text = element_text(hjust = 0, face = &quot;bold&quot;))+
   ggtitle(&quot;Lucknow, India daily mean temperature between 2010 and 2021 \n (compared to 1981-2010 average)&quot;)</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-16-1.png" width="960" /></p>
-<p>We can from the above chart that in last 10 years, many years were hotter than historical average in Lucknow. 2010, 2014, 2015, 2016, 2017, 2018, 2019, and 2021, had more months where the temperature was more than the historical average (see the red peaks in the chart).</p>
+<p>We can from the above chart that in last 10 years, many years were hotter than historical average in Lucknow. 2010, 2014, 2015, 2016, 2017, 2018, 2019, and 2021, had more months where the temperature was more than the historical average (see the red peaks in the chart). I will also like to thank <a href="https://flowingdata.com/">Flowingdata</a> for inspiration for this analysis.</p>
 </div>
