@@ -20,7 +20,7 @@ Aside
 Contact Info {#contact}
 --------------------------------------------------------------------------------
 
-- <i class="fa fa-envelope"></i> siddharth.dixit@duke.edu
+- <i class="fa fa-envelope"></i> sdixit2@worldbank.org
 - <i class="fa fa-link"></i> [www.siddix.us](https://www.siddix.us/)
 - <i class="fa fa-github"></i> [github.com/pyarasid](https://github.com/pyarasid)
 - <i class="fa fa-linkedin"></i> [https://www.linkedin.com/siddharth_dixit](https://www.linkedin.com/in/siddharth-dixit-b02bbb34)
@@ -109,6 +109,17 @@ Manipal, India
 
 Professional Experience {data-icon=suitcase}
 --------------------------------------------------------------------------------
+### Associate in Research
+
+The World Bank
+
+Washington, DC
+
+2022 - Present
+
+::: concise
+- Work on putting together a Whole-of-Economy proposal on climate change economics and policy 
+- Lead the $500k project in the proposal on development of a unified database and dashboard
 
 ### Associate in Research
 
@@ -116,7 +127,7 @@ Duke University
 
 Durham, USA
 
-2017 - Present
+2017 - 2022
 
 ::: concise
 - Lead BMGF sponsored health transition project in Nigeria and Ghana 
