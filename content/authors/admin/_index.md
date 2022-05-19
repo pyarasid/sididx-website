@@ -16,9 +16,9 @@ interests:
 - Statistical Learning
 - Economic Analysis
 organizations:
-- name: Duke University
-  url: https://duke.edu/
-role: Associate in Research
+- name: The World Bank
+  url: https://www.worldbank.org/en/home
+role: Consultant
 social:
 - icon: envelope
   icon_pack: fas
@@ -36,6 +36,6 @@ superuser: true
 title: Siddharth Dixit
 ---
 
-I am an associate in research with the Duke University's [Center for Policy Impact in Global Health (CPIGH)](https://centerforpolicyimpact.org/). I work on economic analysis and impact of aid transition on health in low- and middle- income countries at CPIGH. In my spare time i enjoy hiking.
+I am a consultant with [The World Bank's](https://www.worldbank.org/en/home) Climate Economics and Policy team. I work on data and economic analysis at the bank. In my spare time i enjoy hiking.
 
 

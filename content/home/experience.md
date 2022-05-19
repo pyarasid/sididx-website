@@ -25,9 +25,20 @@ date_format: Jan 2006
 #   Leave `date_end` empty if it's your current employer.
 #   You can begin a multiline `description` using YAML's `|-`.
 experience:
-- company: Duke University
+- company: The World Bank
   company_url: ""
   date_end: ""
+  date_start: "2022-04-18"
+  description: |-
+  #  Responsibilities include:
+  #  * Analysing
+  #  * Modelling
+  #  * Deploying
+  location: Washington, DC
+  title: Consultant
+- company: Duke University
+  company_url: ""
+  date_end: "2022-03-01"
   date_start: "2017-07-01"
   description: |-
   #  Responsibilities include:

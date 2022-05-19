@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>R, Time Series | Siddharth Dixit</title>
+    <link>/category/r-time-series/</link>
+      <atom:link href="/category/r-time-series/index.xml" rel="self" type="application/rss+xml" />
+    <description>R, Time Series</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>Code with  and  Blogdown
+© Siddharth Dixit, 2022</copyright><lastBuildDate>Thu, 18 Nov 2021 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/images/icon_huad25c1bc025cb7d239e90ad1fd91518e_22315_512x512_fill_lanczos_center_2.png</url>
+      <title>R, Time Series</title>
+      <link>/category/r-time-series/</link>
+    </image>
+    
+    <item>
+      <title>Visualizing deviation in mean daily temperature in Lucknow, India from the historical average</title>
+      <link>/2021/11/18/time-series/</link>
+      <pubDate>Thu, 18 Nov 2021 00:00:00 +0000</pubDate>
+      <guid>/2021/11/18/time-series/</guid>
+      <description>
+&lt;script src=&#34;/2021/11/18/time-series/index_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;In this blog, we will try to visualize the deviation in mean daily temperature in Lucknow, India in last ten years compared to the historical average.&lt;/p&gt;
+&lt;p&gt;Lets load the essential libraries first.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(dplyr)
+library(ggplot2)
+library(lubridate)
+library(zoo)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Lets read in the temperature data for Lucknow, India.We obtained the data from &lt;a href=&#34;https://www.ncdc.noaa.gov/cdo-web/search?datasetid=GHCND&#34;&gt;Global Historical Climatology Network daily&lt;/a&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;weather_data &amp;lt;- read.csv(&amp;quot;temp_data_lko.csv&amp;quot;, stringsAsFactors = FALSE)
+
+head(weather_data)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##       STATION               NAME       DATE TAVG TMAX TMIN
+## 1 IN023351400 LUCKNOW AMAUSI, IN 1981-01-01   58   73   45
+## 2 IN023351400 LUCKNOW AMAUSI, IN 1981-01-02   58   73   46
+## 3 IN023351400 LUCKNOW AMAUSI, IN 1981-01-03   59   75   45
+## 4 IN023351400 LUCKNOW AMAUSI, IN 1981-01-04   61   77   52
+## 5 IN023351400 LUCKNOW AMAUSI, IN 1981-01-05   60   73   54
+## 6 IN023351400 LUCKNOW AMAUSI, IN 1981-01-06   60   70   48&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In this dataset, we are only interested in “Date” and “TAVG” columns. Therefore, we will only select these columns. We will also convert the date column from “character” to “dates”.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;weather_data &amp;lt;- weather_data %&amp;gt;% 
+  select(&amp;quot;DATE&amp;quot;, &amp;quot;TAVG&amp;quot;)
+
+weather_data$DATE &amp;lt;- as.Date(weather_data$DATE)
+
+head(weather_data)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##         DATE TAVG
+## 1 1981-01-01   58
+## 2 1981-01-02   58
+## 3 1981-01-03   59
+## 4 1981-01-04   61
+## 5 1981-01-05   60
+## 6 1981-01-06   60&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;historical-averages&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Historical Averages&lt;/h4&gt;
+&lt;p&gt;In this chart we are interested in showing how is the temperate in different months since 2010 changed from the historical averages each month. Therefore, we will first take the average of historical data. For, this analysis we are going to take the daily average of temperature each day from 1981-2010.&lt;/p&gt;
+&lt;p&gt;Here, the idea is the between 1981 and 2010, we will calculate the average for each day over this time period.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;avg_temp &amp;lt;- weather_data %&amp;gt;% 
+  filter(DATE&amp;gt;&amp;quot;1981-01-01&amp;quot; &amp;amp; DATE&amp;lt; &amp;quot;2010-01-01&amp;quot;) %&amp;gt;% 
+  filter(!(is.na(TAVG))) %&amp;gt;% 
+  mutate(doy=yday(DATE)) %&amp;gt;% 
+  group_by(doy) %&amp;gt;% #here we group by each day of all the years in the time period
+  summarise(doytavg=mean(TAVG)) #now we calculate the average
+
+head(avg_temp)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 2
+##     doy doytavg
+##   &amp;lt;dbl&amp;gt;   &amp;lt;dbl&amp;gt;
+## 1     1    55.6
+## 2     2    56.6
+## 3     3    55.9
+## 4     4    56.1
+## 5     5    56.1
+## 6     6    56.9&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Checking how the line chart of the average temperature.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(avg_temp, aes(x = doy, y = doytavg))+
+  geom_line()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/2021/11/18/time-series/index_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;
+This chart looks fine but, we need a a smoother average line on which we can then plot the temperature changes from 2010 to 2021. To accomplish this, we wil use the rollmean() function from the “zoo” package.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;avg_temp$rollavg20 &amp;lt;- rollmean(avg_temp$doytavg, 20, fill = c(NA, NA, NA), align = &amp;quot;center&amp;quot;)
+
+(avg_temp)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 366 x 3
+##      doy doytavg rollavg20
+##    &amp;lt;dbl&amp;gt;   &amp;lt;dbl&amp;gt;     &amp;lt;dbl&amp;gt;
+##  1     1    55.6      NA  
+##  2     2    56.6      NA  
+##  3     3    55.9      NA  
+##  4     4    56.1      NA  
+##  5     5    56.1      NA  
+##  6     6    56.9      NA  
+##  7     7    56.8      NA  
+##  8     8    57.4      NA  
+##  9     9    57.4      NA  
+## 10    10    58.0      56.9
+## # ... with 356 more rows&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;With rollmean, we provide a window of 10 data point, and the use align as “center”. The “center” parameter in align calculates the mean for a data point by taking the ten data points before and ten data points after the point for which it is calculating the mean. And with “fill” command we instruct the code to fill with “NA” for the points it is unable to find a window. These are the first and last ten rows in “avg_temp”.&lt;/p&gt;
+&lt;p&gt;The issue here is that rollmean() does not know to connect the first day of the year to the last day to calculate the rolling mean. Therefore, we create a new column where we subtract that last 20 days of december from 366. The we arrange the whole data frame in ascending order by this column. ow we calculate the rolling average again in the new column and replace the NAs in from the old rolling average column with the new averages.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;avg_temp &amp;lt;- avg_temp %&amp;gt;% 
+  mutate(doy2=ifelse(doy&amp;gt;345, doy-366, doy))  %&amp;gt;% 
+  arrange(doy2) %&amp;gt;% 
+  mutate(rollavg_2=rollmean(doytavg, 20, fill = c(NA, NA, NA)))  %&amp;gt;% 
+  mutate(rollavg20=ifelse(is.na(rollavg20), rollavg_2, rollavg20)) %&amp;gt;%  
+select(-c(&amp;quot;doy2&amp;quot;, &amp;quot;rollavg_2&amp;quot;)) 
+
+(avg_temp)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 366 x 3
+##      doy doytavg rollavg20
+##    &amp;lt;dbl&amp;gt;   &amp;lt;dbl&amp;gt;     &amp;lt;dbl&amp;gt;
+##  1   346    61.5      61.6
+##  2   347    61.6      61.4
+##  3   348    61.7      61.2
+##  4   349    61.1      61.0
+##  5   350    60.6      60.8
+##  6   351    61.1      60.5
+##  7   352    60.4      60.3
+##  8   353    60.1      60.1
+##  9   354    60.0      59.8
+## 10   355    60.1      59.5
+## # ... with 356 more rows&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Lets see how the rolling average smoothens the curve.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(avg_temp, aes(x = doy))+
+  geom_line(aes(y = doytavg))+
+  geom_line(aes(y = rollavg20), color=&amp;quot;red&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/2021/11/18/time-series/index_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; /&gt;
+Now that we have calculate the historical average, we should now subset the dataset to the years for which we want to see the average difference in temperature from the average.&lt;/p&gt;
+&lt;p&gt;We will now create doy column to count the days for the date of the years (as we did before), and also get the year using the year() function. Then we join this subsetted data frame with our rolling average data frame. Finally we create the column which will provide us with the difference between out “TAVG” for our years of interest and the historical rolling temperature average. The code for all these steps can be found below:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;avg_temp10now &amp;lt;- weather_data %&amp;gt;% 
+  filter(DATE&amp;gt;&amp;quot;2009-12-31&amp;quot;) %&amp;gt;% 
+  mutate(doy=yday(DATE)) %&amp;gt;% 
+  mutate(year=year(DATE)) %&amp;gt;% 
+  left_join(avg_temp, by = &amp;quot;doy&amp;quot;) %&amp;gt;% 
+  mutate(avgtTdiff=TAVG-rollavg20)
+
+
+head(avg_temp10now)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##         DATE TAVG doy year  doytavg rollavg20 avgtTdiff
+## 1 2010-01-01   53   1 2010 55.56000  57.30069 -4.300685
+## 2 2010-01-02   53   2 2010 56.62069  57.14628 -4.146279
+## 3 2010-01-03   53   3 2010 55.89286  57.04575 -4.045750
+## 4 2010-01-04   55   4 2010 56.14286  57.00265 -2.002646
+## 5 2010-01-05   54   5 2010 56.06897  56.99908 -2.999075
+## 6 2010-01-06   55   6 2010 56.85185  56.92993 -1.929932&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;NOw lets first plot the chart, and then i will explain what we did.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(avg_temp10now, aes(x = doy, y = rollavg20), color=&amp;quot;#777777&amp;quot;)+
+  geom_line()+
+  geom_rect(aes(xmin=doy-0.5, xmax=doy+0.5, ymin=rollavg20, ymax=TAVG, fill=avgtTdiff))+
+  facet_wrap(~year)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/2021/11/18/time-series/index_files/figure-html/unnamed-chunk-10-1.png&#34; width=&#34;672&#34; /&gt;
+To create the above chart, first we create the line, and then we build small rectangles on top or below the line depending upon the difference between the “TAVG” and historical average. We finally fill these rectangles with the average difference column we calculate above. We centered the rectangle on the day of the year by adding and subtracting 0.5 from it. This also smooths the transition from one rectangle to other.&lt;/p&gt;
+&lt;p&gt;The fill is just one color but we want to show hotter and colder temperature from the rolling average by different gradient of colors. Here we basically want the diverging red and blue colors with 0 degree celsius as white. We will use scale_fill_gradient2() for this.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(avg_temp10now)+
+  geom_rect(aes(xmin=doy-0.5, xmax=doy+0.5, ymin=rollavg20, ymax=TAVG, fill=avgtTdiff))+
+  geom_line(aes(x = doy, y = rollavg20), color=&amp;quot;#777777&amp;quot;)+
+  scale_fill_gradient2(low=&amp;quot;blue&amp;quot;, high=&amp;quot;red&amp;quot;, name=&amp;quot;Temperature anomaly&amp;quot;, breaks=c(10,5,0,-5,-10))+
+  facet_wrap(~year, ncol=1)+
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/2021/11/18/time-series/index_files/figure-html/unnamed-chunk-11-1.png&#34; width=&#34;768&#34; /&gt;
+Now, we will add the month names instead of doy for the x-axis in the chart. We will add the month label on 16th day of each month. Here, we first get a sequence and extract the 16th date of each month. Then we convert the date to the days of the year using yday() function.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;midmonths &amp;lt;- seq(ymd(&amp;quot;2019-01-16&amp;quot;), ymd(&amp;quot;2019-12-16&amp;quot;), by=&amp;quot;month&amp;quot;)
+midmonths &amp;lt;- yday(midmonths)
+
+midmonths&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  [1]  16  47  75 106 136 167 197 228 259 289 320 350&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now using scale_x_continuous() function we will add month labels to the chart.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(avg_temp10now)+
+  geom_rect(aes(xmin=doy-0.5, xmax=doy+0.5, ymin=rollavg20, ymax=TAVG, fill=avgtTdiff))+
+    geom_line(aes(x = doy, y = rollavg20), color=&amp;quot;#777777&amp;quot;)+
+  facet_wrap(~year, ncol=2) +
+  scale_fill_gradient2(low=&amp;quot;blue&amp;quot;, high=&amp;quot;red&amp;quot;, name=&amp;quot;Temperature anomaly&amp;quot;, breaks=c(10,5,0,-5,-10))+
+  scale_x_continuous(breaks = midmonths, labels=c(&amp;quot;Jan&amp;quot;, &amp;quot;Feb&amp;quot;, &amp;quot;Mar&amp;quot;, &amp;quot;Apr&amp;quot;, &amp;quot;May&amp;quot;, &amp;quot;Jun&amp;quot;, &amp;quot;Jul&amp;quot;, &amp;quot;Aug&amp;quot;, &amp;quot;Sep&amp;quot;, &amp;quot;Oct&amp;quot;, &amp;quot;Nov&amp;quot;, &amp;quot;Dec&amp;quot;))+
+  theme_minimal()+
+  xlab(&amp;quot;&amp;quot;)+ylab(&amp;quot;&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/2021/11/18/time-series/index_files/figure-html/unnamed-chunk-13-1.png&#34; width=&#34;960&#34; /&gt;
+Now, we will add gray background rectangles at the names of every other month. This is not necessary but to we are adding these rectangles to make the charts more aesthetically pleasing.&lt;/p&gt;
+&lt;p&gt;The rectangle will start at the start date of every other month, and end at the last day of the month. We subtract 1 to get the last day.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;band_start &amp;lt;- seq(ymd(&amp;quot;2019-02-01&amp;quot;), ymd(&amp;quot;2019-12-01&amp;quot;), by=&amp;quot;2 months&amp;quot;) 
+#converting dates to day of the year
+band_start &amp;lt;- yday(band_start)
+
+band_end &amp;lt;- seq(ymd(&amp;quot;2019-03-01&amp;quot;), ymd(&amp;quot;2020-01-01&amp;quot;), by=&amp;quot;2 months&amp;quot;)-1
+#converting dates to day of the year
+band_end &amp;lt;- yday(band_end)
+
+#binding the start and end points for the rectangles
+band &amp;lt;- cbind.data.frame(band_start, band_end)
+
+head(band)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##   band_start band_end
+## 1         32       59
+## 2         91      120
+## 3        152      181
+## 4        213      243
+## 5        274      304
+## 6        335      365&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now, lets add the rectangles band in our chart.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(avg_temp10now)+
+  theme_minimal()+
+  geom_rect(data = band, aes(xmin=band_start, xmax=band_end), ymin=40, ymax=110, fill=&amp;quot;#cccccc&amp;quot;, alpha=0.5)+
+  geom_rect(aes(xmin=doy-0.5, xmax=doy+0.5, ymin=rollavg20, ymax=TAVG, fill=avgtTdiff))+
+    geom_line(aes(x = doy, y = rollavg20), color=&amp;quot;#777777&amp;quot;)+
+  facet_wrap(~year, ncol=2) +
+  scale_fill_gradient2(low=&amp;quot;blue&amp;quot;, high=&amp;quot;red&amp;quot;, name=&amp;quot;Temperature anomaly&amp;quot;, breaks=c(10,5,0,-5,-10))+
+  scale_x_continuous(breaks = midmonths, labels=c(&amp;quot;Jan&amp;quot;, &amp;quot;Feb&amp;quot;, &amp;quot;Mar&amp;quot;, &amp;quot;Apr&amp;quot;, &amp;quot;May&amp;quot;, &amp;quot;Jun&amp;quot;, &amp;quot;Jul&amp;quot;, &amp;quot;Aug&amp;quot;, &amp;quot;Sep&amp;quot;, &amp;quot;Oct&amp;quot;, &amp;quot;Nov&amp;quot;, &amp;quot;Dec&amp;quot;))+
+  xlab(&amp;quot;&amp;quot;)+ylab(&amp;quot;&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/2021/11/18/time-series/index_files/figure-html/unnamed-chunk-15-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Now, we did a bit of styling like moving the legend to the bottom, and moving the y-axis to the right.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(avg_temp10now)+
+  theme_minimal()+
+  geom_rect(data = band, aes(xmin=band_start, xmax=band_end), ymin=40, ymax=110, fill=&amp;quot;#cccccc&amp;quot;, alpha=0.5)+
+  geom_rect(aes(xmin=doy-0.5, xmax=doy+0.5, ymin=rollavg20, ymax=TAVG, fill=avgtTdiff))+
+    geom_line(aes(x = doy, y = rollavg20), color=&amp;quot;#777777&amp;quot;)+
+  facet_wrap(~year, ncol=2) +
+  scale_fill_gradient2(low=&amp;quot;blue&amp;quot;, high=&amp;quot;red&amp;quot;, name=&amp;quot;Temperature anomaly&amp;quot;, breaks=c(10,5,0,-5,-10))+
+  scale_x_continuous(breaks = midmonths, labels=c(&amp;quot;Jan&amp;quot;, &amp;quot;Feb&amp;quot;, &amp;quot;Mar&amp;quot;, &amp;quot;Apr&amp;quot;, &amp;quot;May&amp;quot;, &amp;quot;Jun&amp;quot;, &amp;quot;Jul&amp;quot;, &amp;quot;Aug&amp;quot;, &amp;quot;Sep&amp;quot;, &amp;quot;Oct&amp;quot;, &amp;quot;Nov&amp;quot;, &amp;quot;Dec&amp;quot;))+
+  xlab(&amp;quot;&amp;quot;)+ylab(&amp;quot;&amp;quot;)+
+  scale_y_continuous(position=&amp;quot;right&amp;quot;)+
+  theme(
+    axis.text = element_text(size = 17),
+    legend.position = &amp;quot;bottom&amp;quot;,
+    legend.title = element_text(size = 18),
+    legend.text = element_text(size = 12),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    strip.text = element_text(hjust = 0, face = &amp;quot;bold&amp;quot;, size = 20),
+    plot.title = element_text(size = 25, face = &amp;quot;bold&amp;quot;),
+    )+
+  ggtitle(&amp;quot;Lucknow, India daily mean temperature between \n 2010 and 2021 (compared to 1981-2010 average)&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/2021/11/18/time-series/index_files/figure-html/unnamed-chunk-16-1.png&#34; width=&#34;1440&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;We can from the above chart that in last 10 years, many years were hotter than historical average in Lucknow. 2010, 2014, 2015, 2016, 2017, 2018, 2019, and 2021, had more months where the temperature was more than the historical average (see the red peaks in the chart). I will also like to thank &lt;a href=&#34;https://flowingdata.com/&#34;&gt;Flowingdata&lt;/a&gt; for inspiration for this analysis.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

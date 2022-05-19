@@ -6,7 +6,7 @@
       <atom:link href="/tag/choropleth/index.xml" rel="self" type="application/rss+xml" />
     <description>choropleth</description>
     <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>Code with  and  Blogdown
-© Siddharth Dixit, 2021</copyright><lastBuildDate>Sun, 02 May 2021 00:00:00 +0000</lastBuildDate>
+© Siddharth Dixit, 2022</copyright><lastBuildDate>Sun, 02 May 2021 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/images/icon_huad25c1bc025cb7d239e90ad1fd91518e_22315_512x512_fill_lanczos_center_2.png</url>
       <title>choropleth</title>
@@ -264,7 +264,7 @@ We have now created a static and an animated hexbin chropleth map of COVID-19 ca
       <link>/2021/03/07/hexbin/</link>
       <pubDate>Sun, 07 Mar 2021 00:00:00 +0000</pubDate>
       <guid>/2021/03/07/hexbin/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;index_files/figure-html/unnamed-chunk-1-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+      <description>&lt;p&gt;&lt;img src=&#34;/2021/03/07/hexbin/index_files/figure-html/unnamed-chunk-1-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;NewYork Times, The Economist, The Washington Post and many other news outlets often use hexbin maps to convey information in exciting and cool ways. I have been always drawn to these kind of maps, and wanted to create one myself. Last year i got the opportunity (and data!) to learn and create choropleth hexbin maps to show the progression of COVID-19 cases.&lt;/p&gt;
 &lt;p&gt;I am planning to through the whole process in two parts. In this first part, i will talk about where i got Kenya&amp;rsquo;s shape files, data munging with the shape files data, and creating the hexagonal grid.&lt;/p&gt;
 &lt;p&gt;We first start with downloading the shape files for Kenya from the GADM website which is a high-resolution database of country administrative areas. The data is not freely available for use in commercial purposes. The website provide files which can be directly read into R, which makes this website a really handy resource. It has pretty latest shape files for almost all the countries in the worlds. You can find Kenya&amp;rsquo;s shape files on &lt;a href=&#34;https://gadm.org/download_country_v3.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GADM&lt;/a&gt;. We will download level-1 shape files, as we are only interested in county level data. Level-2 and level-3 provide more granulated information of Kenya&amp;rsquo;s administrative areas.&lt;/p&gt;
@@ -363,7 +363,7 @@ for (i in 1:6) {
   plot(new_cells, main = paste(&amp;quot;Seed&amp;quot;, i, sep = &amp;quot; &amp;quot;))
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;index_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; /&gt;
+&lt;p&gt;&lt;img src=&#34;/2021/03/07/hexbin/index_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; /&gt;
 Seed 6, i feel, best preserves Kenya&amp;rsquo;s map geometry. Therefore, we will choose this seed, and assign this grid to convert Kenya&amp;rsquo;s map into hexbin map.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;#Grid plot
 #we choose grid 6 as it closely matches the actual geometry of kenya
@@ -375,7 +375,7 @@ resultreg &amp;lt;- assign_polygons(original_shapes, new_cells_reg)
 #plotting Kenya&#39;s grid map 
 plot(resultreg)
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;index_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/2021/03/07/hexbin/index_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;I will end this post here. In the second part of the tutorial, i will go through the joining of shape file data and the CVOID-19 data for Kenya, and creation of static and animated choropleth hexbin maps to show the progression of COVID-19 cases.&lt;/p&gt;
 </description>
     </item>

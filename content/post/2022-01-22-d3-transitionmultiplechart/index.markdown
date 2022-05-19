@@ -1,0 +1,50 @@
+---
+title: How to transition/animate between multiple charts using HTML buttons and D3.js?
+author: Siddharth Dixit
+date: '2022-01-22'
+slug: d3-transitionmultiplechart
+categories: [D3, Javascript, HTML]
+
+subtitle: ''
+summary: ''
+authors: []
+lastmod: '2022-01-22T18:58:18-05:00'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+---
+
+The head section of the HTML file will have two tags–title of the HTML page and the link to link to the twitter bootstrap. We will make use of the bootstrap to make nice toggle buttons to transition between the charts.
+
+<head>
+    
+    <title>Transition Scatter to Bar</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    
+</head>
+
+Next, in the body tag of HTML file we will have a div tag with id=`container`. This div will contain all our buttons and our visualizations. There are more div tag inside the `container` div which will hold visualization separately and buttons separately as shown below. This is just to make sure that every discrete element is kept separately and helps in referencing different div’s easily to work on them.
+
+We downloaded the sixth version of d3.js from `https://d3js.org/`, referenced it in the script tag. Similarly , `transition.js` file will also be referenced in the script tag as shown below. The `transition.js` will contain the d3.js code to draw the visualizations.
+
+    <div id="container" class="container">
+        <h1>Transition from one chart to other using button</h1>
+        <div id="main" role="main">
+            <div class="btn-group" role="group">
+                <button type="button" id="bar" class="btn btn-default" value="bar">Bar</button>
+                <button type="button" id="scatter" class="btn btn-default" value="scatter">Scatter</button>
+            </div>
+            <div id="vis"></div>
+            <a href="https://www.siddix.us/">Visit website for code</a> 
+        </div>
+    </div>
+    
+
+    <script src="d3.v6.js"></script>
+    <script src="transition.js"></script>
+    
+
+**Note**: I am working on writing this article and will post the complete article soon.

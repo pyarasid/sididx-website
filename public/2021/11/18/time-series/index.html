@@ -1,0 +1,1389 @@
+<!DOCTYPE html><html lang="en-us" >
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  
+  
+  <meta name="generator" content="Wowchemy 5.0.0-beta.1 for Hugo">
+  
+
+  
+
+  
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Siddharth Dixit">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="In this blog, we will try to visualize the deviation in mean daily temperature in Lucknow, India in last ten years compared to the historical average.
+Lets load the essential libraries first.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/2021/11/18/time-series/">
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+
+  
+  
+  
+  <meta name="theme-color" content="#EF525B">
+  
+
+  
+  
+  
+  <script src="/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha256-FMvZuGapsJLjouA6k7Eo2lusoAX9i0ShlWFG6qt7SLc=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css" integrity="sha512-1xoFisiGdy9nvho8EgXuXvnpR5GAMSjFwp40gSRE3NwdUdIMIKuPa7bqoUhLD0O/5tPNhteAsE5XyyMi5reQVA==" crossorigin="anonymous">
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.2.2/lazysizes.min.js" integrity="sha512-TmDwFLhg3UA4ZG0Eb4MIyT1O1Mb+Oww5kFG0uHqXsdbyZz9DcvYQhKpGgNkamAI6h2lGGZq2X8ftOJvF/XjTUg==" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+    
+      
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cutive+Mono%7CLora:400,700%7CRoboto:400,700&display=swap">
+    
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.min.bb565ccc8def40f418a9099753e73ccb.css">
+
+  
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-ACCOUNTID-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+      dataLayer.push(arguments);
+  }
+
+  function trackOutboundLink(url, target) {
+    gtag('event', 'click', {
+         'event_category': 'outbound',
+         'event_label': url,
+         'transport_type': 'beacon',
+         'event_callback': function () {
+           if (target !== '_blank') {
+             document.location = url;
+           }
+         }
+    });
+    console.debug("Outbound link clicked: " + url);
+  }
+
+  function onClickCallback(event) {
+    if ((event.target.tagName !== 'A') || (event.target.host === window.location.host)) {
+      return;
+    }
+    trackOutboundLink(event.target, event.target.getAttribute('target'));  
+  }
+
+  gtag('js', new Date());
+  gtag('config', 'UA-ACCOUNTID-1', {});
+
+  
+  document.addEventListener('click', onClickCallback, false);
+</script>
+
+
+  
+
+  
+
+
+  
+  
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_huad25c1bc025cb7d239e90ad1fd91518e_22315_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_huad25c1bc025cb7d239e90ad1fd91518e_22315_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="/2021/11/18/time-series/">
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary">
+  
+  <meta property="og:site_name" content="Siddharth Dixit">
+  <meta property="og:url" content="/2021/11/18/time-series/">
+  <meta property="og:title" content="Visualizing deviation in mean daily temperature in Lucknow, India from the historical average | Siddharth Dixit">
+  <meta property="og:description" content="In this blog, we will try to visualize the deviation in mean daily temperature in Lucknow, India in last ten years compared to the historical average.
+Lets load the essential libraries first."><meta property="og:image" content="/images/icon_huad25c1bc025cb7d239e90ad1fd91518e_22315_512x512_fill_lanczos_center_2.png">
+  <meta property="twitter:image" content="/images/icon_huad25c1bc025cb7d239e90ad1fd91518e_22315_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2021-11-18T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2021-11-18T20:03:36-05:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/2021/11/18/time-series/"
+  },
+  "headline": "Visualizing deviation in mean daily temperature in Lucknow, India from the historical average",
+  
+  "datePublished": "2021-11-18T00:00:00Z",
+  "dateModified": "2021-11-18T20:03:36-05:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Siddharth Dixit"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Siddharth Dixit",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/images/icon_huad25c1bc025cb7d239e90ad1fd91518e_22315_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "In this blog, we will try to visualize the deviation in mean daily temperature in Lucknow, India in last ten years compared to the historical average.\nLets load the essential libraries first."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Visualizing deviation in mean daily temperature in Lucknow, India from the historical average | Siddharth Dixit</title>
+
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper  ">
+
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.js"></script>
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  <div class="page-header">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Siddharth Dixit</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Siddharth Dixit</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>Blogs</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#featured"><span>Publications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+            
+            
+            
+              
+            
+            
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#gallery"><span>Gallery</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/resume/"><span>Resume</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+          <i class="fas fa-moon" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  </div>
+
+  <div class="page-body">
+    <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Visualizing deviation in mean daily temperature in Lucknow, India from the historical average</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          Last updated on
+      
+    
+    Nov 18, 2021
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    8 min read
+  </span>
+  
+
+  
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/category/r-time-series/">R, Time Series</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      
+<script src="/2021/11/18/time-series/index_files/header-attrs/header-attrs.js"></script>
+
+
+<p>In this blog, we will try to visualize the deviation in mean daily temperature in Lucknow, India in last ten years compared to the historical average.</p>
+<p>Lets load the essential libraries first.</p>
+<pre class="r"><code>library(dplyr)
+library(ggplot2)
+library(lubridate)
+library(zoo)</code></pre>
+<p>Lets read in the temperature data for Lucknow, India.We obtained the data from <a href="https://www.ncdc.noaa.gov/cdo-web/search?datasetid=GHCND">Global Historical Climatology Network daily</a>.</p>
+<pre class="r"><code>weather_data &lt;- read.csv(&quot;temp_data_lko.csv&quot;, stringsAsFactors = FALSE)
+
+head(weather_data)</code></pre>
+<pre><code>##       STATION               NAME       DATE TAVG TMAX TMIN
+## 1 IN023351400 LUCKNOW AMAUSI, IN 1981-01-01   58   73   45
+## 2 IN023351400 LUCKNOW AMAUSI, IN 1981-01-02   58   73   46
+## 3 IN023351400 LUCKNOW AMAUSI, IN 1981-01-03   59   75   45
+## 4 IN023351400 LUCKNOW AMAUSI, IN 1981-01-04   61   77   52
+## 5 IN023351400 LUCKNOW AMAUSI, IN 1981-01-05   60   73   54
+## 6 IN023351400 LUCKNOW AMAUSI, IN 1981-01-06   60   70   48</code></pre>
+<p>In this dataset, we are only interested in “Date” and “TAVG” columns. Therefore, we will only select these columns. We will also convert the date column from “character” to “dates”.</p>
+<pre class="r"><code>weather_data &lt;- weather_data %&gt;% 
+  select(&quot;DATE&quot;, &quot;TAVG&quot;)
+
+weather_data$DATE &lt;- as.Date(weather_data$DATE)
+
+head(weather_data)</code></pre>
+<pre><code>##         DATE TAVG
+## 1 1981-01-01   58
+## 2 1981-01-02   58
+## 3 1981-01-03   59
+## 4 1981-01-04   61
+## 5 1981-01-05   60
+## 6 1981-01-06   60</code></pre>
+<div id="historical-averages" class="section level4">
+<h4>Historical Averages</h4>
+<p>In this chart we are interested in showing how is the temperate in different months since 2010 changed from the historical averages each month. Therefore, we will first take the average of historical data. For, this analysis we are going to take the daily average of temperature each day from 1981-2010.</p>
+<p>Here, the idea is the between 1981 and 2010, we will calculate the average for each day over this time period.</p>
+<pre class="r"><code>avg_temp &lt;- weather_data %&gt;% 
+  filter(DATE&gt;&quot;1981-01-01&quot; &amp; DATE&lt; &quot;2010-01-01&quot;) %&gt;% 
+  filter(!(is.na(TAVG))) %&gt;% 
+  mutate(doy=yday(DATE)) %&gt;% 
+  group_by(doy) %&gt;% #here we group by each day of all the years in the time period
+  summarise(doytavg=mean(TAVG)) #now we calculate the average
+
+head(avg_temp)</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##     doy doytavg
+##   &lt;dbl&gt;   &lt;dbl&gt;
+## 1     1    55.6
+## 2     2    56.6
+## 3     3    55.9
+## 4     4    56.1
+## 5     5    56.1
+## 6     6    56.9</code></pre>
+<p>Checking how the line chart of the average temperature.</p>
+<pre class="r"><code>ggplot(avg_temp, aes(x = doy, y = doytavg))+
+  geom_line()</code></pre>
+<p><img src="/2021/11/18/time-series/index_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+This chart looks fine but, we need a a smoother average line on which we can then plot the temperature changes from 2010 to 2021. To accomplish this, we wil use the rollmean() function from the “zoo” package.</p>
+<pre class="r"><code>avg_temp$rollavg20 &lt;- rollmean(avg_temp$doytavg, 20, fill = c(NA, NA, NA), align = &quot;center&quot;)
+
+(avg_temp)</code></pre>
+<pre><code>## # A tibble: 366 x 3
+##      doy doytavg rollavg20
+##    &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;
+##  1     1    55.6      NA  
+##  2     2    56.6      NA  
+##  3     3    55.9      NA  
+##  4     4    56.1      NA  
+##  5     5    56.1      NA  
+##  6     6    56.9      NA  
+##  7     7    56.8      NA  
+##  8     8    57.4      NA  
+##  9     9    57.4      NA  
+## 10    10    58.0      56.9
+## # ... with 356 more rows</code></pre>
+<p>With rollmean, we provide a window of 10 data point, and the use align as “center”. The “center” parameter in align calculates the mean for a data point by taking the ten data points before and ten data points after the point for which it is calculating the mean. And with “fill” command we instruct the code to fill with “NA” for the points it is unable to find a window. These are the first and last ten rows in “avg_temp”.</p>
+<p>The issue here is that rollmean() does not know to connect the first day of the year to the last day to calculate the rolling mean. Therefore, we create a new column where we subtract that last 20 days of december from 366. The we arrange the whole data frame in ascending order by this column. ow we calculate the rolling average again in the new column and replace the NAs in from the old rolling average column with the new averages.</p>
+<pre class="r"><code>avg_temp &lt;- avg_temp %&gt;% 
+  mutate(doy2=ifelse(doy&gt;345, doy-366, doy))  %&gt;% 
+  arrange(doy2) %&gt;% 
+  mutate(rollavg_2=rollmean(doytavg, 20, fill = c(NA, NA, NA)))  %&gt;% 
+  mutate(rollavg20=ifelse(is.na(rollavg20), rollavg_2, rollavg20)) %&gt;%  
+select(-c(&quot;doy2&quot;, &quot;rollavg_2&quot;)) 
+
+(avg_temp)</code></pre>
+<pre><code>## # A tibble: 366 x 3
+##      doy doytavg rollavg20
+##    &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;
+##  1   346    61.5      61.6
+##  2   347    61.6      61.4
+##  3   348    61.7      61.2
+##  4   349    61.1      61.0
+##  5   350    60.6      60.8
+##  6   351    61.1      60.5
+##  7   352    60.4      60.3
+##  8   353    60.1      60.1
+##  9   354    60.0      59.8
+## 10   355    60.1      59.5
+## # ... with 356 more rows</code></pre>
+<p>Lets see how the rolling average smoothens the curve.</p>
+<pre class="r"><code>ggplot(avg_temp, aes(x = doy))+
+  geom_line(aes(y = doytavg))+
+  geom_line(aes(y = rollavg20), color=&quot;red&quot;)</code></pre>
+<p><img src="/2021/11/18/time-series/index_files/figure-html/unnamed-chunk-8-1.png" width="672" />
+Now that we have calculate the historical average, we should now subset the dataset to the years for which we want to see the average difference in temperature from the average.</p>
+<p>We will now create doy column to count the days for the date of the years (as we did before), and also get the year using the year() function. Then we join this subsetted data frame with our rolling average data frame. Finally we create the column which will provide us with the difference between out “TAVG” for our years of interest and the historical rolling temperature average. The code for all these steps can be found below:</p>
+<pre class="r"><code>avg_temp10now &lt;- weather_data %&gt;% 
+  filter(DATE&gt;&quot;2009-12-31&quot;) %&gt;% 
+  mutate(doy=yday(DATE)) %&gt;% 
+  mutate(year=year(DATE)) %&gt;% 
+  left_join(avg_temp, by = &quot;doy&quot;) %&gt;% 
+  mutate(avgtTdiff=TAVG-rollavg20)
+
+
+head(avg_temp10now)</code></pre>
+<pre><code>##         DATE TAVG doy year  doytavg rollavg20 avgtTdiff
+## 1 2010-01-01   53   1 2010 55.56000  57.30069 -4.300685
+## 2 2010-01-02   53   2 2010 56.62069  57.14628 -4.146279
+## 3 2010-01-03   53   3 2010 55.89286  57.04575 -4.045750
+## 4 2010-01-04   55   4 2010 56.14286  57.00265 -2.002646
+## 5 2010-01-05   54   5 2010 56.06897  56.99908 -2.999075
+## 6 2010-01-06   55   6 2010 56.85185  56.92993 -1.929932</code></pre>
+<p>NOw lets first plot the chart, and then i will explain what we did.</p>
+<pre class="r"><code>ggplot(avg_temp10now, aes(x = doy, y = rollavg20), color=&quot;#777777&quot;)+
+  geom_line()+
+  geom_rect(aes(xmin=doy-0.5, xmax=doy+0.5, ymin=rollavg20, ymax=TAVG, fill=avgtTdiff))+
+  facet_wrap(~year)</code></pre>
+<p><img src="/2021/11/18/time-series/index_files/figure-html/unnamed-chunk-10-1.png" width="672" />
+To create the above chart, first we create the line, and then we build small rectangles on top or below the line depending upon the difference between the “TAVG” and historical average. We finally fill these rectangles with the average difference column we calculate above. We centered the rectangle on the day of the year by adding and subtracting 0.5 from it. This also smooths the transition from one rectangle to other.</p>
+<p>The fill is just one color but we want to show hotter and colder temperature from the rolling average by different gradient of colors. Here we basically want the diverging red and blue colors with 0 degree celsius as white. We will use scale_fill_gradient2() for this.</p>
+<pre class="r"><code>ggplot(avg_temp10now)+
+  geom_rect(aes(xmin=doy-0.5, xmax=doy+0.5, ymin=rollavg20, ymax=TAVG, fill=avgtTdiff))+
+  geom_line(aes(x = doy, y = rollavg20), color=&quot;#777777&quot;)+
+  scale_fill_gradient2(low=&quot;blue&quot;, high=&quot;red&quot;, name=&quot;Temperature anomaly&quot;, breaks=c(10,5,0,-5,-10))+
+  facet_wrap(~year, ncol=1)+
+  theme_minimal()</code></pre>
+<p><img src="/2021/11/18/time-series/index_files/figure-html/unnamed-chunk-11-1.png" width="768" />
+Now, we will add the month names instead of doy for the x-axis in the chart. We will add the month label on 16th day of each month. Here, we first get a sequence and extract the 16th date of each month. Then we convert the date to the days of the year using yday() function.</p>
+<pre class="r"><code>midmonths &lt;- seq(ymd(&quot;2019-01-16&quot;), ymd(&quot;2019-12-16&quot;), by=&quot;month&quot;)
+midmonths &lt;- yday(midmonths)
+
+midmonths</code></pre>
+<pre><code>##  [1]  16  47  75 106 136 167 197 228 259 289 320 350</code></pre>
+<p>Now using scale_x_continuous() function we will add month labels to the chart.</p>
+<pre class="r"><code>ggplot(avg_temp10now)+
+  geom_rect(aes(xmin=doy-0.5, xmax=doy+0.5, ymin=rollavg20, ymax=TAVG, fill=avgtTdiff))+
+    geom_line(aes(x = doy, y = rollavg20), color=&quot;#777777&quot;)+
+  facet_wrap(~year, ncol=2) +
+  scale_fill_gradient2(low=&quot;blue&quot;, high=&quot;red&quot;, name=&quot;Temperature anomaly&quot;, breaks=c(10,5,0,-5,-10))+
+  scale_x_continuous(breaks = midmonths, labels=c(&quot;Jan&quot;, &quot;Feb&quot;, &quot;Mar&quot;, &quot;Apr&quot;, &quot;May&quot;, &quot;Jun&quot;, &quot;Jul&quot;, &quot;Aug&quot;, &quot;Sep&quot;, &quot;Oct&quot;, &quot;Nov&quot;, &quot;Dec&quot;))+
+  theme_minimal()+
+  xlab(&quot;&quot;)+ylab(&quot;&quot;)</code></pre>
+<p><img src="/2021/11/18/time-series/index_files/figure-html/unnamed-chunk-13-1.png" width="960" />
+Now, we will add gray background rectangles at the names of every other month. This is not necessary but to we are adding these rectangles to make the charts more aesthetically pleasing.</p>
+<p>The rectangle will start at the start date of every other month, and end at the last day of the month. We subtract 1 to get the last day.</p>
+<pre class="r"><code>band_start &lt;- seq(ymd(&quot;2019-02-01&quot;), ymd(&quot;2019-12-01&quot;), by=&quot;2 months&quot;) 
+#converting dates to day of the year
+band_start &lt;- yday(band_start)
+
+band_end &lt;- seq(ymd(&quot;2019-03-01&quot;), ymd(&quot;2020-01-01&quot;), by=&quot;2 months&quot;)-1
+#converting dates to day of the year
+band_end &lt;- yday(band_end)
+
+#binding the start and end points for the rectangles
+band &lt;- cbind.data.frame(band_start, band_end)
+
+head(band)</code></pre>
+<pre><code>##   band_start band_end
+## 1         32       59
+## 2         91      120
+## 3        152      181
+## 4        213      243
+## 5        274      304
+## 6        335      365</code></pre>
+<p>Now, lets add the rectangles band in our chart.</p>
+<pre class="r"><code>ggplot(avg_temp10now)+
+  theme_minimal()+
+  geom_rect(data = band, aes(xmin=band_start, xmax=band_end), ymin=40, ymax=110, fill=&quot;#cccccc&quot;, alpha=0.5)+
+  geom_rect(aes(xmin=doy-0.5, xmax=doy+0.5, ymin=rollavg20, ymax=TAVG, fill=avgtTdiff))+
+    geom_line(aes(x = doy, y = rollavg20), color=&quot;#777777&quot;)+
+  facet_wrap(~year, ncol=2) +
+  scale_fill_gradient2(low=&quot;blue&quot;, high=&quot;red&quot;, name=&quot;Temperature anomaly&quot;, breaks=c(10,5,0,-5,-10))+
+  scale_x_continuous(breaks = midmonths, labels=c(&quot;Jan&quot;, &quot;Feb&quot;, &quot;Mar&quot;, &quot;Apr&quot;, &quot;May&quot;, &quot;Jun&quot;, &quot;Jul&quot;, &quot;Aug&quot;, &quot;Sep&quot;, &quot;Oct&quot;, &quot;Nov&quot;, &quot;Dec&quot;))+
+  xlab(&quot;&quot;)+ylab(&quot;&quot;)</code></pre>
+<p><img src="/2021/11/18/time-series/index_files/figure-html/unnamed-chunk-15-1.png" width="960" /></p>
+<p>Now, we did a bit of styling like moving the legend to the bottom, and moving the y-axis to the right.</p>
+<pre class="r"><code>ggplot(avg_temp10now)+
+  theme_minimal()+
+  geom_rect(data = band, aes(xmin=band_start, xmax=band_end), ymin=40, ymax=110, fill=&quot;#cccccc&quot;, alpha=0.5)+
+  geom_rect(aes(xmin=doy-0.5, xmax=doy+0.5, ymin=rollavg20, ymax=TAVG, fill=avgtTdiff))+
+    geom_line(aes(x = doy, y = rollavg20), color=&quot;#777777&quot;)+
+  facet_wrap(~year, ncol=2) +
+  scale_fill_gradient2(low=&quot;blue&quot;, high=&quot;red&quot;, name=&quot;Temperature anomaly&quot;, breaks=c(10,5,0,-5,-10))+
+  scale_x_continuous(breaks = midmonths, labels=c(&quot;Jan&quot;, &quot;Feb&quot;, &quot;Mar&quot;, &quot;Apr&quot;, &quot;May&quot;, &quot;Jun&quot;, &quot;Jul&quot;, &quot;Aug&quot;, &quot;Sep&quot;, &quot;Oct&quot;, &quot;Nov&quot;, &quot;Dec&quot;))+
+  xlab(&quot;&quot;)+ylab(&quot;&quot;)+
+  scale_y_continuous(position=&quot;right&quot;)+
+  theme(
+    axis.text = element_text(size = 17),
+    legend.position = &quot;bottom&quot;,
+    legend.title = element_text(size = 18),
+    legend.text = element_text(size = 12),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    strip.text = element_text(hjust = 0, face = &quot;bold&quot;, size = 20),
+    plot.title = element_text(size = 25, face = &quot;bold&quot;),
+    )+
+  ggtitle(&quot;Lucknow, India daily mean temperature between \n 2010 and 2021 (compared to 1981-2010 average)&quot;)</code></pre>
+<p><img src="/2021/11/18/time-series/index_files/figure-html/unnamed-chunk-16-1.png" width="1440" /></p>
+<p>We can from the above chart that in last 10 years, many years were hotter than historical average in Lucknow. 2010, 2014, 2015, 2016, 2017, 2018, 2019, and 2021, had more months where the temperature was more than the historical average (see the red peaks in the chart). I will also like to thank <a href="https://flowingdata.com/">Flowingdata</a> for inspiration for this analysis.</p>
+</div>
+
+    </div>
+
+    
+
+
+
+
+
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=/2021/11/18/time-series/&amp;text=Visualizing%20deviation%20in%20mean%20daily%20temperature%20in%20Lucknow,%20India%20from%20the%20historical%20average" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=/2021/11/18/time-series/&amp;t=Visualizing%20deviation%20in%20mean%20daily%20temperature%20in%20Lucknow,%20India%20from%20the%20historical%20average" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Visualizing%20deviation%20in%20mean%20daily%20temperature%20in%20Lucknow,%20India%20from%20the%20historical%20average&amp;body=/2021/11/18/time-series/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=/2021/11/18/time-series/&amp;title=Visualizing%20deviation%20in%20mean%20daily%20temperature%20in%20Lucknow,%20India%20from%20the%20historical%20average" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="whatsapp://send?text=Visualizing%20deviation%20in%20mean%20daily%20temperature%20in%20Lucknow,%20India%20from%20the%20historical%20average%20/2021/11/18/time-series/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=/2021/11/18/time-series/&amp;title=Visualizing%20deviation%20in%20mean%20daily%20temperature%20in%20Lucknow,%20India%20from%20the%20historical%20average" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <a href="/"><img class="avatar mr-3 avatar-circle" src="/author/siddharth-dixit/avatar_hu8fdc9644b00fe4ff51d8cda395766b0f_370662_270x270_fill_q90_lanczos_center.jpg" alt="Siddharth Dixit"></a>
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="/">Siddharth Dixit</a></h5>
+      <h6 class="card-subtitle">Associate in Research</h6>
+      
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/sid_dix" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/pyarasid" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.linkedin.com/in/siddharth-dixit-b02bbb34/" target="_blank" rel="noopener">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+<div id="disqus_thread"></div>
+<script>
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://siddix.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+  </div>
+</article>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    Code with <i class='fas fa-heart'></i> and <i class='fab fa-r-project'></i> <a href='https://bookdown.org/yihui/blogdown/'>Blogdown</a><br>© Siddharth Dixit, 2022
+  </p>
+
+  
+  
+
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+    Published with
+    <a href="https://wowchemy.com" target="_blank" rel="noopener">Wowchemy</a>  —
+    the free, <a href="https://github.com/wowchemy/wowchemy-hugo-modules" target="_blank" rel="noopener">
+    open source</a> website builder that empowers creators.
+    
+  </p>
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+      
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/instant.page/5.1.0/instantpage.min.js" integrity="sha512-1+qUtKoh9XZW7j+6LhRMAyOrgSQKenQ4mluTR+cvxXjP1Z54RxZuzstR/H9kgPXQsVB8IW7DMDFUJpzLjvhGSQ==" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js" integrity="sha512-TDKKr+IvoqZnPzc3l35hdjpHD0m+b2EC2SrLEgKDRWpxf2rFCxemkgvJ5kfU48ip+Y+m2XVKyOCD85ybtlZDmw==" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/latex.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.js" integrity="sha512-SeiQaaDh73yrb56sTW/RgVdi/mMqNeM2oBwubFHagc5BkixSpP1fvqF47mKzPGWYSSy4RwbBunrJBQ4Co8fRWA==" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks",
+        'slides' : "Slides"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/wowchemy.min.ffabb05383f1b16d83e7181a605e644c.js"></script>
+
+    
+
+
+
+
+
+
+</body>
+</html>
