@@ -1,2 +1,2 @@
-# sididx-website
+# www.siddix.us
 Personal website of Siddharth Dixit
